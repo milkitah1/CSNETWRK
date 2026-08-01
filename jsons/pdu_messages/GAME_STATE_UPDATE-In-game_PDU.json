@@ -1,0 +1,61 @@
+{
+    "type": "GAME_STATE_UPDATE",
+    "seq_num": 44,
+    "state": {
+        "turn": 5,
+        "active_player": "player_1",
+        "phase": "PRECOMBAT_MAIN",
+        "priority_holder": "player_1",
+        "life_totals": {
+            "player_1": 17,
+            "player_2": 12
+        },
+        "stack": [
+            {
+                "stack_item_id": "stk_01",
+                "item_type": "SPELL",
+                "source": "lightning_bolt_001",
+                "targets": [
+                    "player_2"
+                ],
+                "controller": "player_1"
+            }
+        ],
+        "battlefield": {
+            "player_1": [
+                {
+                    "id": "mountain_001",
+                    "tapped": true
+                }
+            ],
+            "player_2": [
+                {
+                    "id": "wall_of_stone_004",
+                    "tapped": false,
+                    "damage": 0,
+                    "power": 0,
+                    "toughness": 8,
+                    "summoning_sick": false
+                }
+            ]
+        },
+        "graveyard": {
+            "player_1": [],
+            "player_2": []
+        },
+        "hand": {
+            "player_1": [
+                "shock_002",
+                "forest_003"
+            ]
+        },
+        "hand_counts": {
+            "player_2": 4
+        },
+        "library_counts": {
+            "player_1": 13,
+            "player_2": 11
+        },
+        "land_played_this_turn": true
+    }
+}

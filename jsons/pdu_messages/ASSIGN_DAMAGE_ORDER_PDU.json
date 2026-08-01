@@ -1,0 +1,9 @@
+{
+    "type": "ASSIGN_DAMAGE_ORDER",
+    "seq_num": 26,
+    "attacker_id": "reckless_wurm_003",
+    "blocker_order": [
+        "wall_of_stone_004",
+        "grizzly_bears_002"
+    ]
+}

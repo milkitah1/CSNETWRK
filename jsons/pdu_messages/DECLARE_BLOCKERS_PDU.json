@@ -1,0 +1,10 @@
+{
+    "type": "DECLARE_BLOCKERS",
+    "seq_num": 24,
+    "blockers": [
+        {
+            "creature_id": "wall_of_stone_004",
+            "blocking_id": "goblin_guide_001"
+        }
+    ]
+}

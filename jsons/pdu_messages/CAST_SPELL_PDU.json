@@ -1,0 +1,11 @@
+{
+    "type": "CAST_SPELL",
+    "seq_num": 7,
+    "card_id": "lightning_bolt_001",
+    "targets": [
+        "player_2"
+    ],
+    "mana_payment": {
+        "R": 1
+    }
+}

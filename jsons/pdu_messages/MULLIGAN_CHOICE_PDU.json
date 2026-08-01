@@ -1,0 +1,8 @@
+{
+    "type": "MULLIGAN_CHOICE",
+    "seq_num": 3,
+    "keep": true,
+    "cards_to_bottom": [
+        "shock_001"
+    ]
+}

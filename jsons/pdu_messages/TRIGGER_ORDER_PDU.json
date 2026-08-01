@@ -1,0 +1,9 @@
+{
+    "type": "TRIGGER_ORDER",
+    "seq_num": 15,
+    "player_id": "player_1",
+    "trigger_ids": [
+        "trg_03",
+        "trg_04"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "type": "TRIGGER_CHOICE",
+    "seq_num": 20,
+    "trigger_id": "trg_02",
+    "source_id": "gray_merchant_001",
+    "effect_summary": "You may gain life equal to your devotion to black.",
+    "requires_target": false,
+    "legal_targets": []
+}

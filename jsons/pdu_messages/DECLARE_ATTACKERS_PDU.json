@@ -1,0 +1,14 @@
+{
+    "type": "DECLARE_ATTACKERS",
+    "seq_num": 22,
+    "attackers": [
+        {
+            "creature_id": "goblin_guide_001",
+            "target": "player_2"
+        },
+        {
+            "creature_id": "reckless_wurm_003",
+            "target": "player_2"
+        }
+    ]
+}

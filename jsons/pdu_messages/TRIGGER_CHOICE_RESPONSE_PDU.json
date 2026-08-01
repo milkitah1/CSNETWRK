@@ -1,0 +1,7 @@
+{
+    "type": "TRIGGER_CHOICE_RESPONSE",
+    "seq_num": 20,
+    "trigger_id": "trg_02",
+    "accept": true,
+    "chosen_target": ""
+}

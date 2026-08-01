@@ -1,0 +1,22 @@
+{
+    "type": "STACK_RESOLVE",
+    "seq_num": 31,
+    "stack_item_id": "stk_01",
+    "result": "RESOLVED",
+    "state_changes": [
+        {
+            "change_type": "DAMAGE",
+            "target": "player_2",
+            "amount": 3
+        },
+        {
+            "change_type": "LIFE_GAIN",
+            "target": "player_1",
+            "amount": 2
+        },
+        {
+            "change_type": "DESTROY",
+            "target": "wall_of_stone_004"
+        }
+    ]
+}

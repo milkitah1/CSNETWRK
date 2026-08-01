@@ -1,0 +1,11 @@
+{
+    "type": "GAME_STATE_UPDATE",
+    "seq_num": 2,
+    "state": {
+        "phase": "LOBBY",
+        "players_ready": 1,
+        "waiting_for": [
+            "player_2"
+        ]
+    }
+}

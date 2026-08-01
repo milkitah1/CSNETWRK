@@ -1,0 +1,23 @@
+{
+    "type": "COMBAT_DAMAGE_RESULT",
+    "seq_num": 27,
+    "damage_events": [
+        {
+            "source": "goblin_guide_001",
+            "target": "player_2",
+            "amount": 2
+        },
+        {
+            "source": "wall_of_stone_004",
+            "target": "goblin_guide_001",
+            "amount": 3
+        }
+    ],
+    "life_totals": {
+        "player_1": 20,
+        "player_2": 18
+    },
+    "creatures_died": [
+        "goblin_guide_001"
+    ]
+}

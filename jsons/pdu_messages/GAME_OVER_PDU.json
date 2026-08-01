@@ -1,0 +1,7 @@
+{
+    "type": "GAME_OVER",
+    "seq_num": 100,
+    "winner_id": "player_1",
+    "loser_id": "player_2",
+    "reason": "LIFE_ZERO"
+}

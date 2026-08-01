@@ -1,0 +1,10 @@
+{
+    "type": "PLAYER_READY",
+    "seq_num": 1,
+    "player_id": "player_1",
+    "deck_list": [
+        "lightning_bolt_001",
+        "mountain_001",
+        "goblin_guide_001"
+    ]
+}

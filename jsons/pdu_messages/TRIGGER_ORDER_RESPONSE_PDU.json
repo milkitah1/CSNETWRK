@@ -1,0 +1,8 @@
+{
+    "type": "TRIGGER_ORDER_RESPONSE",
+    "seq_num": 15,
+    "ordered_trigger_ids": [
+        "trg_04",
+        "trg_03"
+    ]
+}

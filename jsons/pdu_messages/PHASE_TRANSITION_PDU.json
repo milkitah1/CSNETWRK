@@ -1,0 +1,7 @@
+{
+    "type": "PHASE_TRANSITION",
+    "seq_num": 10,
+    "to_phase": "DRAW",
+    "active_player": "player_1",
+    "turn": 3
+}

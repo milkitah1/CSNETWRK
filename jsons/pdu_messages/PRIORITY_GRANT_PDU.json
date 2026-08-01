@@ -1,0 +1,6 @@
+{
+    "type": "PRIORITY_GRANT",
+    "player_id": "player_1",
+    "seq_num": 43,
+    "time_limit_ms": 60000
+}

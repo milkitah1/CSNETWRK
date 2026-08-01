@@ -1,0 +1,11 @@
+{
+    "type": "ERROR",
+    "seq_num": 14,
+    "code": "STALE_ACTION",
+    "message": "Priority token mismatch. Expected seq_num 16, got 14.",
+    "rejected_action": {
+        "type": "CAST_SPELL",
+        "seq_num": 14,
+        "card_id": "..."
+    }
+}

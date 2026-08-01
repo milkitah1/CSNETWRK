@@ -1,0 +1,11 @@
+{
+    "type": "STACK_PUSH",
+    "seq_num": 8,
+    "stack_item_id": "stk_01",
+    "item_type": "SPELL",
+    "source": "lightning_bolt_001",
+    "targets": [
+        "player_2"
+    ],
+    "controller": "player_1"
+}

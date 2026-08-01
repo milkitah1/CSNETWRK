@@ -1,0 +1,11 @@
+{
+    "type": "ACTIVATE_ABILITY",
+    "seq_num": 9,
+    "source_id": "llanowar_elves_002",
+    "ability_index": 0,
+    "targets": [],
+    "cost_payment": {
+        "tap": true,
+        "mana": {}
+    }
+}

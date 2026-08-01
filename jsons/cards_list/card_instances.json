@@ -1,0 +1,2186 @@
+[
+    {
+        "card_id (protocol reference)": "mountain_001",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "mountain_002",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "mountain_003",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "mountain_004",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "mountain_005",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "5"
+    },
+    {
+        "card_id (protocol reference)": "mountain_006",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "6"
+    },
+    {
+        "card_id (protocol reference)": "mountain_007",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "7"
+    },
+    {
+        "card_id (protocol reference)": "mountain_008",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "8"
+    },
+    {
+        "card_id (protocol reference)": "mountain_009",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "9"
+    },
+    {
+        "card_id (protocol reference)": "mountain_010",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "10"
+    },
+    {
+        "card_id (protocol reference)": "mountain_011",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "11"
+    },
+    {
+        "card_id (protocol reference)": "mountain_012",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "12"
+    },
+    {
+        "card_id (protocol reference)": "mountain_013",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "13"
+    },
+    {
+        "card_id (protocol reference)": "mountain_014",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "14"
+    },
+    {
+        "card_id (protocol reference)": "mountain_015",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "15"
+    },
+    {
+        "card_id (protocol reference)": "mountain_016",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "16"
+    },
+    {
+        "card_id (protocol reference)": "mountain_017",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "17"
+    },
+    {
+        "card_id (protocol reference)": "mountain_018",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "18"
+    },
+    {
+        "card_id (protocol reference)": "mountain_019",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "19"
+    },
+    {
+        "card_id (protocol reference)": "mountain_020",
+        "Card Name": "Mountain",
+        "Card Type": "Land",
+        "Color": "R",
+        "Copy #": "20"
+    },
+    {
+        "card_id (protocol reference)": "forest_001",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "forest_002",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "forest_003",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "forest_004",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "forest_005",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "5"
+    },
+    {
+        "card_id (protocol reference)": "forest_006",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "6"
+    },
+    {
+        "card_id (protocol reference)": "forest_007",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "7"
+    },
+    {
+        "card_id (protocol reference)": "forest_008",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "8"
+    },
+    {
+        "card_id (protocol reference)": "forest_009",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "9"
+    },
+    {
+        "card_id (protocol reference)": "forest_010",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "10"
+    },
+    {
+        "card_id (protocol reference)": "forest_011",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "11"
+    },
+    {
+        "card_id (protocol reference)": "forest_012",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "12"
+    },
+    {
+        "card_id (protocol reference)": "forest_013",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "13"
+    },
+    {
+        "card_id (protocol reference)": "forest_014",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "14"
+    },
+    {
+        "card_id (protocol reference)": "forest_015",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "15"
+    },
+    {
+        "card_id (protocol reference)": "forest_016",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "16"
+    },
+    {
+        "card_id (protocol reference)": "forest_017",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "17"
+    },
+    {
+        "card_id (protocol reference)": "forest_018",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "18"
+    },
+    {
+        "card_id (protocol reference)": "forest_019",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "19"
+    },
+    {
+        "card_id (protocol reference)": "forest_020",
+        "Card Name": "Forest",
+        "Card Type": "Land",
+        "Color": "G",
+        "Copy #": "20"
+    },
+    {
+        "card_id (protocol reference)": "plains_001",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "plains_002",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "plains_003",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "plains_004",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "plains_005",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "5"
+    },
+    {
+        "card_id (protocol reference)": "plains_006",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "6"
+    },
+    {
+        "card_id (protocol reference)": "plains_007",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "7"
+    },
+    {
+        "card_id (protocol reference)": "plains_008",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "8"
+    },
+    {
+        "card_id (protocol reference)": "plains_009",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "9"
+    },
+    {
+        "card_id (protocol reference)": "plains_010",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "10"
+    },
+    {
+        "card_id (protocol reference)": "plains_011",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "11"
+    },
+    {
+        "card_id (protocol reference)": "plains_012",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "12"
+    },
+    {
+        "card_id (protocol reference)": "plains_013",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "13"
+    },
+    {
+        "card_id (protocol reference)": "plains_014",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "14"
+    },
+    {
+        "card_id (protocol reference)": "plains_015",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "15"
+    },
+    {
+        "card_id (protocol reference)": "plains_016",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "16"
+    },
+    {
+        "card_id (protocol reference)": "plains_017",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "17"
+    },
+    {
+        "card_id (protocol reference)": "plains_018",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "18"
+    },
+    {
+        "card_id (protocol reference)": "plains_019",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "19"
+    },
+    {
+        "card_id (protocol reference)": "plains_020",
+        "Card Name": "Plains",
+        "Card Type": "Land",
+        "Color": "W",
+        "Copy #": "20"
+    },
+    {
+        "card_id (protocol reference)": "island_001",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "island_002",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "island_003",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "island_004",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "island_005",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "5"
+    },
+    {
+        "card_id (protocol reference)": "island_006",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "6"
+    },
+    {
+        "card_id (protocol reference)": "island_007",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "7"
+    },
+    {
+        "card_id (protocol reference)": "island_008",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "8"
+    },
+    {
+        "card_id (protocol reference)": "island_009",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "9"
+    },
+    {
+        "card_id (protocol reference)": "island_010",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "10"
+    },
+    {
+        "card_id (protocol reference)": "island_011",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "11"
+    },
+    {
+        "card_id (protocol reference)": "island_012",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "12"
+    },
+    {
+        "card_id (protocol reference)": "island_013",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "13"
+    },
+    {
+        "card_id (protocol reference)": "island_014",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "14"
+    },
+    {
+        "card_id (protocol reference)": "island_015",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "15"
+    },
+    {
+        "card_id (protocol reference)": "island_016",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "16"
+    },
+    {
+        "card_id (protocol reference)": "island_017",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "17"
+    },
+    {
+        "card_id (protocol reference)": "island_018",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "18"
+    },
+    {
+        "card_id (protocol reference)": "island_019",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "19"
+    },
+    {
+        "card_id (protocol reference)": "island_020",
+        "Card Name": "Island",
+        "Card Type": "Land",
+        "Color": "U",
+        "Copy #": "20"
+    },
+    {
+        "card_id (protocol reference)": "swamp_001",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "swamp_002",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "swamp_003",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "swamp_004",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "swamp_005",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "5"
+    },
+    {
+        "card_id (protocol reference)": "swamp_006",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "6"
+    },
+    {
+        "card_id (protocol reference)": "swamp_007",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "7"
+    },
+    {
+        "card_id (protocol reference)": "swamp_008",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "8"
+    },
+    {
+        "card_id (protocol reference)": "swamp_009",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "9"
+    },
+    {
+        "card_id (protocol reference)": "swamp_010",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "10"
+    },
+    {
+        "card_id (protocol reference)": "swamp_011",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "11"
+    },
+    {
+        "card_id (protocol reference)": "swamp_012",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "12"
+    },
+    {
+        "card_id (protocol reference)": "swamp_013",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "13"
+    },
+    {
+        "card_id (protocol reference)": "swamp_014",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "14"
+    },
+    {
+        "card_id (protocol reference)": "swamp_015",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "15"
+    },
+    {
+        "card_id (protocol reference)": "swamp_016",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "16"
+    },
+    {
+        "card_id (protocol reference)": "swamp_017",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "17"
+    },
+    {
+        "card_id (protocol reference)": "swamp_018",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "18"
+    },
+    {
+        "card_id (protocol reference)": "swamp_019",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "19"
+    },
+    {
+        "card_id (protocol reference)": "swamp_020",
+        "Card Name": "Swamp",
+        "Card Type": "Land",
+        "Color": "B",
+        "Copy #": "20"
+    },
+    {
+        "card_id (protocol reference)": "lightning_bolt_001",
+        "Card Name": "Lightning Bolt",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "lightning_bolt_002",
+        "Card Name": "Lightning Bolt",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "lightning_bolt_003",
+        "Card Name": "Lightning Bolt",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "lightning_bolt_004",
+        "Card Name": "Lightning Bolt",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "shock_001",
+        "Card Name": "Shock",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "shock_002",
+        "Card Name": "Shock",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "shock_003",
+        "Card Name": "Shock",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "shock_004",
+        "Card Name": "Shock",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "lava_spike_001",
+        "Card Name": "Lava Spike",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "lava_spike_002",
+        "Card Name": "Lava Spike",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "lava_spike_003",
+        "Card Name": "Lava Spike",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "lava_spike_004",
+        "Card Name": "Lava Spike",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "flame_slash_001",
+        "Card Name": "Flame Slash",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "flame_slash_002",
+        "Card Name": "Flame Slash",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "flame_slash_003",
+        "Card Name": "Flame Slash",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "flame_slash_004",
+        "Card Name": "Flame Slash",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "searing_spear_001",
+        "Card Name": "Searing Spear",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "searing_spear_002",
+        "Card Name": "Searing Spear",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "searing_spear_003",
+        "Card Name": "Searing Spear",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "searing_spear_004",
+        "Card Name": "Searing Spear",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "skullcrack_001",
+        "Card Name": "Skullcrack",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "skullcrack_002",
+        "Card Name": "Skullcrack",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "skullcrack_003",
+        "Card Name": "Skullcrack",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "skullcrack_004",
+        "Card Name": "Skullcrack",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "rift_bolt_001",
+        "Card Name": "Rift Bolt",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "rift_bolt_002",
+        "Card Name": "Rift Bolt",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "rift_bolt_003",
+        "Card Name": "Rift Bolt",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "rift_bolt_004",
+        "Card Name": "Rift Bolt",
+        "Card Type": "Sorcery",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "incinerate_001",
+        "Card Name": "Incinerate",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "incinerate_002",
+        "Card Name": "Incinerate",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "incinerate_003",
+        "Card Name": "Incinerate",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "incinerate_004",
+        "Card Name": "Incinerate",
+        "Card Type": "Instant",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "goblin_guide_001",
+        "Card Name": "Goblin Guide",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "goblin_guide_002",
+        "Card Name": "Goblin Guide",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "goblin_guide_003",
+        "Card Name": "Goblin Guide",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "goblin_guide_004",
+        "Card Name": "Goblin Guide",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "goblin_bushwhacker_001",
+        "Card Name": "Goblin Bushwhacker",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "goblin_bushwhacker_002",
+        "Card Name": "Goblin Bushwhacker",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "goblin_bushwhacker_003",
+        "Card Name": "Goblin Bushwhacker",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "goblin_bushwhacker_004",
+        "Card Name": "Goblin Bushwhacker",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "reckless_wurm_001",
+        "Card Name": "Reckless Wurm",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "reckless_wurm_002",
+        "Card Name": "Reckless Wurm",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "reckless_wurm_003",
+        "Card Name": "Reckless Wurm",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "reckless_wurm_004",
+        "Card Name": "Reckless Wurm",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "monastery_swiftspear_001",
+        "Card Name": "Monastery Swiftspear",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "monastery_swiftspear_002",
+        "Card Name": "Monastery Swiftspear",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "monastery_swiftspear_003",
+        "Card Name": "Monastery Swiftspear",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "monastery_swiftspear_004",
+        "Card Name": "Monastery Swiftspear",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "counterspell_001",
+        "Card Name": "Counterspell",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "counterspell_002",
+        "Card Name": "Counterspell",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "counterspell_003",
+        "Card Name": "Counterspell",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "counterspell_004",
+        "Card Name": "Counterspell",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "cancel_001",
+        "Card Name": "Cancel",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "cancel_002",
+        "Card Name": "Cancel",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "cancel_003",
+        "Card Name": "Cancel",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "cancel_004",
+        "Card Name": "Cancel",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "unsummon_001",
+        "Card Name": "Unsummon",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "unsummon_002",
+        "Card Name": "Unsummon",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "unsummon_003",
+        "Card Name": "Unsummon",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "unsummon_004",
+        "Card Name": "Unsummon",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "ponder_001",
+        "Card Name": "Ponder",
+        "Card Type": "Sorcery",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "ponder_002",
+        "Card Name": "Ponder",
+        "Card Type": "Sorcery",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "ponder_003",
+        "Card Name": "Ponder",
+        "Card Type": "Sorcery",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "ponder_004",
+        "Card Name": "Ponder",
+        "Card Type": "Sorcery",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "negate_001",
+        "Card Name": "Negate",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "negate_002",
+        "Card Name": "Negate",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "negate_003",
+        "Card Name": "Negate",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "negate_004",
+        "Card Name": "Negate",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "mana_leak_001",
+        "Card Name": "Mana Leak",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "mana_leak_002",
+        "Card Name": "Mana Leak",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "mana_leak_003",
+        "Card Name": "Mana Leak",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "mana_leak_004",
+        "Card Name": "Mana Leak",
+        "Card Type": "Instant",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "merfolk_looter_001",
+        "Card Name": "Merfolk Looter",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "merfolk_looter_002",
+        "Card Name": "Merfolk Looter",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "merfolk_looter_003",
+        "Card Name": "Merfolk Looter",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "merfolk_looter_004",
+        "Card Name": "Merfolk Looter",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "prodigal_sorcerer_001",
+        "Card Name": "Prodigal Sorcerer",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "prodigal_sorcerer_002",
+        "Card Name": "Prodigal Sorcerer",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "prodigal_sorcerer_003",
+        "Card Name": "Prodigal Sorcerer",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "prodigal_sorcerer_004",
+        "Card Name": "Prodigal Sorcerer",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "air_elemental_001",
+        "Card Name": "Air Elemental",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "air_elemental_002",
+        "Card Name": "Air Elemental",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "air_elemental_003",
+        "Card Name": "Air Elemental",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "air_elemental_004",
+        "Card Name": "Air Elemental",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "phantasmal_bear_001",
+        "Card Name": "Phantasmal Bear",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "phantasmal_bear_002",
+        "Card Name": "Phantasmal Bear",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "phantasmal_bear_003",
+        "Card Name": "Phantasmal Bear",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "phantasmal_bear_004",
+        "Card Name": "Phantasmal Bear",
+        "Card Type": "Creature",
+        "Color": "U",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "giant_growth_001",
+        "Card Name": "Giant Growth",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "giant_growth_002",
+        "Card Name": "Giant Growth",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "giant_growth_003",
+        "Card Name": "Giant Growth",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "giant_growth_004",
+        "Card Name": "Giant Growth",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "rampant_growth_001",
+        "Card Name": "Rampant Growth",
+        "Card Type": "Sorcery",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "rampant_growth_002",
+        "Card Name": "Rampant Growth",
+        "Card Type": "Sorcery",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "rampant_growth_003",
+        "Card Name": "Rampant Growth",
+        "Card Type": "Sorcery",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "rampant_growth_004",
+        "Card Name": "Rampant Growth",
+        "Card Type": "Sorcery",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "naturalize_001",
+        "Card Name": "Naturalize",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "naturalize_002",
+        "Card Name": "Naturalize",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "naturalize_003",
+        "Card Name": "Naturalize",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "naturalize_004",
+        "Card Name": "Naturalize",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "vines_of_vastwood_001",
+        "Card Name": "Vines of Vastwood",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "vines_of_vastwood_002",
+        "Card Name": "Vines of Vastwood",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "vines_of_vastwood_003",
+        "Card Name": "Vines of Vastwood",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "vines_of_vastwood_004",
+        "Card Name": "Vines of Vastwood",
+        "Card Type": "Instant",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "llanowar_elves_001",
+        "Card Name": "Llanowar Elves",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "llanowar_elves_002",
+        "Card Name": "Llanowar Elves",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "llanowar_elves_003",
+        "Card Name": "Llanowar Elves",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "llanowar_elves_004",
+        "Card Name": "Llanowar Elves",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "elvish_mystic_001",
+        "Card Name": "Elvish Mystic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "elvish_mystic_002",
+        "Card Name": "Elvish Mystic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "elvish_mystic_003",
+        "Card Name": "Elvish Mystic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "elvish_mystic_004",
+        "Card Name": "Elvish Mystic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "grizzly_bears_001",
+        "Card Name": "Grizzly Bears",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "grizzly_bears_002",
+        "Card Name": "Grizzly Bears",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "grizzly_bears_003",
+        "Card Name": "Grizzly Bears",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "grizzly_bears_004",
+        "Card Name": "Grizzly Bears",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "leatherback_baloth_001",
+        "Card Name": "Leatherback Baloth",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "leatherback_baloth_002",
+        "Card Name": "Leatherback Baloth",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "leatherback_baloth_003",
+        "Card Name": "Leatherback Baloth",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "leatherback_baloth_004",
+        "Card Name": "Leatherback Baloth",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "troll_ascetic_001",
+        "Card Name": "Troll Ascetic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "troll_ascetic_002",
+        "Card Name": "Troll Ascetic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "troll_ascetic_003",
+        "Card Name": "Troll Ascetic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "troll_ascetic_004",
+        "Card Name": "Troll Ascetic",
+        "Card Type": "Creature",
+        "Color": "G",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "wall_of_stone_001",
+        "Card Name": "Wall of Stone",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "wall_of_stone_002",
+        "Card Name": "Wall of Stone",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "wall_of_stone_003",
+        "Card Name": "Wall of Stone",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "wall_of_stone_004",
+        "Card Name": "Wall of Stone",
+        "Card Type": "Creature",
+        "Color": "R",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "swords_to_plowshares_001",
+        "Card Name": "Swords to Plowshares",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "swords_to_plowshares_002",
+        "Card Name": "Swords to Plowshares",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "swords_to_plowshares_003",
+        "Card Name": "Swords to Plowshares",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "swords_to_plowshares_004",
+        "Card Name": "Swords to Plowshares",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "path_to_exile_001",
+        "Card Name": "Path to Exile",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "path_to_exile_002",
+        "Card Name": "Path to Exile",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "path_to_exile_003",
+        "Card Name": "Path to Exile",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "path_to_exile_004",
+        "Card Name": "Path to Exile",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "healing_salve_001",
+        "Card Name": "Healing Salve",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "healing_salve_002",
+        "Card Name": "Healing Salve",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "healing_salve_003",
+        "Card Name": "Healing Salve",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "healing_salve_004",
+        "Card Name": "Healing Salve",
+        "Card Type": "Instant",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "pacifism_001",
+        "Card Name": "Pacifism",
+        "Card Type": "Enchantment",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "pacifism_002",
+        "Card Name": "Pacifism",
+        "Card Type": "Enchantment",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "pacifism_003",
+        "Card Name": "Pacifism",
+        "Card Type": "Enchantment",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "pacifism_004",
+        "Card Name": "Pacifism",
+        "Card Type": "Enchantment",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "white_knight_001",
+        "Card Name": "White Knight",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "white_knight_002",
+        "Card Name": "White Knight",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "white_knight_003",
+        "Card Name": "White Knight",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "white_knight_004",
+        "Card Name": "White Knight",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "serra_angel_001",
+        "Card Name": "Serra Angel",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "serra_angel_002",
+        "Card Name": "Serra Angel",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "serra_angel_003",
+        "Card Name": "Serra Angel",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "serra_angel_004",
+        "Card Name": "Serra Angel",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "savannah_lions_001",
+        "Card Name": "Savannah Lions",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "savannah_lions_002",
+        "Card Name": "Savannah Lions",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "savannah_lions_003",
+        "Card Name": "Savannah Lions",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "savannah_lions_004",
+        "Card Name": "Savannah Lions",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "mother_of_runes_001",
+        "Card Name": "Mother of Runes",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "mother_of_runes_002",
+        "Card Name": "Mother of Runes",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "mother_of_runes_003",
+        "Card Name": "Mother of Runes",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "mother_of_runes_004",
+        "Card Name": "Mother of Runes",
+        "Card Type": "Creature",
+        "Color": "W",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "dark_ritual_001",
+        "Card Name": "Dark Ritual",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "dark_ritual_002",
+        "Card Name": "Dark Ritual",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "dark_ritual_003",
+        "Card Name": "Dark Ritual",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "dark_ritual_004",
+        "Card Name": "Dark Ritual",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "terror_001",
+        "Card Name": "Terror",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "terror_002",
+        "Card Name": "Terror",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "terror_003",
+        "Card Name": "Terror",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "terror_004",
+        "Card Name": "Terror",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "doom_blade_001",
+        "Card Name": "Doom Blade",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "doom_blade_002",
+        "Card Name": "Doom Blade",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "doom_blade_003",
+        "Card Name": "Doom Blade",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "doom_blade_004",
+        "Card Name": "Doom Blade",
+        "Card Type": "Instant",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "raise_dead_001",
+        "Card Name": "Raise Dead",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "raise_dead_002",
+        "Card Name": "Raise Dead",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "raise_dead_003",
+        "Card Name": "Raise Dead",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "raise_dead_004",
+        "Card Name": "Raise Dead",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "mind_rot_001",
+        "Card Name": "Mind Rot",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "mind_rot_002",
+        "Card Name": "Mind Rot",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "mind_rot_003",
+        "Card Name": "Mind Rot",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "mind_rot_004",
+        "Card Name": "Mind Rot",
+        "Card Type": "Sorcery",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "gray_merchant_001",
+        "Card Name": "Gray Merchant of Asphodel",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "gray_merchant_002",
+        "Card Name": "Gray Merchant of Asphodel",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "gray_merchant_003",
+        "Card Name": "Gray Merchant of Asphodel",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "gray_merchant_004",
+        "Card Name": "Gray Merchant of Asphodel",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "gravedigger_001",
+        "Card Name": "Gravedigger",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "gravedigger_002",
+        "Card Name": "Gravedigger",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "gravedigger_003",
+        "Card Name": "Gravedigger",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "gravedigger_004",
+        "Card Name": "Gravedigger",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "royal_assassin_001",
+        "Card Name": "Royal Assassin",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "royal_assassin_002",
+        "Card Name": "Royal Assassin",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "royal_assassin_003",
+        "Card Name": "Royal Assassin",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "royal_assassin_004",
+        "Card Name": "Royal Assassin",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "black_knight_001",
+        "Card Name": "Black Knight",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "black_knight_002",
+        "Card Name": "Black Knight",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "black_knight_003",
+        "Card Name": "Black Knight",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "black_knight_004",
+        "Card Name": "Black Knight",
+        "Card Type": "Creature",
+        "Color": "B",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "sol_ring_001",
+        "Card Name": "Sol Ring",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "sol_ring_002",
+        "Card Name": "Sol Ring",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "sol_ring_003",
+        "Card Name": "Sol Ring",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "sol_ring_004",
+        "Card Name": "Sol Ring",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "ornithopter_001",
+        "Card Name": "Ornithopter",
+        "Card Type": "Artifact Creature",
+        "Color": "C",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "ornithopter_002",
+        "Card Name": "Ornithopter",
+        "Card Type": "Artifact Creature",
+        "Color": "C",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "ornithopter_003",
+        "Card Name": "Ornithopter",
+        "Card Type": "Artifact Creature",
+        "Color": "C",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "ornithopter_004",
+        "Card Name": "Ornithopter",
+        "Card Type": "Artifact Creature",
+        "Color": "C",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "millstone_001",
+        "Card Name": "Millstone",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "millstone_002",
+        "Card Name": "Millstone",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "millstone_003",
+        "Card Name": "Millstone",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "millstone_004",
+        "Card Name": "Millstone",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "4"
+    },
+    {
+        "card_id (protocol reference)": "rod_of_ruin_001",
+        "Card Name": "Rod of Ruin",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "1"
+    },
+    {
+        "card_id (protocol reference)": "rod_of_ruin_002",
+        "Card Name": "Rod of Ruin",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "2"
+    },
+    {
+        "card_id (protocol reference)": "rod_of_ruin_003",
+        "Card Name": "Rod of Ruin",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "3"
+    },
+    {
+        "card_id (protocol reference)": "rod_of_ruin_004",
+        "Card Name": "Rod of Ruin",
+        "Card Type": "Artifact",
+        "Color": "C",
+        "Copy #": "4"
+    }
+]

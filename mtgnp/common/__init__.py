@@ -4,4 +4,5 @@ __all__ = [
     "framing",
     "verbose",
     "pdu",
+    "game_state",
 ]

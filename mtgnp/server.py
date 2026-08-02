@@ -13,14 +13,23 @@ from typing import Optional
 from .common import framing
 from .common import pdu as PDUs
 from .common.verbose import set_verbose
+from .common.managers.lobby_manager import Lobby
 
 
 class ClientHandler(threading.Thread):
-    def __init__(self, conn: socket.socket, addr):
+    def __init__(self, conn: socket.socket, addr, server: "Server"):
         super().__init__(daemon=True)
         self.conn = conn
         self.addr = addr
+        self.server = server
         self.running = True
+        self.player_id: str | None = None
+
+    def _send(self, obj: dict) -> None:
+        try:
+            framing.send_pdu(self.conn, obj)
+        except Exception:
+            pass
 
     def run(self) -> None:
         try:
@@ -28,12 +37,28 @@ class ClientHandler(threading.Thread):
                 pkt = framing.recv_pdu(self.conn)
                 t = pkt.get("type")
                 if t == PDUs.PING:
-                    framing.send_pdu(self.conn, {"type": PDUs.PONG})
-                elif t == PDUs.HELLO:
-                    # simple accept and send WELCOME
-                    framing.send_pdu(self.conn, {"type": PDUs.WELCOME, "message": "Welcome to MTGNP"})
+                    self._send({"type": PDUs.PONG})
+                elif t == PDUs.JOIN:
+                    # register player in lobby and acknowledge
+                    name = pkt.get("name") or f"{self.addr}"
+                    self.player_id = str(name)
+                    try:
+                        self.server.lobby.add_player(self.player_id, meta={"addr": self.addr})
+                    except RuntimeError:
+                        # lobby full
+                        self._send(PDUs.make_error(400, "LOBBY_FULL"))
+                        self.running = False
+                        break
+                    self._send({"type": PDUs.WELCOME, "message": "Welcome to MTGNP"})
+                elif t == PDUs.PLAYER_READY:
+                    if not self.player_id:
+                        self._send(PDUs.make_error(400, "NOT_REGISTERED"))
+                        continue
+                    self.server.lobby.set_ready(self.player_id, True)
+                    # acknowledge
+                    self._send({"type": "PLAYER_READY_ACK"})
                 else:
-                    framing.send_pdu(self.conn, PDUs.make_error(400, f"unhandled pdu type: {t}"))
+                    self._send(PDUs.make_error(400, f"unhandled pdu type: {t}"))
         except (ConnectionError, OSError):
             pass
         finally:
@@ -41,6 +66,11 @@ class ClientHandler(threading.Thread):
                 self.conn.close()
             except Exception:
                 pass
+            if self.player_id:
+                try:
+                    self.server.lobby.remove_player(self.player_id)
+                except Exception:
+                    pass
 
 
 class Server:
@@ -48,10 +78,13 @@ class Server:
         set_verbose(verbose)
         self.host = host
         self.port = port
+        self.lobby = Lobby(max_players=2)
         self._sock: Optional[socket.socket] = None
         self._accept_thread: Optional[threading.Thread] = None
         self._clients: list[ClientHandler] = []
         self._stop = threading.Event()
+
+        self._game_starter_thread: Optional[threading.Thread] = None
 
     def start(self) -> None:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -67,12 +100,26 @@ class Server:
                     conn, addr = self._sock.accept()
                 except OSError:
                     break
-                handler = ClientHandler(conn, addr)
+                handler = ClientHandler(conn, addr, self)
                 self._clients.append(handler)
                 handler.start()
 
+        def game_starter():
+            # wait for both players to be present and ready
+            ready = self.lobby.wait_for_all_ready()
+            if not ready:
+                return
+            # broadcast START_GAME to all connected clients
+            for c in list(self._clients):
+                try:
+                    framing.send_pdu(c.conn, {"type": PDUs.START_GAME})
+                except Exception:
+                    pass
+
         self._accept_thread = threading.Thread(target=accept_loop, daemon=True)
         self._accept_thread.start()
+        self._game_starter_thread = threading.Thread(target=game_starter, daemon=True)
+        self._game_starter_thread.start()
 
     def stop(self) -> None:
         self._stop.set()

@@ -38,6 +38,7 @@ RECONNECT = "RECONNECT"
 DISCONNECT = "DISCONNECT"
 STATE_REQUEST = "STATE_REQUEST"
 STATE_RESPONSE = "STATE_RESPONSE"
+PLAYER_READY = "PLAYER_READY"
 
 
 def make_error(code: int, message: str, rejected_action: Optional[Dict[str, Any]] = None, seq_num: Optional[int] = None) -> Dict[str, Any]:

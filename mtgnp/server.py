@@ -25,20 +25,22 @@ class ClientHandler(threading.Thread):
         self.running = True
         self.player_id: str | None = None
 
-    def _send(self, obj: dict) -> None:
+    def _send(self, obj):
         try:
             framing.send_pdu(self.conn, obj)
-        except Exception:
-            pass
+        except Exception as e:
+            print("SEND ERROR:", e)
+            raise
 
     def run(self) -> None:
         try:
             while self.running:
                 pkt = framing.recv_pdu(self.conn)
+                print("SERVER RECEIVED:", pkt)
                 t = pkt.get("type")
                 if t == PDUs.PING:
                     self._send({"type": PDUs.PONG})
-                elif t == PDUs.JOIN:
+                elif t == PDUs.HELLO:
                     # register player in lobby and acknowledge
                     name = pkt.get("name") or f"{self.addr}"
                     self.player_id = str(name)
@@ -53,8 +55,10 @@ class ClientHandler(threading.Thread):
                 elif t == PDUs.PLAYER_READY:
                     if not self.player_id:
                         self._send(PDUs.make_error(400, "NOT_REGISTERED"))
+                        
                         continue
                     self.server.lobby.set_ready(self.player_id, True)
+                    
                     # acknowledge
                     self._send({"type": "PLAYER_READY_ACK"})
                 else:

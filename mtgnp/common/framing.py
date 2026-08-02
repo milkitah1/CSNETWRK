@@ -41,7 +41,9 @@ def recv_pdu(sock: socket.socket) -> Dict[str, Any]:
 def send_pdu(sock: socket.socket, obj: Dict[str, Any]) -> None:
     payload = json.dumps(obj, separators=(",", ":")).encode("utf-8")
     length = len(payload)
+   
     if length > MAX_PDU_SIZE:
+        print("ERROR: PDU too large to send:", length)
         raise ValueError(f"PDU too large to send: {length}")
     hdr = struct.pack(
         ">I", length

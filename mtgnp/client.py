@@ -60,6 +60,7 @@ class Client:
                 pass
 
     def send_pdu(self, obj: dict) -> None:
+        
         if not self.sock:
             raise RuntimeError("not connected")
         framing.send_pdu(self.sock, obj)
@@ -86,17 +87,6 @@ class Client:
 
     def interactive_lobby(self, name: str = "player") -> None:
         """Simple terminal UI that shows lobby status and lets the user mark ready.
-
-        UI example:
-
-        Connected to MTGNP Server
-
-        ========== LOBBY ==========
-        Players: 1 / 2
-
-        You are not ready.
-
-        1. Ready
         """
         self.connect()
         try:
@@ -141,6 +131,7 @@ class Client:
                 if choice == "1" and not ready:
                     # send PLAYER_READY
                     try:
+                       
                         self.send_pdu({"type": PDUs.PLAYER_READY})
                     except Exception as e:
                         print(f"failed to send PLAYER_READY: {e}")

@@ -11,7 +11,7 @@ import json
 import datetime
 from typing import Any, Dict
 
-VERBOSE = False
+VERBOSE = True
 
 
 def set_verbose(flag: bool) -> None:
@@ -31,14 +31,12 @@ def _pretty(obj: Dict[str, Any]) -> str:
 
 
 def log_send(label: str, pdu: Dict[str, Any]) -> None:
-    if not VERBOSE:
-        return
+    
     print(f"[{_timestamp()}] {label}: {pdu.get('type', '<no-type>')}")
     print(_pretty(pdu))
 
 
 def log_recv(label: str, pdu: Dict[str, Any]) -> None:
-    if not VERBOSE:
-        return
+  
     print(f"[{_timestamp()}] {label}: {pdu.get('type', '<no-type>')}")
     print(_pretty(pdu))

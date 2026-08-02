@@ -10,6 +10,7 @@ import argparse
 
 from .server import Server
 from .client import Client
+from .client import Client
 
 
 def main():
@@ -24,7 +25,7 @@ def main():
     crun.add_argument("--host", default="127.0.0.1")
     crun.add_argument("--port", type=int, default=4444)
     crun.add_argument("--ping", action="store_true")
-    crun.add_argument("--hello", action="store_true")
+    crun.add_argument("--connect", action="store_true")
     crun.add_argument("--verbose", action="store_true")
 
     args = p.parse_args()
@@ -42,8 +43,8 @@ def main():
         c.connect()
         if args.ping:
             print(c.ping())
-        if args.hello:
-            print(c.hello())
+        if args.connect:
+            print(c.interactive_lobby())
         c.close()
     else:
         p.print_help()

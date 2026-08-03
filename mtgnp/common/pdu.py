@@ -40,12 +40,27 @@ DISCONNECT = "DISCONNECT"
 STATE_REQUEST = "STATE_REQUEST"
 STATE_RESPONSE = "STATE_RESPONSE"
 PLAYER_READY = "PLAYER_READY"
+CAST_SPELL = "CAST_SPELL"
+ACTIVATE_ABILITY = "ACTIVATE_ABILITY"
+PLAY_LAND = "PLAY_LAND"
+STACK_PUSH = "STACK_PUSH"
+STACK_RESOLVE = "STACK_RESOLVE"
+DECLARE_ATTACKERS = "DECLARE_ATTACKERS"
+DECLARE_BLOCKERS = "DECLARE_BLOCKERS"
+ASSIGN_DAMAGE_ORDER = "ASSIGN_DAMAGE_ORDER"
+COMBAT_DAMAGE_RESULT = "COMBAT_DAMAGE_RESULT"
+TRIGGER_ORDER_RESPONSE = "TRIGGER_ORDER_RESPONSE"
+TRIGGER_CHOICE_RESPONSE = "TRIGGER_CHOICE_RESPONSE"
+MULLIGAN_CHOICE = "MULLIGAN_CHOICE"
+DISCARD = "DISCARD"
+GAME_OVER = "GAME_OVER"
+PHASE_TRANSITION = "PHASE_TRANSITION"
 
 
-def make_error(code: int, message: str, rejected_action: Optional[Dict[str, Any]] = None, seq_num: Optional[int] = None) -> Dict[str, Any]:
+def make_error(code: Any, message: str, rejected_action: Optional[Dict[str, Any]] = None, seq_num: Optional[int] = None) -> Dict[str, Any]:
     pdu: Dict[str, Any] = {
         "type": ERROR,
-        "code": int(code),
+        "code": code,
         "message": message,
     }
     if rejected_action is not None:

@@ -42,10 +42,10 @@ STATE_RESPONSE = "STATE_RESPONSE"
 PLAYER_READY = "PLAYER_READY"
 
 
-def make_error(code: int, message: str, rejected_action: Optional[Dict[str, Any]] = None, seq_num: Optional[int] = None) -> Dict[str, Any]:
+def make_error(code: Any, message: str, rejected_action: Optional[Dict[str, Any]] = None, seq_num: Optional[int] = None) -> Dict[str, Any]:
     pdu: Dict[str, Any] = {
         "type": ERROR,
-        "code": int(code),
+        "code": code,
         "message": message,
     }
     if rejected_action is not None:

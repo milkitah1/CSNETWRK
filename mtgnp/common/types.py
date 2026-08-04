@@ -1,18 +1,16 @@
 """
-This module contains classes for all PDU types.
-Used for type checking.
+This module contains classes for all PDU types. Used for type checking.
 
-Example:
+Usage:
 msg: Concede = {
     "type": "CONCEDE",
     "seq_num": 100,
     "player_id": "player_001"
 }
 
-serialize(msg)
+send_pdu(sock, msg)
 """
 from typing import TypedDict
-
 
 class ActivateAbility(TypedDict):
     type: str

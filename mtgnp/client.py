@@ -17,8 +17,8 @@ from .common.verbose import set_verbose
 
 
 class Client:
-    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False):
-        set_verbose(verbose)
+    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False, log_filename: str = ""):
+        set_verbose(verbose, filename=log_filename)
         self.host = host
         self.port = port
         self.sock: Optional[socket.socket] = None

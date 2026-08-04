@@ -78,8 +78,8 @@ class ClientHandler(threading.Thread):
 
 
 class Server:
-    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False):
-        set_verbose(verbose)
+    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False, log: bool = False):
+        set_verbose(verbose, log=log)
         self.host = host
         self.port = port
         self.lobby = Lobby(max_players=2)

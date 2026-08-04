@@ -121,18 +121,29 @@ class Server:
             ready = self.lobby.wait_for_all_ready()
             if not ready:
                 return
+
+            # initialize the game state and start the game
+            game_state = self.gameEngine.run_game_setup()
+            self.gameEngine.start_game()
+
             # broadcast START_GAME to all connected clients
             for c in list(self._clients):
                 try:
-                    framing.send_pdu(c.conn, {"type": PDUs.START_GAME})
+                    framing.send_pdu(c.conn, {
+                        "type": PDUs.START_GAME,
+                        "phase": self.gameEngine.phase,
+                        "turn": self.gameEngine.game_state.turn_number
+                    })
                 except Exception:
                     pass
 
+        # start the accept loop and game start threads
         self._accept_thread = threading.Thread(target=accept_loop, daemon=True)
         self._accept_thread.start()
         self._game_starter_thread = threading.Thread(target=game_starter, daemon=True)
         self._game_starter_thread.start()
 
+    # stop the server and all client threads
     def stop(self) -> None:
         self._stop.set()
         if self._sock:
@@ -145,6 +156,14 @@ class Server:
             c.running = False
             try:
                 c.join(timeout=0.2)
+            except Exception:
+                pass
+
+    # broadcast a message to all connected clients
+    def broadcast(self, msg: dict):
+        for c in list(self._clients):
+            try:
+                framing.send_pdu(c.conn, msg)
             except Exception:
                 pass
 

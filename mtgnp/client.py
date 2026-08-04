@@ -21,6 +21,7 @@ class Client:
         set_verbose(verbose)
         self.host = host
         self.port = port
+        self.seq_num = 0
         self.sock: Optional[socket.socket] = None
         self._recv_thread: Optional[threading.Thread] = None
         self._recv_q: "queue.Queue[dict]" = queue.Queue()
@@ -63,6 +64,8 @@ class Client:
         
         if not self.sock:
             raise RuntimeError("not connected")
+        self.seq_num += 1
+        obj["seq_num"] = self.seq_num
         framing.send_pdu(self.sock, obj)
 
     def hello(self, name: str = "test-client", timeout: float = 2.0) -> dict:
@@ -85,6 +88,11 @@ class Client:
         except queue.Empty:
             raise TimeoutError("no pong")
 
+    @staticmethod
+    def load_deck(filename: str) -> list[str]:
+        with open(filename, "r") as f:
+            return [line.strip() for line in f if line.strip()]
+
     def interactive_lobby(self, name: str = "player") -> None:
         """Simple terminal UI that shows lobby status and lets the user mark ready.
         """
@@ -95,6 +103,7 @@ class Client:
             ready = False
             start_game = False
             players_count = 1
+            decklist = None
 
             # small loop: display status, accept input, handle incoming PDUs
             while True:
@@ -125,18 +134,29 @@ class Client:
                 print(f"You are {'ready' if ready else 'not ready'}.\n")
                 if not ready:
                     print("1. Ready")
+                print("2. Load deck")
                 print("q. Quit")
 
                 choice = input("Select: ").strip().lower()
                 if choice == "1" and not ready:
                     # send PLAYER_READY
                     try:
-                       
-                        self.send_pdu({"type": PDUs.PLAYER_READY})
+                         # check if decklist is defined
+                        if 'decklist' not in locals():
+                            raise RuntimeError("No deck loaded")
+                        self.send_pdu({"type": PDUs.PLAYER_READY, "decklist": decklist})
                     except Exception as e:
                         print(f"failed to send PLAYER_READY: {e}")
+                elif choice == "2":
+                    deck_file = input("Enter deck filename: ").strip()
+                    try:
+                        decklist = self.load_deck(deck_file)
+                        print(f"Loaded deck with {len(decklist)} cards.")                       
+                    except Exception as e:
+                        print(f"failed to load deck: {e}")
                 elif choice == "q":
                     break
+                
                 else:
                     # small sleep to avoid busy loop
                     time.sleep(0.1)
@@ -153,3 +173,10 @@ def quick_ping(host: str, port: int) -> Tuple[str, dict]:
     resp = c.ping()
     c.close()
     return (resp.get("type"), resp)
+
+
+if __name__ == "__main__":
+    name = input("Enter your name: ").strip()
+
+    client = Client()
+    client.interactive_lobby(name)

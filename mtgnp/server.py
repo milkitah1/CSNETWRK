@@ -49,6 +49,7 @@ class ClientHandler(threading.Thread):
                     self.player_id = str(name)
                     
                     try:
+                        self.server.lobby.add_player(self.player_id)
                         self._send({"type": PDUs.HELLO, "player_id": self.player_id})
                     except RuntimeError:
                         # lobby full
@@ -63,8 +64,22 @@ class ClientHandler(threading.Thread):
                         continue
                     name = pkt.get("name") or f"{self.addr}"
                     deckList = pkt.get("decklist") or None
-                    
-                    self.server.gameEngine.register_player_ready(self.player_id, deckList)
+
+                    # validate deck
+                    if not deckList or not isinstance(deckList, list):
+                        self._send(PDUs.make_error(400, "INVALID_DECK"))
+                        continue
+
+                    # register player as ready in lobby and game engine
+                    try:
+                        self.server.lobby.set_ready(self.player_id)
+                        ok, err = self.server.gameEngine.register_player_ready(self.player_id, deckList)
+                        if not ok:
+                            self._send(PDUs.make_error(400, err))
+                            continue
+                    except Exception as e:
+                        self._send(PDUs.make_error(400, str(e)))
+                        continue
                     
                     # acknowledge
                     self._send({"type": "PLAYER_READY_ACK"})
@@ -122,15 +137,19 @@ class Server:
             if not ready:
                 return
 
-            # initialize the game state and start the game
-            game_state = self.gameEngine.run_game_setup()
-            self.gameEngine.start_game()
+            # only start setup if both players are already registered in lifecycle
+            if len(self.gameEngine.registered_players) < 2:
+                return
+            
+            # initialize the game state for setup + mulligan
+            self.gameEngine.run_game_setup()
 
-            # broadcast START_GAME to all connected clients
+            # tell clients the game has started and is in mulligan state
             for c in list(self._clients):
                 try:
                     framing.send_pdu(c.conn, {
                         "type": PDUs.START_GAME,
+                        "macro_state": self.gameEngine.macro_state.value,
                         "phase": self.gameEngine.phase,
                         "turn": self.gameEngine.game_state.turn_number
                     })

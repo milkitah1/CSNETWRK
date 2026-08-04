@@ -13,6 +13,7 @@ from mtgnp.common.game_state import GameState
 from mtgnp.common import pdu as PDUs
 from mtgnp.cards import get_card
 from mtgnp.engine.sba import check_state_based_actions
+from mtgnp.engine.card_effects import apply_card_effect
 
 
 @dataclass
@@ -401,6 +402,9 @@ class StackManager:
 
         # Otherwise RESOLVED: apply effects
         state_changes: List[Dict[str, Any]] = []
+        effect_changes = apply_card_effect(game_state, source_id, controller_name, legal_targets)
+        state_changes.extend(effect_changes)
+
         player_idx = _find_player_index(game_state, controller_name)
 
         if card_info and player_idx is not None:
@@ -414,14 +418,16 @@ class StackManager:
                     "card_id": card_info.get("card_id", source_id),
                     "name": card_info.get("name", source_id),
                     "type": card_type,
+                    "mana_cost": card_info.get("mana_cost", ""),
                     "power": card_info.get("power", 0),
                     "toughness": card_info.get("toughness", 0),
                     "tapped": False,
                     "damage": 0,
                     "entered_this_turn": True,
                 }
-                player.battlefield.append(perm)
-                state_changes.append({"change_type": "ENTER_BATTLEFIELD", "target": source_id})
+                if not any((p.get("id") == source_id or p.get("card_id") == source_id) for p in player.battlefield):
+                    player.battlefield.append(perm)
+                    state_changes.append({"change_type": "ENTER_BATTLEFIELD", "target": source_id})
             elif card_type in ("Instant", "Sorcery"):
                 player.graveyard.append({"id": source_id, "type": card_type})
 

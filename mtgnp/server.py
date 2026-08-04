@@ -2,18 +2,20 @@
 
 Features:
 - Accepts TCP connections, thread-per-client
-- Handles `PING` -> `PONG` and `HELLO` -> `WELCOME`
+
 """
 from __future__ import annotations
 
 import socket
 import threading
 from typing import Optional
+import uuid
 
 from .common import framing
 from .common import pdu as PDUs
 from .common.verbose import set_verbose
 from .common.managers.lobby_manager import Lobby
+from .common.lifecycle import GameLifecycleEngine
 
 
 class ClientHandler(threading.Thread):
@@ -27,6 +29,7 @@ class ClientHandler(threading.Thread):
 
     def _send(self, obj):
         try:
+            obj["seq_num"] = (obj.get("seq_num", 0)) + 1
             framing.send_pdu(self.conn, obj)
         except Exception as e:
             print("SEND ERROR:", e)
@@ -36,7 +39,7 @@ class ClientHandler(threading.Thread):
         try:
             while self.running:
                 pkt = framing.recv_pdu(self.conn)
-                print("SERVER RECEIVED:", pkt)
+                
                 t = pkt.get("type")
                 if t == PDUs.PING:
                     self._send({"type": PDUs.PONG})
@@ -44,8 +47,9 @@ class ClientHandler(threading.Thread):
                     # register player in lobby and acknowledge
                     name = pkt.get("name") or f"{self.addr}"
                     self.player_id = str(name)
+                    
                     try:
-                        self.server.lobby.add_player(self.player_id, meta={"addr": self.addr})
+                        self._send({"type": PDUs.HELLO, "player_id": self.player_id})
                     except RuntimeError:
                         # lobby full
                         self._send(PDUs.make_error(400, "LOBBY_FULL"))
@@ -57,7 +61,10 @@ class ClientHandler(threading.Thread):
                         self._send(PDUs.make_error(400, "NOT_REGISTERED"))
                         
                         continue
-                    self.server.lobby.set_ready(self.player_id, True)
+                    name = pkt.get("name") or f"{self.addr}"
+                    deckList = pkt.get("decklist") or None
+                    
+                    self.server.gameEngine.register_player_ready(self.player_id, deckList)
                     
                     # acknowledge
                     self._send({"type": "PLAYER_READY_ACK"})
@@ -72,7 +79,7 @@ class ClientHandler(threading.Thread):
                 pass
             if self.player_id:
                 try:
-                    self.server.lobby.remove_player(self.player_id)
+                    self.server.gameEngine.unregister_player(self.player_id)
                 except Exception:
                     pass
 
@@ -83,6 +90,7 @@ class Server:
         self.host = host
         self.port = port
         self.lobby = Lobby(max_players=2)
+        self.gameEngine = GameLifecycleEngine()
         self._sock: Optional[socket.socket] = None
         self._accept_thread: Optional[threading.Thread] = None
         self._clients: list[ClientHandler] = []

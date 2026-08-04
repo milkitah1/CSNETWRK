@@ -27,6 +27,7 @@ def main():
     crun.add_argument("--port", type=int, default=4444)
     crun.add_argument("--ping", action="store_true")
     crun.add_argument("--connect", action="store_true")
+    crun.add_argument("--name", default="player")
     crun.add_argument("--verbose", action="store_true")
     crun.add_argument("--log", choices=["client1.log", "player1.log"] ,default="")
 
@@ -46,7 +47,7 @@ def main():
         if args.ping:
             print(c.ping())
         if args.connect:
-            print(c.interactive_lobby())
+            c.interactive_lobby(args.name)
         c.close()
     else:
         p.print_help()

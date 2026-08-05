@@ -48,6 +48,7 @@ class GameLifecycleEngine:
         self.game_state: Optional[GameState] = None
         
         # Track player registration in lobby
+        self.lobby_count = 0
         self.registered_players: Dict[str, List[str]] = {}  # player_id -> deck_list
         self.mulligan_counts: Dict[str, int] = {}           # player_id -> count
         self.mulligan_kept: Set[str] = set()                # set of players who clicked keep

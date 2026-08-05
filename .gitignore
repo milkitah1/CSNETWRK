@@ -3,3 +3,12 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+mtgnp/__pycache__/server.cpython-314.pyc
+mtgnp/__pycache__/client.cpython-314.pyc
+mtgnp/__pycache__/server.cpython-314.pyc
+/mtgnp/__pycache__
+*.pyc

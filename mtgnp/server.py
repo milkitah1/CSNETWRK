@@ -16,6 +16,7 @@ from .common import pdu as PDUs
 from .common.verbose import set_verbose
 from .common.managers.lobby_manager import Lobby
 from .common.lifecycle import GameLifecycleEngine
+from . import pdu_handlers
 
 
 class ClientHandler(threading.Thread):
@@ -26,6 +27,8 @@ class ClientHandler(threading.Thread):
         self.server = server
         self.running = True
         self.player_id: str | None = None
+        # per-client PDU dispatcher
+        self.pdu_handler = pdu_handlers.PDUHandler(self)
 
     def _send(self, obj):
         try:
@@ -39,52 +42,7 @@ class ClientHandler(threading.Thread):
         try:
             while self.running:
                 pkt = framing.recv_pdu(self.conn)
-                
-                t = pkt.get("type")
-                if t == PDUs.PING:
-                    self._send({"type": PDUs.PONG})
-                elif t == PDUs.HELLO:
-                    # register player in lobby and acknowledge
-                    name = pkt.get("name") or f"{self.addr}"
-                    self.player_id = str(name)
-                    
-                    try:
-                        self.server.lobby.add_player(self.player_id)
-                        self._send({"type": PDUs.HELLO, "player_id": self.player_id})
-                    except RuntimeError:
-                        # lobby full
-                        self._send(PDUs.make_error(400, "LOBBY_FULL"))
-                        self.running = False
-                        break
-                    self._send({"type": PDUs.WELCOME, "message": "Welcome to MTGNP"})
-                elif t == PDUs.PLAYER_READY:
-                    if not self.player_id:
-                        self._send(PDUs.make_error(400, "NOT_REGISTERED"))
-                        
-                        continue
-                    name = pkt.get("name") or f"{self.addr}"
-                    deckList = pkt.get("decklist") or None
-
-                    # validate deck
-                    if not deckList or not isinstance(deckList, list):
-                        self._send(PDUs.make_error(400, "INVALID_DECK"))
-                        continue
-
-                    # register player as ready in lobby and game engine
-                    try:
-                        self.server.lobby.set_ready(self.player_id)
-                        ok, err = self.server.gameEngine.register_player_ready(self.player_id, deckList)
-                        if not ok:
-                            self._send(PDUs.make_error(400, err))
-                            continue
-                    except Exception as e:
-                        self._send(PDUs.make_error(400, str(e)))
-                        continue
-                    
-                    # acknowledge
-                    self._send({"type": "PLAYER_READY_ACK"})
-                else:
-                    self._send(PDUs.make_error(400, f"unhandled pdu type: {t}"))
+                self.pdu_handler.handle_pdu(pkt)
         except (ConnectionError, OSError):
             pass
         finally:

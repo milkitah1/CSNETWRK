@@ -104,6 +104,7 @@ class Client:
             start_game = False
             players_count = 1
             decklist = None
+            name = welcome.get("player_id", name) #gets name of client 
 
             # small loop: display status, accept input, handle incoming PDUs
             while True:

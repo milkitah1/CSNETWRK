@@ -1,0 +1,728 @@
+[2026-08-05T17:57:57.126898Z] server.log RECV: HELLO
+{
+  "name": "ace1",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T17:57:57.237970Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T17:57:57.364914Z] server.log SEND: HELLO
+{
+  "player_id": "ad3ddfbe-65ac-4534-bfca-e70079dbe5e7",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T17:57:57.492928Z] server.log SEND: WELCOME
+{
+  "message": "Welcome to MTGNP",
+  "seq_num": 1,
+  "type": "WELCOME"
+}
+[2026-08-05T17:58:10.530048Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T17:58:10.642163Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T17:58:10.768088Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T17:59:29.797080Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 3,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T17:59:29.925175Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T17:59:30.067203Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T17:59:56.360697Z] server.log RECV: HELLO
+{
+  "name": "ace1",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T17:59:56.472853Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T17:59:56.616839Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T17:59:56.744856Z] server.log SEND: HELLO
+{
+  "player_id": "6ffc6823-93be-48b7-aed3-19005d6632d7",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T17:59:56.888867Z] server.log SEND: WELCOME
+{
+  "message": "Welcome to MTGNP",
+  "seq_num": 1,
+  "type": "WELCOME"
+}
+[2026-08-05T17:59:58.225153Z] server.log RECV: PLAYER_READY
+{
+  "decklist": null,
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T17:59:58.337587Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "INVALID_DECK",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T17:59:58.783280Z] server.log RECV: PLAYER_READY
+{
+  "decklist": null,
+  "seq_num": 3,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T17:59:58.894885Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "INVALID_DECK",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T17:59:59.226938Z] server.log RECV: PLAYER_READY
+{
+  "decklist": null,
+  "seq_num": 4,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T17:59:59.338965Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "INVALID_DECK",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T18:00:08.710579Z] server.log RECV: PLAYER_READY
+{
+  "decklist": null,
+  "seq_num": 5,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:00:08.854183Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "INVALID_DECK",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T18:00:09.388292Z] server.log RECV: PLAYER_READY
+{
+  "decklist": null,
+  "seq_num": 6,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:00:09.484575Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "INVALID_DECK",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T18:00:09.882387Z] server.log RECV: PLAYER_READY
+{
+  "decklist": null,
+  "seq_num": 7,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:00:09.992434Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "INVALID_DECK",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T18:00:14.058859Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 8,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:00:14.170950Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:00:14.280995Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:00:14.408966Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:00:14.857041Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 9,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:00:14.969167Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:00:15.097156Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:00:15.225138Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:03:33.289316Z] server.log RECV: HELLO
+{
+  "name": "ace1",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:03:33.401390Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:33.513428Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:33.625432Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:33.751414Z] server.log SEND: HELLO
+{
+  "player_id": "50e73fb9-a196-4b9f-9a8a-69b5c2e1e274",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:03:33.876966Z] server.log SEND: WELCOME
+{
+  "message": "Welcome to MTGNP",
+  "seq_num": 1,
+  "type": "WELCOME"
+}
+[2026-08-05T18:03:59.098297Z] server.log RECV: HELLO
+{
+  "name": "ace1",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:03:59.210393Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:59.319408Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:59.458416Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:59.602418Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:59.730442Z] server.log SEND: HELLO
+{
+  "player_id": "49bd2cd6-0ae8-45b3-ae8a-c6888c09a092",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:03:59.874485Z] server.log SEND: WELCOME
+{
+  "message": "Welcome to MTGNP",
+  "seq_num": 1,
+  "type": "WELCOME"
+}
+[2026-08-05T18:04:15.860677Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:04:15.988778Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:16.116768Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:16.260809Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:16.420805Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:16.548826Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:04:55.961486Z] server.log RECV: HELLO
+{
+  "name": "ace2",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:04:56.073620Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:56.185639Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:56.329631Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:56.457628Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:56.583690Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:56.711700Z] server.log SEND: HELLO
+{
+  "player_id": "ff4fcd2a-68e4-4b15-b8b5-954c15534392",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:04:56.839690Z] server.log SEND: WELCOME
+{
+  "message": "Welcome to MTGNP",
+  "seq_num": 1,
+  "type": "WELCOME"
+}
+[2026-08-05T18:05:07.561169Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:07.689251Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:07.815284Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:07.925296Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:08.051282Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:08.211352Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:08.339340Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:05:08.499388Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 3,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:08.611461Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:08.739470Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:08.883659Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:09.011630Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:09.137663Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:09.265663Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:05:09.441689Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 4,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:09.553765Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:09.681795Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:09.839828Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:09.967857Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:10.127908Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:10.287894Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:05:17.382992Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:17.495128Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:17.621141Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:17.749125Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:17.877140Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:17.987177Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:18.115183Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:05:18.323219Z] server.log RECV: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 3,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:18.435316Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "Cannot set ready outside LOBBY state.",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T18:05:36.731026Z] server.log RECV: HELLO
+{
+  "name": "ace3",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:05:36.857129Z] server.log SEND: ERROR
+{
+  "code": 400,
+  "message": "LOBBY_FULL",
+  "seq_num": 1,
+  "type": "ERROR"
+}

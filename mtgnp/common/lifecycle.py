@@ -12,6 +12,8 @@ from __future__ import annotations
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Set
 import random
+import threading
+from typing import Any
 
 from .game_state import GameState, PlayerState
 
@@ -43,12 +45,16 @@ class TurnPhase(str, Enum):
 
 # Main controller and state machine for the entire game session
 class GameLifecycleEngine:
-    def __init__(self):
+    def __init__(self, max_players: int = 2):
         self.macro_state: MacroState = MacroState.LOBBY
         self.game_state: Optional[GameState] = None
-        
-        # Track player registration in lobby
-        self.lobby_count = 0
+
+        # Lobby / player join tracking (thread-safe)
+        self.max_players = int(max_players)
+        self._lock = threading.Condition()
+        self.joined_players: Dict[str, Dict[str, Any]] = {}  # player_id -> {"ready": bool, "meta": Any}
+
+        # Track player registration (decks) submitted during LOBBY
         self.registered_players: Dict[str, List[str]] = {}  # player_id -> deck_list
         self.mulligan_counts: Dict[str, int] = {}           # player_id -> count
         self.mulligan_kept: Set[str] = set()                # set of players who clicked keep
@@ -70,6 +76,17 @@ class GameLifecycleEngine:
             TurnPhase.CLEANUP,
         ]
         self._phase_index: int = 0
+
+    def get_visible_state(self) -> dict:
+        return {
+            "phase": "LOBBY",
+            "players": len(self.registered_players),
+            "waiting_for": [
+                pid
+                for pid in self.registered_players
+                if not self.joined_players.get(pid, {}).get("ready", False)
+            ]
+        }
 
     # -------------------------------------------------------------------------
     # 1. LOBBY & PLAYER READY HANDLING (Section 6.2 and 6.3)
@@ -98,6 +115,11 @@ class GameLifecycleEngine:
         """Removes a player from tracking if they disconnect during LOBBY."""
         if player_id in self.registered_players:
             del self.registered_players[player_id]
+        # also remove from joined / ready tracking
+        with self._lock:
+            if player_id in self.joined_players:
+                del self.joined_players[player_id]
+                self._lock.notify_all()
 
     # -------------------------------------------------------------------------
     # 2. GAME_SETUP (Section 6.3)
@@ -153,6 +175,56 @@ class GameLifecycleEngine:
         # Advance to MULLIGAN
         self.macro_state = MacroState.MULLIGAN
         return self.game_state
+
+    # -------------------------------------------------------------------------
+    # Lobby methods (thread-safe)
+    # -------------------------------------------------------------------------
+    def add_player(self, player_id: str, meta: Optional[Any] = None) -> None:
+        """Add a connected player to the lobby. Raises RuntimeError if lobby full."""
+        with self._lock:
+            if player_id not in self.joined_players and len(self.joined_players) >= self.max_players:
+                raise RuntimeError("lobby is full")
+            self.joined_players[player_id] = {"ready": False, "meta": meta}
+            self._lock.notify_all()
+
+    def remove_player(self, player_id: str) -> None:
+        with self._lock:
+            if player_id in self.joined_players:
+                del self.joined_players[player_id]
+                self._lock.notify_all()
+
+    def set_ready(self, player_id: str, ready: bool = True) -> None:
+        """Mark a player as ready/unready and notify waiters."""
+        with self._lock:
+            if player_id not in self.joined_players:
+                raise KeyError(player_id)
+            self.joined_players[player_id]["ready"] = bool(ready)
+            self._lock.notify_all()
+
+    def is_ready(self, player_id: str) -> bool:
+        return bool(self.joined_players.get(player_id, {}).get("ready", False))
+
+    def players(self) -> List[str]:
+        return list(self.joined_players.keys())
+
+    def ready_count(self) -> int:
+        return sum(1 for p in self.joined_players.values() if p.get("ready"))
+
+    def all_ready(self) -> bool:
+        if len(self.joined_players) < self.max_players:
+            return False
+        return all(p.get("ready") for p in self.joined_players.values())
+
+    def wait_for_all_ready(self, timeout: Optional[float] = None) -> bool:
+        """Block until the lobby has `max_players` joined and all are ready.
+
+        Returns True if the condition was reached, False if the timeout expired first.
+        """
+        with self._lock:
+            if self.all_ready():
+                return True
+            waited = self._lock.wait_for(self.all_ready, timeout=timeout)
+            return bool(waited)
 
     # -------------------------------------------------------------------------
     # 3. MULLIGAN STATE (London Mulligan Rule | Section 6.4)

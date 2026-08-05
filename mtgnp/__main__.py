@@ -29,7 +29,7 @@ def main():
     crun.add_argument("--connect", action="store_true")
     crun.add_argument("--name", default="player")
     crun.add_argument("--verbose", action="store_true")
-    crun.add_argument("--log", choices=["client1.log", "player1.log"] ,default="")
+    crun.add_argument("--log", choices=["client1.log", "player1.log","server.log","client2.log"] ,default="")
 
     args = p.parse_args()
     if args.cmd == "server":

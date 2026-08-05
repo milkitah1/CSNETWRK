@@ -14,6 +14,7 @@ from typing import Tuple, Optional
 from .common import framing
 from .common import pdu as PDUs
 from .common.verbose import set_verbose
+from .client_pdu_handler import ClientPDUHandler
 
 
 class Client:
@@ -26,6 +27,12 @@ class Client:
         self._recv_thread: Optional[threading.Thread] = None
         self._recv_q: "queue.Queue[dict]" = queue.Queue()
         self._recv_stop = threading.Event()
+        self.player_id: Optional[str] = None
+        self._ready = False
+        self._start_game = False
+        self._last_error: Optional[dict] = None
+        self.players_count = 0
+        self.pdu_handler = ClientPDUHandler(self)
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -56,9 +63,13 @@ class Client:
                 # ignore malformed or protocol errors here
                 continue
             try:
-                self._recv_q.put_nowait(pkt)
+                # dispatch via client-side handler (also enqueues by default)
+                self.pdu_handler.handle_pdu(pkt)
             except Exception:
-                pass
+                try:
+                    self._recv_q.put_nowait(PDUs.make_error(500, "recv handler error"))
+                except Exception:
+                    pass
 
     def send_pdu(self, obj: dict) -> None:
         
@@ -96,42 +107,24 @@ class Client:
     def interactive_lobby(self, name: str = "player") -> None:
         """Simple terminal UI that shows lobby status and lets the user mark ready.
         """
-        self.connect()
+        
         try:
             welcome = self.hello(name)
             print("Connected to MTGNP Server")
             ready = False
             start_game = False
-            players_count = 1
+            players_count = 0
             decklist = None
             name = welcome.get("player_id", name) #gets name of client 
 
             # small loop: display status, accept input, handle incoming PDUs
             while True:
                 # process any incoming PDUs
-                while True:
-                    try:
-                        pkt = self._recv_q.get_nowait()
-                    except queue.Empty:
-                        break
-                    t = pkt.get("type")
-                    if t == PDUs.START_GAME:
-                        print("\n==> START_GAME received — game starting")
-                        start_game = True
-                    elif t == PDUs.PLAYER_READY:
-                        # server-side may broadcast player readiness (optional)
-                        players_count = pkt.get("players", players_count)
-                    elif t == "PLAYER_READY_ACK":
-                        ready = True
-                    elif t == PDUs.ERROR:
-                        print(f"ERROR from server: {pkt.get('message')}")
-
-                if start_game:
-                    break
+             
 
                 # render lobby UI
                 print("\n========== LOBBY ==========\n")
-                print(f"Players: {players_count} / 2\n")
+                print(f"Players: {self.players_count} / 2\n")
                 print(f"You are {'ready' if ready else 'not ready'}.\n")
                 if not ready:
                     print("1. Ready")

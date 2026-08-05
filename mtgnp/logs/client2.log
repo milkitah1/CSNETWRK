@@ -1,0 +1,31 @@
+[2026-08-05T18:05:36.672614Z] client2.log SEND: HELLO
+{
+  "name": "ace3",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:05:36.953202Z] client2.log RECV: ERROR
+{
+  "code": 400,
+  "message": "LOBBY_FULL",
+  "seq_num": 1,
+  "type": "ERROR"
+}
+[2026-08-05T18:05:41.607482Z] client2.log SEND: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:43.327464Z] client2.log SEND: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 3,
+  "type": "PLAYER_READY"
+}

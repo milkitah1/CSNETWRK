@@ -23,15 +23,19 @@ def set_verbose(flag: bool, filename: str = "", log: bool = False) -> None:
     VERBOSE = bool(flag)
 
     global LOG_FILENAME
-    if log == True: # Server wants to log
-        LOG_FILENAME = str("server.log")
 
-    elif filename: # Client wants to log
-        LOG_FILENAME = str(filename)
-
+    if log:
+        LOG_FILENAME = "server.log"
+    elif filename:
+        LOG_FILENAME = filename
     else:
         LOG_FILENAME = ""
 
+    # Clear old log on startup
+    if LOG_FILENAME:
+        file_path = Path(f"mtgnp/logs/{LOG_FILENAME}")
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        file_path.write_text("")
 
 def _timestamp() -> str:
     return datetime.datetime.utcnow().isoformat() + "Z"
@@ -48,6 +52,7 @@ def log_to_file(obj: str):
 
     with open(file_path, "a") as f:
         f.write(obj)
+        f.flush()
 
 
 def log_send(label: str, pdu: Dict[str, Any]) -> None:

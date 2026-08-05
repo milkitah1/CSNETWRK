@@ -1,0 +1,132 @@
+[2026-08-05T18:03:33.236217Z] client1.log SEND: HELLO
+{
+  "name": "ace1",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:03:33.735505Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:03:33.861075Z] client1.log RECV: HELLO
+{
+  "player_id": "50e73fb9-a196-4b9f-9a8a-69b5c2e1e274",
+  "seq_num": 1,
+  "type": "HELLO"
+}
+[2026-08-05T18:03:33.989079Z] client1.log RECV: WELCOME
+{
+  "message": "Welcome to MTGNP",
+  "seq_num": 1,
+  "type": "WELCOME"
+}
+[2026-08-05T18:03:59.586495Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:16.404893Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:04:56.441694Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 0,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:07.527500Z] client1.log SEND: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:08.035407Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:08.423383Z] client1.log SEND: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 3,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:08.451460Z] client1.log RECV: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:05:08.807412Z] client1.log SEND: PLAYER_READY
+{
+  "decklist": [
+    "forest",
+    "mountain"
+  ],
+  "seq_num": 4,
+  "type": "PLAYER_READY"
+}
+[2026-08-05T18:05:08.995672Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:09.393777Z] client1.log RECV: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:05:09.951906Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 1,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-05T18:05:10.432014Z] client1.log RECV: PLAYER_READY_ACK
+{
+  "seq_num": 1,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-05T18:05:17.861231Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}

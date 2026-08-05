@@ -14,8 +14,8 @@ import uuid
 from .common import framing
 from .common import pdu as PDUs
 from .common.verbose import set_verbose
-from .common.managers.lobby_manager import Lobby
 from .common.lifecycle import GameLifecycleEngine
+from .pdu_handlers import PDUHandler
 
 
 class ClientHandler(threading.Thread):
@@ -26,6 +26,7 @@ class ClientHandler(threading.Thread):
         self.server = server
         self.running = True
         self.player_id: str | None = None
+        self.pdu_handler = PDUHandler(self)
 
     def _send(self, obj):
         try:
@@ -39,52 +40,13 @@ class ClientHandler(threading.Thread):
         try:
             while self.running:
                 pkt = framing.recv_pdu(self.conn)
-                
-                t = pkt.get("type")
-                if t == PDUs.PING:
-                    self._send({"type": PDUs.PONG})
-                elif t == PDUs.HELLO:
-                    # register player in lobby and acknowledge
-                    name = pkt.get("name") or f"{self.addr}"
-                    self.player_id = str(name)
-                    
+                try:
+                    self.pdu_handler.handle_pdu(pkt)
+                except Exception as e:
                     try:
-                        self.server.lobby.add_player(self.player_id)
-                        self._send({"type": PDUs.HELLO, "player_id": self.player_id})
-                    except RuntimeError:
-                        # lobby full
-                        self._send(PDUs.make_error(400, "LOBBY_FULL"))
-                        self.running = False
-                        break
-                    self._send({"type": PDUs.WELCOME, "message": "Welcome to MTGNP"})
-                elif t == PDUs.PLAYER_READY:
-                    if not self.player_id:
-                        self._send(PDUs.make_error(400, "NOT_REGISTERED"))
-                        
-                        continue
-                    name = pkt.get("name") or f"{self.addr}"
-                    deckList = pkt.get("decklist") or None
-
-                    # validate deck
-                    if not deckList or not isinstance(deckList, list):
-                        self._send(PDUs.make_error(400, "INVALID_DECK"))
-                        continue
-
-                    # register player as ready in lobby and game engine
-                    try:
-                        self.server.lobby.set_ready(self.player_id)
-                        ok, err = self.server.gameEngine.register_player_ready(self.player_id, deckList)
-                        if not ok:
-                            self._send(PDUs.make_error(400, err))
-                            continue
-                    except Exception as e:
-                        self._send(PDUs.make_error(400, str(e)))
-                        continue
-                    
-                    # acknowledge
-                    self._send({"type": "PLAYER_READY_ACK"})
-                else:
-                    self._send(PDUs.make_error(400, f"unhandled pdu type: {t}"))
+                        self._send(PDUs.make_error(500, str(e)))
+                    except Exception:
+                        pass
         except (ConnectionError, OSError):
             pass
         finally:
@@ -104,8 +66,8 @@ class Server:
         set_verbose(verbose, log=log)
         self.host = host
         self.port = port
-        self.lobby = Lobby(max_players=2)
-        self.gameEngine = GameLifecycleEngine()
+        
+        self.gameEngine = GameLifecycleEngine(max_players=2)
         self._sock: Optional[socket.socket] = None
         self._accept_thread: Optional[threading.Thread] = None
         self._clients: list[ClientHandler] = []
@@ -132,13 +94,13 @@ class Server:
                 handler.start()
 
         def game_starter():
-            # wait for both players to be present and ready
-            ready = self.lobby.wait_for_all_ready()
+            # wait for both players to be present and ready (managed by GameLifecycleEngine)
+            ready = self.gameEngine.wait_for_all_ready()
             if not ready:
                 return
 
             # only start setup if both players are already registered in lifecycle
-            if len(self.gameEngine.registered_players) < 2:
+            if len(self.gameEngine.registered_players) < self.gameEngine.max_players:
                 return
             
             # initialize the game state for setup + mulligan

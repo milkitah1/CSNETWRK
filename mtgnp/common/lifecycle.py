@@ -77,7 +77,7 @@ class GameLifecycleEngine:
         ]
         self._phase_index: int = 0
 
-    def get_visible_state(self) -> dict:
+    def get_lobby_state(self) -> dict:
         return {
             "phase": "LOBBY",
             "players": len(self.registered_players),
@@ -87,6 +87,54 @@ class GameLifecycleEngine:
                 if not self.joined_players.get(pid, {}).get("ready", False)
             ]
         }
+
+    def get_visible_state(self, player_id: str) -> dict:
+        """
+        Returns the game state visible to a specific player.
+        Hides the opponent's hand and private information.
+        """
+
+        if self.game_state is None:
+            return {
+                "macro_state": self.macro_state.value,
+                "phase": "LOBBY"
+            }
+
+        player_state = None
+        opponent_state = None
+
+        # Find the requesting player and opponent
+        for player in self.game_state.players:
+            if player.name == player_id:
+                player_state = player
+            else:
+                opponent_state = player
+
+        if player_state is None:
+            raise ValueError("Player not found")
+
+        return {
+            "macro_state": self.macro_state.value,
+
+            "turn_number": self.game_state.turn_number,
+            "phase": self.game_state.phase,
+            "step": self.game_state.step,
+
+            # Your information
+            "player": {
+                "id": player_state.name,
+                "life": player_state.life,
+                "hand": player_state.hand,
+                "library_count": len(player_state.library)
+            },
+
+            # Opponent visible information
+            "opponent": {
+                "id": opponent_state.name if opponent_state else None,
+                "life": opponent_state.life if opponent_state else None,
+                "library_count": len(opponent_state.library) if opponent_state else None
+            }
+    }
 
     # -------------------------------------------------------------------------
     # 1. LOBBY & PLAYER READY HANDLING (Section 6.2 and 6.3)

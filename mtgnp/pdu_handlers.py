@@ -44,7 +44,7 @@ class PDUHandler:
             return
         self.client.server.broadcast({
             "type": PDUs.GAME_STATE_UPDATE,
-            "state": self.client.server.gameEngine.get_visible_state()
+            "state": self.client.server.gameEngine.get_lobby_state()
         })
 
         # Acknowledge registration
@@ -90,7 +90,7 @@ class PDUHandler:
                 return
             self.client.server.broadcast({
                 "type": PDUs.GAME_STATE_UPDATE,
-                "state": self.client.server.gameEngine.get_visible_state()
+                "state": self.client.server.gameEngine.get_lobby_state()
             })
         except Exception as e:
             traceback.print_exc()

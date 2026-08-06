@@ -106,17 +106,8 @@ class Server:
             # initialize the game state for setup + mulligan
             self.gameEngine.run_game_setup()
 
-            # tell clients the game has started and is in mulligan state
-            for c in list(self._clients):
-                try:
-                    framing.send_pdu(c.conn, {
-                        "type": PDUs.START_GAME,
-                        "macro_state": self.gameEngine.macro_state.value,
-                        "phase": self.gameEngine.phase,
-                        "turn": self.gameEngine.game_state.turn_number
-                    })
-                except Exception:
-                    pass
+            # send each player their initial game state (including hand, deck, etc.)
+            self.send_initial_game_state()
 
         # start the accept loop and game start threads
         self._accept_thread = threading.Thread(target=accept_loop, daemon=True)
@@ -144,9 +135,22 @@ class Server:
     def broadcast(self, msg: dict):
         for c in list(self._clients):
             try:
-                framing.send_pdu(c.conn, msg)
-            except Exception:
-                pass
+                c._send(msg)
+            except Exception as e:
+                print("Broadcast failed:", e)
+
+    def send_initial_game_state(self):
+        for c in list(self._clients):
+            try:
+                state = self.gameEngine.get_visible_state(c.player_id)
+
+                c._send({
+                    "type": PDUs.GAME_STATE_UPDATE,
+                    "state": state
+                })
+
+            except Exception as e:
+                print("Failed sending game state:", e)
 
 
 if __name__ == "__main__":

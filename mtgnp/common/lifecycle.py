@@ -1,7 +1,4 @@
 ﻿"""
-common/lifecycle.py
-Author: Aaron Mikael C. Enriquez (Member 2)
-
 Game lifecycle engine for MTGNP
 This module drives macro game states (LOBBY -> GAME_SETUP -> MULLIGAN -> IN_GAME -> GAME_OVER)
 and turn phase transitions while mutating the canonical GameState object.
@@ -69,6 +66,7 @@ class GameLifecycleEngine:
             TurnPhase.DECLARE_ATTACKERS,
             TurnPhase.DECLARE_BLOCKERS,
             TurnPhase.ASSIGN_DAMAGE_ORDER,
+            TurnPhase.FIRST_STRIKE_DAMAGE,
             TurnPhase.COMBAT_DAMAGE,
             TurnPhase.END_OF_COMBAT,
             TurnPhase.POSTCOMBAT_MAIN,

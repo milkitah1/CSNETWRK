@@ -16,6 +16,7 @@ from .common import pdu as PDUs
 from .common.verbose import set_verbose
 from .client_pdu_handler import ClientPDUHandler
 from .states.lobbyState import LobbyState
+from .states.mulliganState import MulliganState
 
 
 class Client:
@@ -23,7 +24,7 @@ class Client:
         set_verbose(verbose, filename=log_filename)
         self.host = host
         self.port = port
-        self.seq_num = 0
+        self.seq_num = 0 # latest seq_num received from server
         self.sock: Optional[socket.socket] = None
         self._recv_thread: Optional[threading.Thread] = None
         self._recv_q: "queue.Queue[dict]" = queue.Queue()
@@ -36,6 +37,8 @@ class Client:
         self.players_ready: int = 0
         self.waiting_for: list[str] = []
         self.pdu_handler = ClientPDUHandler(self)
+        self.mulligan_count = 0
+        self.ready_seq_num = 0          # only for PLAYER_READY
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -77,8 +80,13 @@ class Client:
     def send_pdu(self, obj: dict) -> None:
         if not self.sock:
             raise RuntimeError("not connected")
-        self.seq_num += 1
-        obj["seq_num"] = self.seq_num
+
+        if obj["type"] == PDUs.PLAYER_READY:
+            self.ready_seq_num += 1
+            obj["seq_num"] = self.ready_seq_num
+        else:
+            obj["seq_num"] = self.seq_num
+
         framing.send_pdu(self.sock, obj)
 
     def hello(self, name: str = "test-client", timeout: float = 2.0) -> dict:
@@ -125,3 +133,7 @@ if __name__ == "__main__":
 
     client = Client()
     client.interactive_lobby(name)
+
+    print("LOBBY FINISHED")
+
+    

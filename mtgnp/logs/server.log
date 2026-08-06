@@ -1,10 +1,10 @@
-[2026-08-06T18:04:24.788824Z] server.log RECV: HELLO
+[2026-08-06T20:20:42.569466Z] server.log RECV: HELLO
 {
   "name": "ace1",
-  "seq_num": 1,
+  "seq_num": 0,
   "type": "HELLO"
 }
-[2026-08-06T18:04:24.899015Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:20:42.695521Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 1,
   "state": {
@@ -12,24 +12,24 @@
     "players": 1,
     "players_ready": 0,
     "waiting_for": [
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9"
+      "ace1"
     ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:25.010915Z] server.log SEND: HELLO
+[2026-08-06T20:20:42.837478Z] server.log SEND: HELLO
 {
-  "player_id": "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9",
+  "player_id": "ace1",
   "seq_num": 2,
   "type": "HELLO"
 }
-[2026-08-06T18:04:25.166900Z] server.log SEND: WELCOME
+[2026-08-06T20:20:42.963545Z] server.log SEND: WELCOME
 {
   "message": "Welcome to MTGNP",
   "seq_num": 3,
   "type": "WELCOME"
 }
-[2026-08-06T18:04:30.023553Z] server.log RECV: PLAYER_READY
+[2026-08-06T20:20:48.016172Z] server.log RECV: PLAYER_READY
 {
   "decklist": [
     "forest_001",
@@ -42,11 +42,11 @@
     "skullcrack_001",
     "rift_bolt_001"
   ],
-  "player_id": "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9",
-  "seq_num": 2,
+  "player_id": "ace1",
+  "seq_num": 1,
   "type": "PLAYER_READY"
 }
-[2026-08-06T18:04:30.149584Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:20:48.160247Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 4,
   "state": {
@@ -57,18 +57,18 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:30.305560Z] server.log SEND: PLAYER_READY_ACK
+[2026-08-06T20:20:48.318229Z] server.log SEND: PLAYER_READY_ACK
 {
   "seq_num": 5,
   "type": "PLAYER_READY_ACK"
 }
-[2026-08-06T18:04:35.901367Z] server.log RECV: HELLO
+[2026-08-06T20:27:53.710647Z] server.log RECV: HELLO
 {
-  "name": "ace1",
-  "seq_num": 1,
+  "name": "ace2",
+  "seq_num": 0,
   "type": "HELLO"
 }
-[2026-08-06T18:04:36.041477Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:27:53.854253Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 6,
   "state": {
@@ -76,12 +76,12 @@
     "players": 2,
     "players_ready": 1,
     "waiting_for": [
-      "440b6db1-406c-4c48-86fb-f17b76a088dc"
+      "ace2"
     ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:36.201446Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:27:54.010268Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 1,
   "state": {
@@ -89,24 +89,24 @@
     "players": 2,
     "players_ready": 1,
     "waiting_for": [
-      "440b6db1-406c-4c48-86fb-f17b76a088dc"
+      "ace2"
     ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:36.361476Z] server.log SEND: HELLO
+[2026-08-06T20:27:54.168313Z] server.log SEND: HELLO
 {
-  "player_id": "440b6db1-406c-4c48-86fb-f17b76a088dc",
+  "player_id": "ace2",
   "seq_num": 2,
   "type": "HELLO"
 }
-[2026-08-06T18:04:36.517504Z] server.log SEND: WELCOME
+[2026-08-06T20:27:54.328344Z] server.log SEND: WELCOME
 {
   "message": "Welcome to MTGNP",
   "seq_num": 3,
   "type": "WELCOME"
 }
-[2026-08-06T18:04:38.726012Z] server.log RECV: PLAYER_READY
+[2026-08-06T20:27:58.796875Z] server.log RECV: PLAYER_READY
 {
   "decklist": [
     "forest_001",
@@ -119,11 +119,11 @@
     "skullcrack_001",
     "rift_bolt_001"
   ],
-  "player_id": "440b6db1-406c-4c48-86fb-f17b76a088dc",
-  "seq_num": 2,
+  "player_id": "ace2",
+  "seq_num": 1,
   "type": "PLAYER_READY"
 }
-[2026-08-06T18:04:38.869635Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:27:58.922564Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 7,
   "state": {
@@ -134,12 +134,12 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:38.885654Z] server.log SEND: START_GAME
+[2026-08-06T20:27:58.938533Z] server.log SEND: START_GAME
 {
   "seq_num": 8,
   "type": "START_GAME"
 }
-[2026-08-06T18:04:39.023603Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:27:59.142504Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 4,
   "state": {
@@ -150,48 +150,48 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:39.086628Z] server.log SEND: START_GAME
+[2026-08-06T20:27:59.190506Z] server.log SEND: START_GAME
 {
   "seq_num": 5,
   "type": "START_GAME"
 }
-[2026-08-06T18:04:39.150610Z] server.log SEND: PLAYER_READY_ACK
+[2026-08-06T20:27:59.350541Z] server.log SEND: PLAYER_READY_ACK
 {
   "seq_num": 6,
   "type": "PLAYER_READY_ACK"
 }
-[2026-08-06T18:04:39.246694Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:27:59.414603Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 9,
   "state": {
-    "active_player": "440b6db1-406c-4c48-86fb-f17b76a088dc",
+    "active_player": "ace1",
     "battlefield": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": [],
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": []
+      "ace1": [],
+      "ace2": []
     },
     "graveyard": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": [],
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": []
+      "ace1": [],
+      "ace2": []
     },
     "hand": [
-      "searing_spear_001",
-      "rift_bolt_001",
-      "forest_001",
-      "skullcrack_001",
+      "mountain_001",
+      "lava_spike_001",
       "lightning_bolt_001",
+      "forest_001",
+      "searing_spear_001",
       "plains_001",
-      "island_001"
+      "rift_bolt_001"
     ],
     "hand_counts": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 7
+      "ace2": 7
     },
     "library_counts": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 2,
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": 2
+      "ace1": 2,
+      "ace2": 2
     },
     "life_totals": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 20,
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": 20
+      "ace1": 20,
+      "ace2": 20
     },
     "phase": "MULLIGAN",
     "stack": [],
@@ -199,38 +199,38 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:39.372705Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-06T20:27:59.588649Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 7,
   "state": {
-    "active_player": "440b6db1-406c-4c48-86fb-f17b76a088dc",
+    "active_player": "ace1",
     "battlefield": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": [],
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": []
+      "ace1": [],
+      "ace2": []
     },
     "graveyard": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": [],
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": []
+      "ace1": [],
+      "ace2": []
     },
     "hand": [
-      "plains_001",
-      "searing_spear_001",
-      "mountain_001",
-      "skullcrack_001",
       "lightning_bolt_001",
-      "forest_001",
-      "island_001"
+      "lava_spike_001",
+      "rift_bolt_001",
+      "skullcrack_001",
+      "plains_001",
+      "island_001",
+      "searing_spear_001"
     ],
     "hand_counts": {
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": 7
+      "ace1": 7
     },
     "library_counts": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 2,
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": 2
+      "ace1": 2,
+      "ace2": 2
     },
     "life_totals": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 20,
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": 20
+      "ace1": 20,
+      "ace2": 20
     },
     "phase": "MULLIGAN",
     "stack": [],

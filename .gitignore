@@ -8,3 +8,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.pyc
+mtgnp/scripts/test.py
+*.log
+

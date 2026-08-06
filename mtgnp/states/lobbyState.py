@@ -63,6 +63,7 @@ class LobbyState:
                     try:
                         if not decklist:
                             raise RuntimeError("No deck loaded")
+                        
                         self.client.send_pdu({"type": PDUs.PLAYER_READY, "decklist": decklist, "player_id": self.client.player_id})
                     except Exception as e:
                         print(f"failed to send PLAYER_READY: {e}")
@@ -80,7 +81,6 @@ class LobbyState:
                 else:
                     time.sleep(0.1)
 
-            if self.client._start_game:
-                print("Entering game loop (not implemented)")
+           
         finally:
-            self.client.close()
+            print()

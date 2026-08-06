@@ -41,6 +41,8 @@ class ClientPDUHandler:
         if not isinstance(pkt, dict):
             return
         t = pkt.get("type")
+        if "seq_num" in pkt:
+            self.client.seq_num = pkt["seq_num"]
         handler = self.handlers.get(t)
         try:
             if handler:
@@ -106,6 +108,7 @@ class ClientPDUHandler:
 
     def _handle_game_state_update(self, pkt: dict) -> None:
         # Parse lobby-phase updates and update client-friendly fields
+        self.client.game_state = pkt.get("state")
         state = pkt.get("state") or {}
         phase = state.get("phase")
         if phase == "LOBBY":

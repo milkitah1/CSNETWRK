@@ -34,7 +34,7 @@ class PDUHandler:
     def handle_hello(self, pkt: dict) -> None:
         name = pkt.get("name") or f"{self.client.addr}"
         # Generate unique player ID
-        self.client.player_id = str(uuid.uuid4())
+        self.client.player_id = name
         # Register player in the lifecycle-managed lobby
         try:
             self.client.server.gameEngine.add_player(self.client.player_id)

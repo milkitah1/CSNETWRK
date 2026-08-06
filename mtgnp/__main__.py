@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import argparse
 
+from mtgnp.states.mulliganState import MulliganState
+
 from .server import Server
 from .client import Client
 from .client import Client
@@ -48,6 +50,9 @@ def main():
             print(c.ping())
         if args.connect:
             c.interactive_lobby(args.name)
+            if c._start_game:
+                mulligan = MulliganState(c)
+                mulligan.run()
         c.close()
     else:
         p.print_help()

@@ -123,7 +123,7 @@ class ClientPDUHandler:
                 self.client.waiting_for = list(waiting)
 
             # optional players count
-            players = state.get("players")
+            players = state.get("players_ready")
             if players is not None:
                 try:
                     self.client.players_count = int(players)

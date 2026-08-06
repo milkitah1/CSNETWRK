@@ -15,6 +15,7 @@ from .common import framing
 from .common import pdu as PDUs
 from .common.verbose import set_verbose
 from .client_pdu_handler import ClientPDUHandler
+from .states.lobbyState import LobbyState
 
 
 class Client:
@@ -32,8 +33,9 @@ class Client:
         self._start_game = False
         self._last_error: Optional[dict] = None
         self.players_count = 0
+        self.players_ready: int = 0
+        self.waiting_for: list[str] = []
         self.pdu_handler = ClientPDUHandler(self)
-
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -73,7 +75,6 @@ class Client:
                     pass
 
     def send_pdu(self, obj: dict) -> None:
-        
         if not self.sock:
             raise RuntimeError("not connected")
         self.seq_num += 1
@@ -106,60 +107,9 @@ class Client:
             return [line.strip() for line in f if line.strip()]
 
     def interactive_lobby(self, name: str = "player") -> None:
-        """Simple terminal UI that shows lobby status and lets the user mark ready.
-        """
-        
-        try:
-            welcome = self.hello(name)
-            print("Connected to MTGNP Server")
-            
-           
-            
-            name = welcome.get("player_id", name) #gets name of client 
-
-            # small loop: display status, accept input, handle incoming PDUs
-            while True:
-                # process any incoming PDUs
-             
-
-                # render lobby UI
-                print("\n========== LOBBY ==========\n")
-                print(f"Players: {self.players_count} / 2\n")
-                print(f"You are {'ready' if self._ready else 'not ready'}.\n")
-                if not self._ready:
-                    print("1. Ready")
-                print("2. Load deck")
-                print("q. Quit")
-
-                choice = input("Select: ").strip().lower()
-                if choice == "1" and not self._ready:
-                    # send PLAYER_READY
-                    try:
-                         # check if decklist is defined
-                        if 'decklist' not in locals():
-                            raise RuntimeError("No deck loaded")
-                        self.send_pdu({"type": PDUs.PLAYER_READY, "decklist": decklist, "player_id": self.player_id})
-                    except Exception as e:
-                        print(f"failed to send PLAYER_READY: {e}")
-                elif choice == "2":
-                    deck_file = input("Enter deck filename: ").strip()
-                    try:
-                        decklist = self.load_deck(deck_file)
-                        print(f"Loaded deck with {len(decklist)} cards.")                       
-                    except Exception as e:
-                        print(f"failed to load deck: {e}")
-                elif choice == "q":
-                    break
-                elif self._start_game:
-                    break
-                else:
-                    # small sleep to avoid busy loop
-                    time.sleep(0.1)
-
-            if self._start_game:
-                print("Entering game loop (not implemented)")
-        finally:
-            self.close()
+        """Delegate the lobby UI to the `LobbyState` object."""
+        lobby = LobbyState(self)
+        lobby.run(name)
 
 
 def quick_ping(host: str, port: int) -> Tuple[str, dict]:

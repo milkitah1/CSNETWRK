@@ -79,6 +79,7 @@ class GameLifecycleEngine:
         return {
             "phase": "LOBBY",
             "players": len(self.joined_players),
+            "players_ready": len(self.registered_players),
             "waiting_for": [
                 pid
                 for pid, info in self.joined_players.items()
@@ -89,19 +90,20 @@ class GameLifecycleEngine:
     def get_visible_state(self, player_id: str) -> dict:
         """
         Returns the game state visible to a specific player.
-        Hides the opponent's hand and private information.
+        Hides opponent private information such as hand contents.
         """
 
         if self.game_state is None:
             return {
-                "macro_state": self.macro_state.value,
-                "phase": "LOBBY"
+                "phase": "LOBBY",
+                "players_ready": 0,
+                "waiting_for": []
             }
 
         player_state = None
         opponent_state = None
 
-        # Find the requesting player and opponent
+        # Find requesting player and opponent
         for player in self.game_state.players:
             if player.name == player_id:
                 player_state = player
@@ -111,28 +113,61 @@ class GameLifecycleEngine:
         if player_state is None:
             raise ValueError("Player not found")
 
-        return {
-            "macro_state": self.macro_state.value,
+        state = {
+            "turn": self.game_state.turn_number,
+            "phase": self.macro_state.value,
 
-            "turn_number": self.game_state.turn_number,
-            "phase": self.game_state.phase,
-            "step": self.game_state.step,
+            "active_player": (
+                self.game_state.players[self.game_state.active_player_index].name
+                if self.game_state.players
+                else None
+            ),
 
-            # Your information
-            "player": {
-                "id": player_state.name,
-                "life": player_state.life,
-                "hand": player_state.hand,
-                "library_count": len(player_state.library)
+            "life_totals": {
+                player_state.name: player_state.life,
+                opponent_state.name: opponent_state.life
+                if opponent_state else None
             },
 
-            # Opponent visible information
-            "opponent": {
-                "id": opponent_state.name if opponent_state else None,
-                "life": opponent_state.life if opponent_state else None,
-                "library_count": len(opponent_state.library) if opponent_state else None
-            }
-    }
+            # Only this player's hand
+            "hand": [
+                card["id"] if isinstance(card, dict) else card
+                for card in player_state.hand
+            ],
+
+            # Opponent hand size only
+            "hand_counts": {
+                opponent_state.name: len(opponent_state.hand)
+                if opponent_state else 0
+            },
+
+            "library_counts": {
+                player_state.name: len(player_state.library),
+                opponent_state.name: len(opponent_state.library)
+                if opponent_state else 0
+            },
+
+            "battlefield": {
+                player_state.name: player_state.battlefield,
+                opponent_state.name: opponent_state.battlefield
+                if opponent_state else []
+            },
+
+            "graveyard": {
+                player_state.name: player_state.graveyard,
+                opponent_state.name: opponent_state.graveyard
+                if opponent_state else []
+            },
+
+            "stack": []
+        }
+
+        # Only include turn phases after mulligan
+        if self.macro_state == MacroState.IN_GAME:
+            state["phase"] = self.game_state.phase
+            state["step"] = self.game_state.step
+
+        return state
 
     # -------------------------------------------------------------------------
     # 1. LOBBY & PLAYER READY HANDLING (Section 6.2 and 6.3)

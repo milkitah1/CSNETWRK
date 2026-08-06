@@ -1,32 +1,35 @@
-[2026-08-06T06:26:35.677276Z] client2.log SEND: HELLO
+[2026-08-06T16:30:11.163502Z] client2.log SEND: HELLO
 {
   "name": "ace1",
   "seq_num": 1,
   "type": "HELLO"
 }
-[2026-08-06T06:26:36.191020Z] client2.log RECV: GAME_STATE_UPDATE
+[2026-08-06T16:30:11.669451Z] client2.log RECV: GAME_STATE_UPDATE
 {
-  "seq_num": 2,
+  "seq_num": 1,
   "state": {
     "phase": "LOBBY",
-    "players": 1,
-    "waiting_for": []
+    "players": 2,
+    "waiting_for": [
+      "51290139-aac3-4b1b-9239-2cc293d44687",
+      "2cc5d8b3-aa22-4805-9fa2-7d1e649fe6a2"
+    ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T06:26:36.335064Z] client2.log RECV: HELLO
+[2026-08-06T16:30:11.825505Z] client2.log RECV: HELLO
 {
-  "player_id": "8953f651-1cba-4a33-9801-0b6eb3f6d735",
-  "seq_num": 1,
+  "player_id": "2cc5d8b3-aa22-4805-9fa2-7d1e649fe6a2",
+  "seq_num": 2,
   "type": "HELLO"
 }
-[2026-08-06T06:26:36.493059Z] client2.log RECV: WELCOME
+[2026-08-06T16:30:11.985457Z] client2.log RECV: WELCOME
 {
   "message": "Welcome to MTGNP",
-  "seq_num": 1,
+  "seq_num": 3,
   "type": "WELCOME"
 }
-[2026-08-06T06:26:39.470476Z] client2.log SEND: PLAYER_READY
+[2026-08-06T16:30:18.743986Z] client2.log SEND: PLAYER_READY
 {
   "decklist": [
     "forest_001",
@@ -39,65 +42,24 @@
     "skullcrack_001",
     "rift_bolt_001"
   ],
+  "player_id": "2cc5d8b3-aa22-4805-9fa2-7d1e649fe6a2",
   "seq_num": 2,
   "type": "PLAYER_READY"
 }
-[2026-08-06T06:26:39.957350Z] client2.log RECV: GAME_STATE_UPDATE
+[2026-08-06T16:30:19.215165Z] client2.log RECV: GAME_STATE_UPDATE
 {
-  "seq_num": 2,
+  "seq_num": 4,
   "state": {
     "phase": "LOBBY",
     "players": 2,
-    "waiting_for": []
+    "waiting_for": [
+      "51290139-aac3-4b1b-9239-2cc293d44687"
+    ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T06:26:40.005390Z] client2.log RECV: GAME_STATE_UPDATE
+[2026-08-06T16:30:19.372183Z] client2.log RECV: PLAYER_READY_ACK
 {
-  "seq_num": 1,
-  "state": {
-    "macro_state": "MULLIGAN",
-    "opponent": {
-      "id": "a16bfc28-db8d-4410-abac-9aac2e5206de",
-      "library_count": 2,
-      "life": 20
-    },
-    "phase": "UNTAP",
-    "player": {
-      "hand": [
-        {
-          "id": "plains_001"
-        },
-        {
-          "id": "lightning_bolt_001"
-        },
-        {
-          "id": "rift_bolt_001"
-        },
-        {
-          "id": "mountain_001"
-        },
-        {
-          "id": "island_001"
-        },
-        {
-          "id": "searing_spear_001"
-        },
-        {
-          "id": "forest_001"
-        }
-      ],
-      "id": "8953f651-1cba-4a33-9801-0b6eb3f6d735",
-      "library_count": 2,
-      "life": 20
-    },
-    "step": "UNTAP",
-    "turn_number": 0
-  },
-  "type": "GAME_STATE_UPDATE"
-}
-[2026-08-06T06:26:40.101378Z] client2.log RECV: PLAYER_READY_ACK
-{
-  "seq_num": 1,
+  "seq_num": 5,
   "type": "PLAYER_READY_ACK"
 }

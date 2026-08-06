@@ -27,10 +27,12 @@ class ClientHandler(threading.Thread):
         self.running = True
         self.player_id: str | None = None
         self.pdu_handler = PDUHandler(self)
+        self.seq_num = 0
 
     def _send(self, obj):
         try:
-            obj["seq_num"] = (obj.get("seq_num", 0)) + 1
+            self.seq_num += 1
+            obj["seq_num"] = self.seq_num
             framing.send_pdu(self.conn, obj)
         except Exception as e:
             print("SEND ERROR:", e)
@@ -107,6 +109,10 @@ class Server:
             self.gameEngine.run_game_setup()
 
             # send each player their initial game state (including hand, deck, etc.)
+            self.broadcast({
+                "type": PDUs.START_GAME,
+                
+            })
             self.send_initial_game_state()
 
         # start the accept loop and game start threads

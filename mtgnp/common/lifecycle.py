@@ -78,11 +78,11 @@ class GameLifecycleEngine:
     def get_lobby_state(self) -> dict:
         return {
             "phase": "LOBBY",
-            "players": len(self.registered_players),
+            "players": len(self.joined_players),
             "waiting_for": [
                 pid
-                for pid in self.registered_players
-                if not self.joined_players.get(pid, {}).get("ready", False)
+                for pid, info in self.joined_players.items()
+                if not info.get("ready", False)
             ]
         }
 

@@ -34,15 +34,6 @@ class Client:
         self.players_count = 0
         self.pdu_handler = ClientPDUHandler(self)
 
-    def display_lobby(self):
-        while not self._start_game:
-            print("\n========== LOBBY ==========")
-            print(f"Players: {self.players_count}/2")
-            print(f"Ready: {self._ready}")
-
-            time.sleep(1)
-
-        print("Leaving lobby display...")
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -147,7 +138,7 @@ class Client:
                          # check if decklist is defined
                         if 'decklist' not in locals():
                             raise RuntimeError("No deck loaded")
-                        self.send_pdu({"type": PDUs.PLAYER_READY, "decklist": decklist})
+                        self.send_pdu({"type": PDUs.PLAYER_READY, "decklist": decklist, "player_id": self.player_id})
                     except Exception as e:
                         print(f"failed to send PLAYER_READY: {e}")
                 elif choice == "2":
@@ -159,7 +150,8 @@ class Client:
                         print(f"failed to load deck: {e}")
                 elif choice == "q":
                     break
-                
+                elif self._start_game:
+                    break
                 else:
                     # small sleep to avoid busy loop
                     time.sleep(0.1)

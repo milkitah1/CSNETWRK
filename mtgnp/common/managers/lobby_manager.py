@@ -5,6 +5,7 @@ MTGNP server. The lobby accepts up to `max_players` (default 2) and
 offers a blocking `wait_for_all_ready` method that returns when all
 joined players have indicated they're ready.
 """
+#not used in the current code
 from __future__ import annotations
 
 import threading

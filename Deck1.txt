@@ -1,2 +1,9 @@
-forest
-mountain
+forest_001
+mountain_001
+plains_001
+island_001
+lightning_bolt_001
+lava_spike_001
+searing_spear_001
+skullcrack_001
+rift_bolt_001

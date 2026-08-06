@@ -34,6 +34,16 @@ class Client:
         self.players_count = 0
         self.pdu_handler = ClientPDUHandler(self)
 
+    def display_lobby(self):
+        while not self._start_game:
+            print("\n========== LOBBY ==========")
+            print(f"Players: {self.players_count}/2")
+            print(f"Ready: {self._ready}")
+
+            time.sleep(1)
+
+        print("Leaving lobby display...")
+
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
         # start receiver thread
@@ -111,10 +121,9 @@ class Client:
         try:
             welcome = self.hello(name)
             print("Connected to MTGNP Server")
-            ready = False
-            start_game = False
-            players_count = 0
-            decklist = None
+            
+           
+            
             name = welcome.get("player_id", name) #gets name of client 
 
             # small loop: display status, accept input, handle incoming PDUs
@@ -125,14 +134,14 @@ class Client:
                 # render lobby UI
                 print("\n========== LOBBY ==========\n")
                 print(f"Players: {self.players_count} / 2\n")
-                print(f"You are {'ready' if ready else 'not ready'}.\n")
-                if not ready:
+                print(f"You are {'ready' if self._ready else 'not ready'}.\n")
+                if not self._ready:
                     print("1. Ready")
                 print("2. Load deck")
                 print("q. Quit")
 
                 choice = input("Select: ").strip().lower()
-                if choice == "1" and not ready:
+                if choice == "1" and not self._ready:
                     # send PLAYER_READY
                     try:
                          # check if decklist is defined
@@ -155,7 +164,7 @@ class Client:
                     # small sleep to avoid busy loop
                     time.sleep(0.1)
 
-            if start_game:
+            if self._start_game:
                 print("Entering game loop (not implemented)")
         finally:
             self.close()

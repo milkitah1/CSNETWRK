@@ -54,7 +54,7 @@ class MulliganState:
 
         self.client.send_pdu({
             "type": PDUs.MULLIGAN_CHOICE,
-            "seq_num": self.client.last_game_state_seq,
+            "seq_num": self.client.seq_num,
             "keep": True,
             "cards_to_bottom": cards_to_bottom
         })
@@ -70,7 +70,7 @@ class MulliganState:
 
         self.client.send_pdu({
             "type": PDUs.MULLIGAN_CHOICE,
-            "seq_num": self.client.last_game_state_seq,
+            "seq_num": self.client.seq_num,
             "keep": False,
             "cards_to_bottom": []
         })

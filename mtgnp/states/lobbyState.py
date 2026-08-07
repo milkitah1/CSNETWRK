@@ -83,8 +83,11 @@ class LobbyState:
 
            
         finally:
-            # ensure client socket is closed when leaving lobby
+            # If the lobby exited because the game is starting, keep the
+            # client connection open so subsequent in-game states (e.g.
+            # mulligan) can use the same socket. Otherwise, close it.
             try:
-                self.client.close()
+                if not getattr(self.client, "_start_game", False):
+                    self.client.close()
             except Exception:
                 pass

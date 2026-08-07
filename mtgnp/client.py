@@ -58,25 +58,21 @@ class Client:
         self._start_ping()
 
     def close(self) -> None:
-        self.connected = False
-
         # stop ping thread first
         self._stop_ping()
-
         self._recv_stop.set()
-
         if self.sock:
             try:
                 self.sock.close()
             except Exception:
                 pass
-            finally:
-                self.sock = None
-
         if self._recv_thread:
             self._recv_thread.join(timeout=0.2)
-
-        self._pong_event.clear()
+        # clear pong event
+        try:
+            self._pong_event.clear()
+        except Exception:
+            pass
 
     # --- ping thread management ---
     def _start_ping(self) -> None:

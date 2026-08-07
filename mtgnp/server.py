@@ -120,7 +120,7 @@ class Server:
                 "type": PDUs.START_GAME,
                 
             })
-            self.send_initial_game_state()
+            self.send_game_state_to_all()
 
         # start the accept loop and game start threads
         self._accept_thread = threading.Thread(target=accept_loop, daemon=True)
@@ -152,7 +152,7 @@ class Server:
             except Exception as e:
                 print("Broadcast failed:", e)
 
-    def send_initial_game_state(self):
+    def send_game_state_to_all(self):
         for c in list(self._clients):
             try:
                 state = self.gameEngine.get_visible_state(c.player_id)

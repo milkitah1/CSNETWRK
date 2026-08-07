@@ -1,3 +1,6 @@
+import queue
+import time
+
 from ..common import pdu as PDUs
 
 
@@ -5,6 +8,7 @@ class MulliganState:
 
     def __init__(self, client):
         self.client = client
+        self.submitted = False
 
     def run(self):
         """
@@ -12,6 +16,35 @@ class MulliganState:
         """
 
         while True:
+
+            # Process incoming PDUs first
+            while True:
+                try:
+                    pkt = self.client._recv_q.get_nowait()
+                except queue.Empty:
+                    break
+
+                t = pkt.get("type")
+
+                if t == PDUs.PHASE_TRANSITION:
+                    if (
+                        pkt.get("from_phase") == "MULLIGAN"
+                        and pkt.get("to_phase") == "UNTAP"
+                    ):
+                        print("\n==> MULLIGAN phase ended — game starting")
+                        return
+
+                elif t == PDUs.GAME_STATE_UPDATE:
+                    self.client.game_state = pkt.get("state")
+
+            # If we already chose, wait for opponent
+            if self.submitted:
+                print("\nWaiting for opponent...")
+                time.sleep(1)
+                continue
+
+            time.sleep(1)
+
             state = self.client.game_state
 
             print("\n========== MULLIGAN ==========")
@@ -27,13 +60,13 @@ class MulliganState:
 
             if choice == "1":
                 self.keep_hand()
-                break
 
             elif choice == "2":
                 self.take_mulligan()
 
             else:
                 print("Invalid choice")
+
 
     def keep_hand(self):
         state = self.client.game_state
@@ -42,7 +75,9 @@ class MulliganState:
         cards_to_bottom = []
 
         if mulligan_count > 0:
-            print(f"\nChoose {mulligan_count} card(s) to put on the bottom.")
+            print(
+                f"\nChoose {mulligan_count} card(s) to put on the bottom."
+            )
 
             while len(cards_to_bottom) < mulligan_count:
                 choice = int(input("Card number: ")) - 1
@@ -61,52 +96,27 @@ class MulliganState:
 
         self.client.send_pdu({
             "type": PDUs.MULLIGAN_CHOICE,
-            "seq_num": self.client.last_game_state_seq,
             "keep": True,
             "cards_to_bottom": cards_to_bottom
         })
+
+        # Important: prevent showing menu again
+        self.submitted = True
 
 
     def take_mulligan(self):
         """
         Send MULLIGAN_CHOICE keep=false.
-        Server will redraw and send GAME_STATE_UPDATE.
+        Server redraws and sends GAME_STATE_UPDATE.
         """
 
-        
+        self.client.mulligan_count += 1
 
         self.client.send_pdu({
             "type": PDUs.MULLIGAN_CHOICE,
-            "seq_num": self.client.seq_num,
             "keep": False,
             "cards_to_bottom": []
         })
 
-
-    def choose_bottom_cards(self, count):
-        """
-        London mulligan:
-        after keeping, choose N cards to put bottom.
-        """
-
-        hand = self.client.game_state["player"]["hand"]
-
-        print(
-            f"\nChoose {count} card(s) to put on bottom:"
-        )
-
-        for i, card in enumerate(hand, start=1):
-            print(f"{i}. {card}")
-
-        selected = []
-
-        while len(selected) < count:
-            choice = int(
-                input("Card number: ")
-            )
-
-            selected.append(
-                hand[choice - 1]
-            )
-
-        return selected
+        # Still waiting for new hand
+        self.submitted = False

@@ -1,10 +1,10 @@
-[2026-08-07T05:09:47.474055Z] server.log RECV: HELLO
+[2026-08-07T11:04:59.514320Z] server.log RECV: HELLO
 {
   "name": "ace1",
   "seq_num": 0,
   "type": "HELLO"
 }
-[2026-08-07T05:09:47.586150Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-07T11:04:59.623417Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 1,
   "state": {
@@ -17,19 +17,19 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-07T05:09:47.742168Z] server.log SEND: HELLO
+[2026-08-07T11:04:59.781400Z] server.log SEND: HELLO
 {
   "player_id": "ace1",
   "seq_num": 2,
   "type": "HELLO"
 }
-[2026-08-07T05:09:47.898162Z] server.log SEND: WELCOME
+[2026-08-07T11:04:59.941434Z] server.log SEND: WELCOME
 {
   "message": "Welcome to MTGNP",
   "seq_num": 3,
   "type": "WELCOME"
 }
-[2026-08-07T05:09:51.708555Z] server.log RECV: PLAYER_READY
+[2026-08-07T11:05:03.182143Z] server.log RECV: PLAYER_READY
 {
   "decklist": [
     "forest_001",
@@ -46,7 +46,7 @@
   "seq_num": 1,
   "type": "PLAYER_READY"
 }
-[2026-08-07T05:09:51.836638Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-07T11:05:03.324275Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 4,
   "state": {
@@ -57,18 +57,18 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-07T05:09:51.964594Z] server.log SEND: PLAYER_READY_ACK
+[2026-08-07T11:05:03.514209Z] server.log SEND: PLAYER_READY_ACK
 {
   "seq_num": 5,
   "type": "PLAYER_READY_ACK"
 }
-[2026-08-07T05:09:59.962474Z] server.log RECV: HELLO
+[2026-08-07T11:05:10.228852Z] server.log RECV: HELLO
 {
   "name": "ace2",
   "seq_num": 0,
   "type": "HELLO"
 }
-[2026-08-07T05:10:00.072576Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-07T11:05:10.372945Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 6,
   "state": {
@@ -81,7 +81,7 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-07T05:10:00.212534Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-07T11:05:10.484893Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 1,
   "state": {
@@ -94,53 +94,19 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-07T05:10:00.388584Z] server.log SEND: HELLO
+[2026-08-07T11:05:10.644952Z] server.log SEND: HELLO
 {
   "player_id": "ace2",
   "seq_num": 2,
   "type": "HELLO"
 }
-[2026-08-07T05:10:00.532632Z] server.log SEND: WELCOME
+[2026-08-07T11:05:10.788984Z] server.log SEND: WELCOME
 {
   "message": "Welcome to MTGNP",
   "seq_num": 3,
   "type": "WELCOME"
 }
-[2026-08-07T05:10:06.491460Z] server.log RECV: PLAYER_READY
-{
-  "decklist": [
-    "mountain_001",
-    "fakeCard_001"
-  ],
-  "player_id": "ace2",
-  "seq_num": 1,
-  "type": "PLAYER_READY"
-}
-[2026-08-07T05:10:06.635554Z] server.log SEND: ERROR
-{
-  "code": 400,
-  "message": "ILLEGAL_DECK",
-  "seq_num": 4,
-  "type": "ERROR"
-}
-[2026-08-07T05:10:07.879813Z] server.log RECV: PLAYER_READY
-{
-  "decklist": [
-    "mountain_001",
-    "fakeCard_001"
-  ],
-  "player_id": "ace2",
-  "seq_num": 2,
-  "type": "PLAYER_READY"
-}
-[2026-08-07T05:10:08.037910Z] server.log SEND: ERROR
-{
-  "code": 400,
-  "message": "ILLEGAL_DECK",
-  "seq_num": 5,
-  "type": "ERROR"
-}
-[2026-08-07T05:10:11.584163Z] server.log RECV: PLAYER_READY
+[2026-08-07T11:05:13.211521Z] server.log RECV: PLAYER_READY
 {
   "decklist": [
     "forest_001",
@@ -154,46 +120,47 @@
     "rift_bolt_001"
   ],
   "player_id": "ace2",
-  "seq_num": 3,
+  "seq_num": 1,
   "type": "PLAYER_READY"
 }
-[2026-08-07T05:10:11.728271Z] server.log SEND: GAME_STATE_UPDATE
-{
-  "seq_num": 7,
-  "state": {
-    "phase": "LOBBY",
-    "players": 2,
-    "players_ready": 2,
-    "waiting_for": []
-  },
-  "type": "GAME_STATE_UPDATE"
-}
-[2026-08-07T05:10:12.016286Z] server.log SEND: GAME_STATE_UPDATE
-{
-  "seq_num": 6,
-  "state": {
-    "phase": "LOBBY",
-    "players": 2,
-    "players_ready": 2,
-    "waiting_for": []
-  },
-  "type": "GAME_STATE_UPDATE"
-}
-[2026-08-07T05:10:12.016361Z] server.log SEND: START_GAME
-{
-  "seq_num": 7,
-  "type": "START_GAME"
-}
-[2026-08-07T05:10:12.236317Z] server.log SEND: PLAYER_READY_ACK
+[2026-08-07T11:05:13.387667Z] server.log SEND: START_GAME
 {
   "seq_num": 8,
+  "type": "START_GAME"
+}
+hase": "LOBBY",
+    "players": 2,
+    "players_ready": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-07T11:05:13.559587Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "seq_num": 4,
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "players_ready": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-07T11:05:13.575633Z] server.log SEND: START_GAME
+{
+  "seq_num": 5,
+  "type": "START_GAME"
+}
+[2026-08-07T11:05:13.751679Z] server.log SEND: PLAYER_READY_ACK
+{
+  "seq_num": 6,
   "type": "PLAYER_READY_ACK"
 }
-[2026-08-07T05:10:12.268375Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-07T11:05:13.815282Z] server.log SEND: GAME_STATE_UPDATE
 {
   "seq_num": 9,
   "state": {
-    "active_player": "ace2",
+    "active_player": "ace1",
     "battlefield": {
       "ace1": [],
       "ace2": []
@@ -203,13 +170,13 @@
       "ace2": []
     },
     "hand": [
-      "rift_bolt_001",
-      "island_001",
-      "searing_spear_001",
       "plains_001",
+      "lightning_bolt_001",
+      "forest_001",
+      "island_001",
       "lava_spike_001",
-      "skullcrack_001",
-      "mountain_001"
+      "searing_spear_001",
+      "rift_bolt_001"
     ],
     "hand_counts": {
       "ace2": 7
@@ -228,7 +195,7 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-07T05:10:12.472486Z] server.log RECV: PLAYER_READY
+[2026-08-07T11:05:13.943233Z] server.log RECV: PLAYER_READY
 {
   "decklist": [
     "forest_001",
@@ -242,14 +209,14 @@
     "rift_bolt_001"
   ],
   "player_id": "ace2",
-  "seq_num": 4,
+  "seq_num": 2,
   "type": "PLAYER_READY"
 }
-[2026-08-07T05:10:12.472404Z] server.log SEND: GAME_STATE_UPDATE
+[2026-08-07T11:05:14.036286Z] server.log SEND: GAME_STATE_UPDATE
 {
-  "seq_num": 9,
+  "seq_num": 7,
   "state": {
-    "active_player": "ace2",
+    "active_player": "ace1",
     "battlefield": {
       "ace1": [],
       "ace2": []
@@ -259,13 +226,13 @@
       "ace2": []
     },
     "hand": [
-      "rift_bolt_001",
-      "lightning_bolt_001",
-      "forest_001",
-      "skullcrack_001",
       "searing_spear_001",
-      "island_001",
-      "mountain_001"
+      "lava_spike_001",
+      "mountain_001",
+      "rift_bolt_001",
+      "skullcrack_001",
+      "plains_001",
+      "forest_001"
     ],
     "hand_counts": {
       "ace1": 7
@@ -284,10 +251,168 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-07T05:10:12.724447Z] server.log SEND: ERROR
+[2026-08-07T11:05:14.097301Z] server.log SEND: ERROR
 {
   "code": 400,
   "message": "Cannot set ready outside LOBBY state.",
-  "seq_num": 10,
+  "seq_num": 8,
   "type": "ERROR"
+}
+[2026-08-07T11:05:22.844757Z] server.log RECV: MULLIGAN_CHOICE
+{
+  "cards_to_bottom": [],
+  "keep": true,
+  "seq_num": 8,
+  "type": "MULLIGAN_CHOICE"
+}
+[2026-08-07T11:05:22.988869Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "seq_num": 9,
+  "state": {
+    "active_player": "ace1",
+    "battlefield": {
+      "ace1": [],
+      "ace2": []
+    },
+    "graveyard": {
+      "ace1": [],
+      "ace2": []
+    },
+    "hand": [
+      "searing_spear_001",
+      "lava_spike_001",
+      "mountain_001",
+      "rift_bolt_001",
+      "skullcrack_001",
+      "plains_001",
+      "forest_001"
+    ],
+    "hand_counts": {
+      "ace1": 7
+    },
+    "library_counts": {
+      "ace1": 2,
+      "ace2": 2
+    },
+    "life_totals": {
+      "ace1": 20,
+      "ace2": 20
+    },
+    "phase": "MULLIGAN",
+    "stack": [],
+    "turn": 0
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-07T11:05:33.993583Z] server.log RECV: MULLIGAN_CHOICE
+{
+  "cards_to_bottom": [],
+  "keep": false,
+  "seq_num": 9,
+  "type": "MULLIGAN_CHOICE"
+}
+[2026-08-07T11:05:34.137674Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "seq_num": 10,
+  "state": {
+    "active_player": "ace1",
+    "battlefield": {
+      "ace1": [],
+      "ace2": []
+    },
+    "graveyard": {
+      "ace1": [],
+      "ace2": []
+    },
+    "hand": [
+      "plains_001",
+      "skullcrack_001",
+      "rift_bolt_001",
+      "lava_spike_001",
+      "searing_spear_001",
+      "mountain_001",
+      "lightning_bolt_001"
+    ],
+    "hand_counts": {
+      "ace2": 7
+    },
+    "library_counts": {
+      "ace1": 2,
+      "ace2": 2
+    },
+    "life_totals": {
+      "ace1": 20,
+      "ace2": 20
+    },
+    "phase": "MULLIGAN",
+    "stack": [],
+    "turn": 0
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-07T11:05:43.495825Z] server.log RECV: MULLIGAN_CHOICE
+{
+  "cards_to_bottom": [
+    "mountain_001"
+  ],
+  "keep": true,
+  "seq_num": 10,
+  "type": "MULLIGAN_CHOICE"
+}
+[2026-08-07T11:05:43.638955Z] server.log SEND: GAME_STATE_UPDATE
+{
+  "seq_num": 11,
+  "state": {
+    "active_player": "ace1",
+    "battlefield": {
+      "ace1": [],
+      "ace2": []
+    },
+    "graveyard": {
+      "ace1": [],
+      "ace2": []
+    },
+    "hand": [
+      "plains_001",
+      "skullcrack_001",
+      "rift_bolt_001",
+      "lava_spike_001",
+      "searing_spear_001",
+      "lightning_bolt_001"
+    ],
+    "hand_counts": {
+      "ace2": 7
+    },
+    "library_counts": {
+      "ace1": 3,
+      "ace2": 2
+    },
+    "life_totals": {
+      "ace1": 20,
+      "ace2": 20
+    },
+    "phase": "UNTAP",
+    "stack": [],
+    "step": "UNTAP",
+    "turn": 1
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-07T11:05:43.782893Z] server.log SEND: PHASE_TRANSITION
+{
+  "active_player": "ace1",
+  "from_phase": "MULLIGAN",
+  "seq_num": 12,
+  "to_phase": "UNTAP",
+  "turn": 1,
+  "type": "PHASE_TRANSITION"
+}
+[2026-08-07T11:05:43.926449Z] server.log SEND: PHASE_TRANSITION
+{
+  "active_player": "ace1",
+  "from_phase": "MULLIGAN",
+  "seq_num": 10,
+  "to_phase": "UNTAP",
+  "turn": 1,
+  "type": "PHASE_TRANSITION"
 }

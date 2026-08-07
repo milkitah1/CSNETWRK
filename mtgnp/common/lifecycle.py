@@ -315,18 +315,19 @@ class GameLifecycleEngine:
     - If keep is False: redraws 7 new cards and increments mulligan count.
     - If keep is True: validates that len(cards_to_bottom) == mulligan_count and puts them at library bottom.
     """
-    def process_mulligan(self, player_id: str, keep: bool, cards_to_bottom: List[str]) -> Tuple[bool, str]:
+    def process_mulligan(self, player_id: str, keep: bool, cards_to_bottom: List[str]) -> Tuple[bool, str, bool]: #second bool to check if both players kept
         if self.macro_state != MacroState.MULLIGAN:
-            return False, "Not in MULLIGAN state."
+            return False, "Not in MULLIGAN state.", False
 
         p_idx = self._get_player_index(player_id)
         if p_idx is None:
-            return False, "Invalid player ID."
+            return False, "Invalid player ID.", False   
 
         p_state = self.game_state.players[p_idx]
 
         if not keep:
             # Redraw hand: return current hand to library, shuffle, draw 7
+            
             p_state.library.extend(p_state.hand)
             p_state.hand.clear()
             random.shuffle(p_state.library)
@@ -335,18 +336,20 @@ class GameLifecycleEngine:
             p_state.hand = [p_state.library.pop() for _ in range(draw_count)]
 
             self.mulligan_counts[player_id] += 1
-            return True, ""
+            return True, "", False
         else:
+            if player_id in self.mulligan_kept:
+                return False, "Player has already kept their hand."
             # Player keeps hand: validate cards to bottom
             required_bottom = self.mulligan_counts[player_id]
             if len(cards_to_bottom) != required_bottom:
-                return False, f"Must place exactly {required_bottom} cards on bottom."
+                return False, f"Must place exactly {required_bottom} cards on bottom.", False
 
             # Check cards exist in hand
             hand_card_ids = [c["id"] for c in p_state.hand]
             for cid in cards_to_bottom:
                 if cid not in hand_card_ids:
-                    return False, f"Card {cid} is not in hand."
+                    return False, f"Card {cid} is not in hand.", False
                 hand_card_ids.remove(cid)
 
             # Move cards from hand to bottom of library
@@ -364,8 +367,9 @@ class GameLifecycleEngine:
             # Transition to IN_GAME when both players keep
             if len(self.mulligan_kept) == 2:
                 self.start_in_game()
+                return True, "", True  # both players kept
 
-            return True, ""
+            return True, "", False  # not both players kept
 
     # -------------------------------------------------------------------------
     # 4. IN_GAME & TURN/PHASE ENGINE

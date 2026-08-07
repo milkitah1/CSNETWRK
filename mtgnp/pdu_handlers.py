@@ -18,6 +18,7 @@ class PDUHandler:
             PDUs.PING: self.handle_ping,
             PDUs.HELLO: self.handle_hello,
             PDUs.PLAYER_READY: self.handle_player_ready,
+            PDUs.MULLIGAN_CHOICE: self.handle_mulligan_choice,
         }
 
     def handle_pdu(self, pkt: dict) -> None:
@@ -103,3 +104,40 @@ class PDUHandler:
         
         # acknowledge
         self.client._send({"type": "PLAYER_READY_ACK"})
+
+    def handle_mulligan_choice(self, pkt: dict) -> None:
+        if not self.client.player_id:
+            self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
+            return
+        keep = pkt.get("keep")
+        cards_to_bottom = pkt.get("cards_to_bottom", [])
+        if not isinstance(keep, bool) or not isinstance(cards_to_bottom, list):
+            self.client._send(PDUs.make_error(400, "INVALID_MULLIGAN_CHOICE"))
+            return
+        try:
+            success, msg, started = self.client.server.gameEngine.process_mulligan(
+                self.client.player_id,
+                keep,
+                cards_to_bottom
+            )
+        except Exception as e:
+            traceback.print_exc()
+            self.client._send(PDUs.make_error(400, str("ILLEGAL_ACTION")))
+            return
+        # acknowledge
+       
+        self.client._send({
+        "type": PDUs.GAME_STATE_UPDATE,
+        "state": self.client.server.gameEngine.get_visible_state(self.client.player_id)
+        })
+
+        if started:
+            self.client.server.broadcast({
+                "type": PDUs.PHASE_TRANSITION,
+                "from_phase": "MULLIGAN",
+                "to_phase": "UNTAP",
+                "active_player": self.client.server.gameEngine.game_state.players[
+                    self.client.server.gameEngine.game_state.active_player_index
+                ].name,
+                "turn": self.client.server.gameEngine.game_state.turn_number
+            })

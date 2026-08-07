@@ -30,7 +30,7 @@ class PDUHandler:
         handler(pkt)
 
     def handle_ping(self, pkt: dict) -> None:
-        self.client._send({"type": PDUs.PONG})
+        self.client._send({"type": PDUs.PONG, "seq_num": pkt.get("seq_num")})
 
     def handle_hello(self, pkt: dict) -> None:
         name = pkt.get("name") or f"{self.client.addr}"

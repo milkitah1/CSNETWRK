@@ -20,7 +20,7 @@ from .states.mulliganState import MulliganState
 
 
 class Client:
-    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False, log_filename: str = ""):
+    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False, log_filename: str = "", ping_interval: float = 30.0, ping_timeout: float = 10.0):
         set_verbose(verbose, filename=log_filename)
         self.host = host
         self.port = port
@@ -39,6 +39,14 @@ class Client:
         self.pdu_handler = ClientPDUHandler(self)
         self.mulligan_count = 0
         self.ready_seq_num = 0          # only for PLAYER_READY
+        self.ping_seq_num = 0           # separate counter for PING PDUs
+        # ping/pong heartbeat
+        self.ping_interval = float(ping_interval)
+        self.ping_timeout = float(ping_timeout)
+        self._ping_thread: Optional[threading.Thread] = None
+        self._ping_stop = threading.Event()
+        self._pong_event = threading.Event()
+        self._last_pong: Optional[float] = None
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -46,16 +54,89 @@ class Client:
         self._recv_stop.clear()
         self._recv_thread = threading.Thread(target=self._recv_loop, daemon=True)
         self._recv_thread.start()
+        # start ping thread
+        self._start_ping()
 
     def close(self) -> None:
+        self.connected = False
+
+        # stop ping thread first
+        self._stop_ping()
+
         self._recv_stop.set()
+
         if self.sock:
             try:
                 self.sock.close()
             except Exception:
                 pass
+            finally:
+                self.sock = None
+
         if self._recv_thread:
             self._recv_thread.join(timeout=0.2)
+
+        self._pong_event.clear()
+
+    # --- ping thread management ---
+    def _start_ping(self) -> None:
+        if self._ping_thread and self._ping_thread.is_alive():
+            return
+        self._ping_stop.clear()
+        self._ping_thread = threading.Thread(target=self._ping_loop, daemon=True)
+        self._ping_thread.start()
+
+    def _stop_ping(self) -> None:
+        self._ping_stop.set()
+        if self._ping_thread and threading.current_thread() is not self._ping_thread:
+            try:
+                self._ping_thread.join(timeout=0.5)
+            except Exception:
+                pass
+
+    def _ping_loop(self) -> None:
+        # Periodically send PING and wait for PONG within timeout
+        while not self._ping_stop.is_set():
+            try:
+                # clear previous pong
+                self._pong_event.clear()
+                # send ping
+                try:
+                    self.send_pdu({"type": PDUs.PING})
+                except Exception:
+                    # can't send; assume disconnected
+                    try:
+                        self.close()
+                    except Exception:
+                        pass
+                    break
+
+                # wait for pong
+                got = self._pong_event.wait(self.ping_timeout)
+                if not got:
+                    # no pong within timeout -> disconnect
+                    try:
+                        print("No PONG received; disconnecting")
+                    except Exception:
+                        pass
+                    try:
+                        self.close()
+                    except Exception:
+                        pass
+                    break
+
+                # sleep until next ping interval (respect stop)
+                slept = 0.0
+                while slept < self.ping_interval and not self._ping_stop.is_set():
+                    time.sleep(0.5)
+                    slept += 0.5
+            except Exception:
+                # on unexpected error, attempt clean shutdown
+                try:
+                    self.close()
+                except Exception:
+                    pass
+                break
 
     def _recv_loop(self) -> None:
         while not self._recv_stop.is_set():
@@ -81,9 +162,14 @@ class Client:
         if not self.sock:
             raise RuntimeError("not connected")
 
-        if obj["type"] == PDUs.PLAYER_READY:
+        ptype = obj.get("type")
+        if ptype == PDUs.PLAYER_READY:
             self.ready_seq_num += 1
             obj["seq_num"] = self.ready_seq_num
+        elif ptype == PDUs.PING:
+            # use a dedicated ping counter so heartbeats don't affect other seq counters
+            self.ping_seq_num += 1
+            obj["seq_num"] = self.ping_seq_num
         else:
             obj["seq_num"] = self.seq_num
 

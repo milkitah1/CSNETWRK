@@ -50,8 +50,8 @@ class LobbyState:
                     break
 
                 # render lobby UI
-                print("\n========== LOBBY ==========\n")
-                print(f"Players: {self.client.players_count} / {self.client.pdu_handler.client._start_game and 2 or 2}\n")
+                    print("\n========== LOBBY ==========")
+                print(f"Players: {self.client.players_count} / 2\n")
                 print(f"You are {'ready' if self.client._ready else 'not ready'}.\n")
                 if not self.client._ready:
                     print("1. Ready")
@@ -83,4 +83,8 @@ class LobbyState:
 
            
         finally:
-            print()
+            # ensure client socket is closed when leaving lobby
+            try:
+                self.client.close()
+            except Exception:
+                pass

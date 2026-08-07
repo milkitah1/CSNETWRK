@@ -28,12 +28,18 @@ class ClientHandler(threading.Thread):
         self.player_id: str | None = None
         self.pdu_handler = PDUHandler(self)
         self.seq_num = 0
+        self.ping_seq_num = 0
         
     
     def _send(self, obj):
         try:
-            self.seq_num += 1
-            obj["seq_num"] = self.seq_num
+            if obj["type"] != PDUs.PONG:
+                self.seq_num += 1
+                obj["seq_num"] = self.seq_num
+            else:
+                self.ping_seq_num = obj.get("seq_num", self.ping_seq_num)
+                obj["seq_num"] = self.ping_seq_num
+            
             framing.send_pdu(self.conn, obj)
         except Exception as e:
             print("SEND ERROR:", e)

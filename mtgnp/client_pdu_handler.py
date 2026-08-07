@@ -68,7 +68,16 @@ class ClientPDUHandler:
 
     # ---- handlers ----
     def _handle_pong(self, pkt: dict) -> None:
-        # nothing special; pong will be queued
+        # record last pong timestamp and notify ping loop
+        try:
+            import time as _t
+            self.client._last_pong = _t.time()
+        except Exception:
+            pass
+        try:
+            self.client._pong_event.set()
+        except Exception:
+            pass
         return
 
     def _handle_welcome(self, pkt: dict) -> None:

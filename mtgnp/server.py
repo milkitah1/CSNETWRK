@@ -5,7 +5,7 @@ Features:
 
 """
 from __future__ import annotations
-
+import json
 import socket
 import threading
 from typing import Optional
@@ -28,7 +28,8 @@ class ClientHandler(threading.Thread):
         self.player_id: str | None = None
         self.pdu_handler = PDUHandler(self)
         self.seq_num = 0
-
+        
+    
     def _send(self, obj):
         try:
             self.seq_num += 1
@@ -76,6 +77,12 @@ class Server:
         self._stop = threading.Event()
 
         self._game_starter_thread: Optional[threading.Thread] = None
+        with open("./jsons/cards_list/card_instances.json", "r") as f:
+            cards = json.load(f)
+            self.LEGAL_CARDS = {
+                card["card_id (protocol reference)"]
+                for card in cards
+            }
 
     def start(self) -> None:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

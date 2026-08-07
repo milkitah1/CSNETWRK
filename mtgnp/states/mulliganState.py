@@ -36,25 +36,32 @@ class MulliganState:
                 print("Invalid choice")
 
     def keep_hand(self):
-        """
-        Send MULLIGAN_CHOICE keep=true.
-
-        If mulligan_count > 0, player must choose cards
-        to put on bottom.
-        """
-
+        state = self.client.game_state
         mulligan_count = self.client.mulligan_count
 
         cards_to_bottom = []
 
         if mulligan_count > 0:
-            cards_to_bottom = self.choose_bottom_cards(
-                mulligan_count
-            )
+            print(f"\nChoose {mulligan_count} card(s) to put on the bottom.")
+
+            while len(cards_to_bottom) < mulligan_count:
+                choice = int(input("Card number: ")) - 1
+
+                if choice < 0 or choice >= len(state["hand"]):
+                    print("Invalid card.")
+                    continue
+
+                card = state["hand"][choice]
+
+                if card in cards_to_bottom:
+                    print("Already selected.")
+                    continue
+
+                cards_to_bottom.append(card)
 
         self.client.send_pdu({
             "type": PDUs.MULLIGAN_CHOICE,
-            "seq_num": self.client.seq_num,
+            "seq_num": self.client.last_game_state_seq,
             "keep": True,
             "cards_to_bottom": cards_to_bottom
         })
@@ -66,7 +73,7 @@ class MulliganState:
         Server will redraw and send GAME_STATE_UPDATE.
         """
 
-        self.client.mulligan_count += 1
+        
 
         self.client.send_pdu({
             "type": PDUs.MULLIGAN_CHOICE,

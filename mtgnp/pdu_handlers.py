@@ -70,6 +70,10 @@ class PDUHandler:
         if not deckList or not isinstance(deckList, list):
             self.client._send(PDUs.make_error(400, "INVALID_DECK"))
             return
+        for card in deckList:
+            if card not in self.client.server.LEGAL_CARDS:
+                self.client._send(PDUs.make_error(400, "ILLEGAL_DECK"))
+                return
 
         # register player as ready in lifecycle and register deck
         try:

@@ -141,8 +141,9 @@ class StackManager:
                 card_in_hand = c
                 break
 
-        # Fallback to catalog lookup
-        card_info = get_card(card_id) or (card_in_hand if isinstance(card_in_hand, dict) else {})
+        # Fallback to catalog lookup and merge with hand instance data
+        cat_info = get_card(card_id) or get_card(card_id.rsplit("_", 1)[0]) or {}
+        card_info = {**cat_info, **(card_in_hand if isinstance(card_in_hand, dict) else {})}
         card_type = card_info.get("type") if card_info else "Instant"
 
         # Phase timing check (WRONG_PHASE)

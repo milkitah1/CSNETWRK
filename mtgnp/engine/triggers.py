@@ -168,6 +168,37 @@ class TriggerManager:
         self.pending_triggers.extend(detected)
         return detected
 
+    def observe_event(
+        self, game_state: GameState, event_type: str, event_payload: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """Observes a game event, detects triggers, arranges AP/NAP order, and returns generated PDUs."""
+        detected = self.detect_triggers(game_state, event_type, event_payload)
+        if not detected:
+            return []
+        order_pdu, ordered = self.arrange_apnap_triggers(game_state, detected)
+        if order_pdu:
+            return [order_pdu]
+
+        pdus: List[Dict[str, Any]] = []
+        for trg in ordered:
+            if trg.is_optional or trg.requires_target:
+                choice_pdu = self.prompt_trigger_choice(game_state, trg)
+                if choice_pdu:
+                    pdus.append(choice_pdu)
+            else:
+                stack_item = {
+                    "type": PDUs.STACK_PUSH,
+                    "seq_num": game_state.next_seq_num(),
+                    "stack_item_id": f"stk_trg_{trg.trigger_id}",
+                    "item_type": "TRIGGER",
+                    "source": trg.source_id,
+                    "targets": trg.legal_targets,
+                    "controller": trg.controller,
+                }
+                game_state.stack.append(stack_item)
+                pdus.append(stack_item)
+        return pdus
+
     def arrange_apnap_triggers(
         self, game_state: GameState, triggers: List[PendingTrigger]
     ) -> Tuple[Optional[Dict[str, Any]], List[PendingTrigger]]:

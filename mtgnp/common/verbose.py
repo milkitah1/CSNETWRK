@@ -12,7 +12,7 @@ import datetime
 from typing import Any, Dict
 from pathlib import Path
 
-# VERBOSE = True
+VERBOSE = False
 LOG_FILENAME = ""
 
 # Is not verbose by default

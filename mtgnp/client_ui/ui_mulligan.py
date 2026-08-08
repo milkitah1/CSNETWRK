@@ -117,7 +117,6 @@ class MulliganState:
         
         # 
         elif key == ord("+"):
-            print("hello plus")
             if self.selected_index not in self.bottomed_indices:
                 if len(self.bottomed_indices) < self.mulligan_count:
                     self.bottomed_indices.add(self.selected_index)
@@ -125,7 +124,6 @@ class MulliganState:
 
         # Un-bottom TODO: include some error handling 
         elif key == ord("-"):
-            print("hello minus")
             if self.selected_index in self.bottomed_indices:
                 self.bottomed_indices.remove(self.selected_index)
                 self.hand_window.addstr(2, 2, f"{self.mulligan_count - len(self.bottomed_indices)}")

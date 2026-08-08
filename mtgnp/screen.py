@@ -1,5 +1,7 @@
 """ Handles the client rendering. Does not handle PDUs for now.
 Scroll down to main function below for high-level overview.
+
+Test using `python -m mtgnp.screen`
 """
 
 import curses

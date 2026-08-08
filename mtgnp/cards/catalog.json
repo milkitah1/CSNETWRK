@@ -3,7 +3,6 @@
     "card_id": "mountain_001",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -12,7 +11,6 @@
     "card_id": "mountain_002",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -21,7 +19,6 @@
     "card_id": "mountain_003",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -30,7 +27,6 @@
     "card_id": "mountain_004",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -39,7 +35,6 @@
     "card_id": "mountain_005",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -48,7 +43,6 @@
     "card_id": "mountain_006",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -57,7 +51,6 @@
     "card_id": "mountain_007",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -66,7 +59,6 @@
     "card_id": "mountain_008",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -75,7 +67,6 @@
     "card_id": "mountain_009",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -84,7 +75,6 @@
     "card_id": "mountain_010",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -93,7 +83,6 @@
     "card_id": "mountain_011",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -102,7 +91,6 @@
     "card_id": "mountain_012",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -111,7 +99,6 @@
     "card_id": "mountain_013",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -120,7 +107,6 @@
     "card_id": "mountain_014",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -129,7 +115,6 @@
     "card_id": "mountain_015",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -138,7 +123,6 @@
     "card_id": "mountain_016",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -147,7 +131,6 @@
     "card_id": "mountain_017",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -156,7 +139,6 @@
     "card_id": "mountain_018",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -165,7 +147,6 @@
     "card_id": "mountain_019",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -174,7 +155,6 @@
     "card_id": "mountain_020",
     "name": "Mountain",
     "type": "Land",
-    "subtype": "Basic Mountain",
     "color": "R",
     "mana_produced": "R",
     "simplified_effect": "Tap: Add {R}."
@@ -183,7 +163,6 @@
     "card_id": "forest_001",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -192,7 +171,6 @@
     "card_id": "forest_002",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -201,7 +179,6 @@
     "card_id": "forest_003",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -210,7 +187,6 @@
     "card_id": "forest_004",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -219,7 +195,6 @@
     "card_id": "forest_005",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -228,7 +203,6 @@
     "card_id": "forest_006",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -237,7 +211,6 @@
     "card_id": "forest_007",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -246,7 +219,6 @@
     "card_id": "forest_008",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -255,7 +227,6 @@
     "card_id": "forest_009",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -264,7 +235,6 @@
     "card_id": "forest_010",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -273,7 +243,6 @@
     "card_id": "forest_011",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -282,7 +251,6 @@
     "card_id": "forest_012",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -291,7 +259,6 @@
     "card_id": "forest_013",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -300,7 +267,6 @@
     "card_id": "forest_014",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -309,7 +275,6 @@
     "card_id": "forest_015",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -318,7 +283,6 @@
     "card_id": "forest_016",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -327,7 +291,6 @@
     "card_id": "forest_017",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -336,7 +299,6 @@
     "card_id": "forest_018",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -345,7 +307,6 @@
     "card_id": "forest_019",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -354,7 +315,6 @@
     "card_id": "forest_020",
     "name": "Forest",
     "type": "Land",
-    "subtype": "Basic Forest",
     "color": "G",
     "mana_produced": "G",
     "simplified_effect": "Tap: Add {G}."
@@ -363,7 +323,6 @@
     "card_id": "plains_001",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -372,7 +331,6 @@
     "card_id": "plains_002",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -381,7 +339,6 @@
     "card_id": "plains_003",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -390,7 +347,6 @@
     "card_id": "plains_004",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -399,7 +355,6 @@
     "card_id": "plains_005",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -408,7 +363,6 @@
     "card_id": "plains_006",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -417,7 +371,6 @@
     "card_id": "plains_007",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -426,7 +379,6 @@
     "card_id": "plains_008",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -435,7 +387,6 @@
     "card_id": "plains_009",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -444,7 +395,6 @@
     "card_id": "plains_010",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -453,7 +403,6 @@
     "card_id": "plains_011",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -462,7 +411,6 @@
     "card_id": "plains_012",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -471,7 +419,6 @@
     "card_id": "plains_013",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -480,7 +427,6 @@
     "card_id": "plains_014",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -489,7 +435,6 @@
     "card_id": "plains_015",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -498,7 +443,6 @@
     "card_id": "plains_016",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -507,7 +451,6 @@
     "card_id": "plains_017",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -516,7 +459,6 @@
     "card_id": "plains_018",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -525,7 +467,6 @@
     "card_id": "plains_019",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -534,7 +475,6 @@
     "card_id": "plains_020",
     "name": "Plains",
     "type": "Land",
-    "subtype": "Basic Plains",
     "color": "W",
     "mana_produced": "W",
     "simplified_effect": "Tap: Add {W}."
@@ -543,7 +483,6 @@
     "card_id": "island_001",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -552,7 +491,6 @@
     "card_id": "island_002",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -561,7 +499,6 @@
     "card_id": "island_003",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -570,7 +507,6 @@
     "card_id": "island_004",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -579,7 +515,6 @@
     "card_id": "island_005",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -588,7 +523,6 @@
     "card_id": "island_006",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -597,7 +531,6 @@
     "card_id": "island_007",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -606,7 +539,6 @@
     "card_id": "island_008",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -615,7 +547,6 @@
     "card_id": "island_009",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -624,7 +555,6 @@
     "card_id": "island_010",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -633,7 +563,6 @@
     "card_id": "island_011",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -642,7 +571,6 @@
     "card_id": "island_012",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -651,7 +579,6 @@
     "card_id": "island_013",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -660,7 +587,6 @@
     "card_id": "island_014",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -669,7 +595,6 @@
     "card_id": "island_015",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -678,7 +603,6 @@
     "card_id": "island_016",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -687,7 +611,6 @@
     "card_id": "island_017",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -696,7 +619,6 @@
     "card_id": "island_018",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -705,7 +627,6 @@
     "card_id": "island_019",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -714,7 +635,6 @@
     "card_id": "island_020",
     "name": "Island",
     "type": "Land",
-    "subtype": "Basic Island",
     "color": "U",
     "mana_produced": "U",
     "simplified_effect": "Tap: Add {U}."
@@ -723,7 +643,6 @@
     "card_id": "swamp_001",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -732,7 +651,6 @@
     "card_id": "swamp_002",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -741,7 +659,6 @@
     "card_id": "swamp_003",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -750,7 +667,6 @@
     "card_id": "swamp_004",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -759,7 +675,6 @@
     "card_id": "swamp_005",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -768,7 +683,6 @@
     "card_id": "swamp_006",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -777,7 +691,6 @@
     "card_id": "swamp_007",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -786,7 +699,6 @@
     "card_id": "swamp_008",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -795,7 +707,6 @@
     "card_id": "swamp_009",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -804,7 +715,6 @@
     "card_id": "swamp_010",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -813,7 +723,6 @@
     "card_id": "swamp_011",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -822,7 +731,6 @@
     "card_id": "swamp_012",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -831,7 +739,6 @@
     "card_id": "swamp_013",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -840,7 +747,6 @@
     "card_id": "swamp_014",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -849,7 +755,6 @@
     "card_id": "swamp_015",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -858,7 +763,6 @@
     "card_id": "swamp_016",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -867,7 +771,6 @@
     "card_id": "swamp_017",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -876,7 +779,6 @@
     "card_id": "swamp_018",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -885,7 +787,6 @@
     "card_id": "swamp_019",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -894,7 +795,6 @@
     "card_id": "swamp_020",
     "name": "Swamp",
     "type": "Land",
-    "subtype": "Basic Swamp",
     "color": "B",
     "mana_produced": "B",
     "simplified_effect": "Tap: Add {B}."
@@ -905,6 +805,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lightning Bolt deals 3 damage to any target."
   },
   "lightning_bolt_002": {
@@ -913,6 +814,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lightning Bolt deals 3 damage to any target."
   },
   "lightning_bolt_003": {
@@ -921,6 +823,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lightning Bolt deals 3 damage to any target."
   },
   "lightning_bolt_004": {
@@ -929,6 +832,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lightning Bolt deals 3 damage to any target."
   },
   "shock_001": {
@@ -937,6 +841,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Shock deals 2 damage to any target."
   },
   "shock_002": {
@@ -945,6 +850,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Shock deals 2 damage to any target."
   },
   "shock_003": {
@@ -953,6 +859,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Shock deals 2 damage to any target."
   },
   "shock_004": {
@@ -961,6 +868,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Shock deals 2 damage to any target."
   },
   "lava_spike_001": {
@@ -969,6 +877,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lava Spike deals 3 damage to target player."
   },
   "lava_spike_002": {
@@ -977,6 +886,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lava Spike deals 3 damage to target player."
   },
   "lava_spike_003": {
@@ -985,6 +895,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lava Spike deals 3 damage to target player."
   },
   "lava_spike_004": {
@@ -993,6 +904,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Lava Spike deals 3 damage to target player."
   },
   "flame_slash_001": {
@@ -1001,6 +913,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Flame Slash deals 4 damage to target creature."
   },
   "flame_slash_002": {
@@ -1009,6 +922,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Flame Slash deals 4 damage to target creature."
   },
   "flame_slash_003": {
@@ -1017,6 +931,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Flame Slash deals 4 damage to target creature."
   },
   "flame_slash_004": {
@@ -1025,6 +940,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "simplified_effect": "Flame Slash deals 4 damage to target creature."
   },
   "searing_spear_001": {
@@ -1033,6 +949,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Searing Spear deals 3 damage to any target."
   },
   "searing_spear_002": {
@@ -1041,6 +958,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Searing Spear deals 3 damage to any target."
   },
   "searing_spear_003": {
@@ -1049,6 +967,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Searing Spear deals 3 damage to any target."
   },
   "searing_spear_004": {
@@ -1057,6 +976,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Searing Spear deals 3 damage to any target."
   },
   "skullcrack_001": {
@@ -1065,6 +985,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Players can't gain life this turn. Damage can't be prevented this turn. Skullcrack deals 3 damage to any target."
   },
   "skullcrack_002": {
@@ -1073,14 +994,16 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Players can't gain life this turn. Damage can't be prevented this turn. Skullcrack deals 3 damage to any target."
   },
   "skullcrack_003": {
     "card_id": "skullcrack_003",
     "name": "Skullcrack",
     "type": "Instant",
-        "color": "R",
+    "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Players can't gain life this turn. Damage can't be prevented this turn. Skullcrack deals 3 damage to any target."
   },
   "skullcrack_004": {
@@ -1089,6 +1012,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Players can't gain life this turn. Damage can't be prevented this turn. Skullcrack deals 3 damage to any target."
   },
   "rift_bolt_001": {
@@ -1097,6 +1021,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "2R",
     "simplified_effect": "Rift Bolt deals 3 damage to any target. Suspend 1—{R}."
   },
   "rift_bolt_002": {
@@ -1105,6 +1030,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "2R",
     "simplified_effect": "Rift Bolt deals 3 damage to any target. Suspend 1—{R}."
   },
   "rift_bolt_003": {
@@ -1113,6 +1039,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "2R",
     "simplified_effect": "Rift Bolt deals 3 damage to any target. Suspend 1—{R}."
   },
   "rift_bolt_004": {
@@ -1121,6 +1048,7 @@
     "type": "Sorcery",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "2R",
     "simplified_effect": "Rift Bolt deals 3 damage to any target. Suspend 1—{R}."
   },
   "incinerate_001": {
@@ -1129,6 +1057,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Incinerate deals 3 damage to any target. The damaged permanent or player can't be regenerated this turn."
   },
   "incinerate_002": {
@@ -1137,6 +1066,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Incinerate deals 3 damage to any target. The damaged permanent or player can't be regenerated this turn."
   },
   "incinerate_003": {
@@ -1145,6 +1075,7 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Incinerate deals 3 damage to any target. The damaged permanent or player can't be regenerated this turn."
   },
   "incinerate_004": {
@@ -1153,15 +1084,16 @@
     "type": "Instant",
     "color": "R",
     "CMC": 2,
+    "mana_cost": "1R",
     "simplified_effect": "Incinerate deals 3 damage to any target. The damaged permanent or player can't be regenerated this turn."
   },
   "goblin_guide_001": {
     "card_id": "goblin_guide_001",
     "name": "Goblin Guide",
     "type": "Creature",
-    "subtype": "Goblin Scout",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Haste. Whenever Goblin Guide attacks, defending player reveals top card of library. If it's a land, that player puts it into their hand."
@@ -1170,9 +1102,9 @@
     "card_id": "goblin_guide_002",
     "name": "Goblin Guide",
     "type": "Creature",
-    "subtype": "Goblin Scout",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Haste. Whenever Goblin Guide attacks, defending player reveals top card of library. If it's a land, that player puts it into their hand."
@@ -1181,9 +1113,9 @@
     "card_id": "goblin_guide_003",
     "name": "Goblin Guide",
     "type": "Creature",
-    "subtype": "Goblin Scout",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Haste. Whenever Goblin Guide attacks, defending player reveals top card of library. If it's a land, that player puts it into their hand."
@@ -1192,9 +1124,9 @@
     "card_id": "goblin_guide_004",
     "name": "Goblin Guide",
     "type": "Creature",
-    "subtype": "Goblin Scout",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Haste. Whenever Goblin Guide attacks, defending player reveals top card of library. If it's a land, that player puts it into their hand."
@@ -1203,9 +1135,9 @@
     "card_id": "goblin_bushwhacker_001",
     "name": "Goblin Bushwhacker",
     "type": "Creature",
-    "subtype": "Goblin Warrior",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Kicker {1}{R}. When this enters, if it was kicked, creatures you control get +1/+0 and gain haste until end of turn."
@@ -1214,9 +1146,9 @@
     "card_id": "goblin_bushwhacker_002",
     "name": "Goblin Bushwhacker",
     "type": "Creature",
-    "subtype": "Goblin Warrior",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Kicker {1}{R}. When this enters, if it was kicked, creatures you control get +1/+0 and gain haste until end of turn."
@@ -1225,9 +1157,9 @@
     "card_id": "goblin_bushwhacker_003",
     "name": "Goblin Bushwhacker",
     "type": "Creature",
-    "subtype": "Goblin Warrior",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Kicker {1}{R}. When this enters, if it was kicked, creatures you control get +1/+0 and gain haste until end of turn."
@@ -1236,9 +1168,9 @@
     "card_id": "goblin_bushwhacker_004",
     "name": "Goblin Bushwhacker",
     "type": "Creature",
-    "subtype": "Goblin Warrior",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Kicker {1}{R}. When this enters, if it was kicked, creatures you control get +1/+0 and gain haste until end of turn."
@@ -1247,9 +1179,9 @@
     "card_id": "reckless_wurm_001",
     "name": "Reckless Wurm",
     "type": "Creature",
-    "subtype": "Wurm",
     "color": "R",
     "CMC": 5,
+    "mana_cost": "3R",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Trample. Madness {2}{R}."
@@ -1258,9 +1190,9 @@
     "card_id": "reckless_wurm_002",
     "name": "Reckless Wurm",
     "type": "Creature",
-    "subtype": "Wurm",
     "color": "R",
     "CMC": 5,
+    "mana_cost": "3R",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Trample. Madness {2}{R}."
@@ -1269,9 +1201,9 @@
     "card_id": "reckless_wurm_003",
     "name": "Reckless Wurm",
     "type": "Creature",
-    "subtype": "Wurm",
     "color": "R",
     "CMC": 5,
+    "mana_cost": "3R",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Trample. Madness {2}{R}."
@@ -1280,9 +1212,9 @@
     "card_id": "reckless_wurm_004",
     "name": "Reckless Wurm",
     "type": "Creature",
-    "subtype": "Wurm",
     "color": "R",
     "CMC": 5,
+    "mana_cost": "3R",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Trample. Madness {2}{R}."
@@ -1291,9 +1223,9 @@
     "card_id": "monastery_swiftspear_001",
     "name": "Monastery Swiftspear",
     "type": "Creature",
-    "subtype": "Human Monk",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "2",
     "simplified_effect": "Haste. Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn)."
@@ -1302,9 +1234,9 @@
     "card_id": "monastery_swiftspear_002",
     "name": "Monastery Swiftspear",
     "type": "Creature",
-    "subtype": "Human Monk",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "2",
     "simplified_effect": "Haste. Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn)."
@@ -1313,9 +1245,9 @@
     "card_id": "monastery_swiftspear_003",
     "name": "Monastery Swiftspear",
     "type": "Creature",
-    "subtype": "Human Monk",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "2",
     "simplified_effect": "Haste. Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn)."
@@ -1324,9 +1256,9 @@
     "card_id": "monastery_swiftspear_004",
     "name": "Monastery Swiftspear",
     "type": "Creature",
-    "subtype": "Human Monk",
     "color": "R",
     "CMC": 1,
+    "mana_cost": "R",
     "power": "1",
     "toughness": "2",
     "simplified_effect": "Haste. Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn)."
@@ -1337,6 +1269,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "UU",
     "simplified_effect": "Counter target spell."
   },
   "counterspell_002": {
@@ -1345,6 +1278,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "UU",
     "simplified_effect": "Counter target spell."
   },
   "counterspell_003": {
@@ -1353,6 +1287,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "UU",
     "simplified_effect": "Counter target spell."
   },
   "counterspell_004": {
@@ -1361,6 +1296,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "UU",
     "simplified_effect": "Counter target spell."
   },
   "cancel_001": {
@@ -1369,6 +1305,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "1UU",
     "simplified_effect": "Counter target spell."
   },
   "cancel_002": {
@@ -1377,6 +1314,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "1UU",
     "simplified_effect": "Counter target spell."
   },
   "cancel_003": {
@@ -1385,6 +1323,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "1UU",
     "simplified_effect": "Counter target spell."
   },
   "cancel_004": {
@@ -1393,6 +1332,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "1UU",
     "simplified_effect": "Counter target spell."
   },
   "unsummon_001": {
@@ -1401,6 +1341,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Return target creature to its owner's hand."
   },
   "unsummon_002": {
@@ -1409,6 +1350,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Return target creature to its owner's hand."
   },
   "unsummon_003": {
@@ -1417,6 +1359,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Return target creature to its owner's hand."
   },
   "unsummon_004": {
@@ -1425,6 +1368,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Return target creature to its owner's hand."
   },
   "ponder_001": {
@@ -1433,6 +1377,7 @@
     "type": "Sorcery",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Look at top 3 cards of your library, then put them back in any order. You may shuffle. Draw a card."
   },
   "ponder_002": {
@@ -1441,6 +1386,7 @@
     "type": "Sorcery",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Look at top 3 cards of your library, then put them back in any order. You may shuffle. Draw a card."
   },
   "ponder_003": {
@@ -1449,6 +1395,7 @@
     "type": "Sorcery",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Look at top 3 cards of your library, then put them back in any order. You may shuffle. Draw a card."
   },
   "ponder_004": {
@@ -1457,6 +1404,7 @@
     "type": "Sorcery",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "simplified_effect": "Look at top 3 cards of your library, then put them back in any order. You may shuffle. Draw a card."
   },
   "negate_001": {
@@ -1465,6 +1413,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target noncreature spell."
   },
   "negate_002": {
@@ -1473,6 +1422,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target noncreature spell."
   },
   "negate_003": {
@@ -1481,6 +1431,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target noncreature spell."
   },
   "negate_004": {
@@ -1489,6 +1440,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target noncreature spell."
   },
   "mana_leak_001": {
@@ -1497,6 +1449,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target spell unless its controller pays {3}."
   },
   "mana_leak_002": {
@@ -1505,6 +1458,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target spell unless its controller pays {3}."
   },
   "mana_leak_003": {
@@ -1513,6 +1467,7 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target spell unless its controller pays {3}."
   },
   "mana_leak_004": {
@@ -1521,15 +1476,16 @@
     "type": "Instant",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "simplified_effect": "Counter target spell unless its controller pays {3}."
   },
   "merfolk_looter_001": {
     "card_id": "merfolk_looter_001",
     "name": "Merfolk Looter",
     "type": "Creature",
-    "subtype": "Merfolk Rogue",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Draw a card, then discard a card."
@@ -1538,9 +1494,9 @@
     "card_id": "merfolk_looter_002",
     "name": "Merfolk Looter",
     "type": "Creature",
-    "subtype": "Merfolk Rogue",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Draw a card, then discard a card."
@@ -1549,9 +1505,9 @@
     "card_id": "merfolk_looter_003",
     "name": "Merfolk Looter",
     "type": "Creature",
-    "subtype": "Merfolk Rogue",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Draw a card, then discard a card."
@@ -1560,9 +1516,9 @@
     "card_id": "merfolk_looter_004",
     "name": "Merfolk Looter",
     "type": "Creature",
-    "subtype": "Merfolk Rogue",
     "color": "U",
     "CMC": 2,
+    "mana_cost": "1U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Draw a card, then discard a card."
@@ -1571,9 +1527,9 @@
     "card_id": "prodigal_sorcerer_001",
     "name": "Prodigal Sorcerer",
     "type": "Creature",
-    "subtype": "Human Wizard",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "2U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Prodigal Sorcerer deals 1 damage to any target."
@@ -1582,9 +1538,9 @@
     "card_id": "prodigal_sorcerer_002",
     "name": "Prodigal Sorcerer",
     "type": "Creature",
-    "subtype": "Human Wizard",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "2U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Prodigal Sorcerer deals 1 damage to any target."
@@ -1593,9 +1549,9 @@
     "card_id": "prodigal_sorcerer_003",
     "name": "Prodigal Sorcerer",
     "type": "Creature",
-    "subtype": "Human Wizard",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "2U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Prodigal Sorcerer deals 1 damage to any target."
@@ -1604,9 +1560,9 @@
     "card_id": "prodigal_sorcerer_004",
     "name": "Prodigal Sorcerer",
     "type": "Creature",
-    "subtype": "Human Wizard",
     "color": "U",
     "CMC": 3,
+    "mana_cost": "2U",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Prodigal Sorcerer deals 1 damage to any target."
@@ -1615,9 +1571,9 @@
     "card_id": "air_elemental_001",
     "name": "Air Elemental",
     "type": "Creature",
-    "subtype": "Elemental",
     "color": "U",
     "CMC": 5,
+    "mana_cost": "3UU",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying."
@@ -1626,9 +1582,9 @@
     "card_id": "air_elemental_002",
     "name": "Air Elemental",
     "type": "Creature",
-    "subtype": "Elemental",
     "color": "U",
     "CMC": 5,
+    "mana_cost": "3UU",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying."
@@ -1637,9 +1593,9 @@
     "card_id": "air_elemental_003",
     "name": "Air Elemental",
     "type": "Creature",
-    "subtype": "Elemental",
     "color": "U",
     "CMC": 5,
+    "mana_cost": "3UU",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying."
@@ -1648,9 +1604,9 @@
     "card_id": "air_elemental_004",
     "name": "Air Elemental",
     "type": "Creature",
-    "subtype": "Elemental",
     "color": "U",
     "CMC": 5,
+    "mana_cost": "3UU",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying."
@@ -1659,9 +1615,9 @@
     "card_id": "phantasmal_bear_001",
     "name": "Phantasmal Bear",
     "type": "Creature",
-    "subtype": "Bear Illusion",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Illusion. When Phantasmal Bear becomes the target of a spell or ability, sacrifice it."
@@ -1670,9 +1626,9 @@
     "card_id": "phantasmal_bear_002",
     "name": "Phantasmal Bear",
     "type": "Creature",
-    "subtype": "Bear Illusion",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Illusion. When Phantasmal Bear becomes the target of a spell or ability, sacrifice it."
@@ -1681,9 +1637,9 @@
     "card_id": "phantasmal_bear_003",
     "name": "Phantasmal Bear",
     "type": "Creature",
-    "subtype": "Bear Illusion",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Illusion. When Phantasmal Bear becomes the target of a spell or ability, sacrifice it."
@@ -1692,9 +1648,9 @@
     "card_id": "phantasmal_bear_004",
     "name": "Phantasmal Bear",
     "type": "Creature",
-    "subtype": "Bear Illusion",
     "color": "U",
     "CMC": 1,
+    "mana_cost": "U",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "Illusion. When Phantasmal Bear becomes the target of a spell or ability, sacrifice it."
@@ -1705,6 +1661,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Target creature gets +3/+3 until end of turn."
   },
   "giant_growth_002": {
@@ -1713,6 +1670,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Target creature gets +3/+3 until end of turn."
   },
   "giant_growth_003": {
@@ -1721,6 +1679,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Target creature gets +3/+3 until end of turn."
   },
   "giant_growth_004": {
@@ -1729,6 +1688,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Target creature gets +3/+3 until end of turn."
   },
   "rampant_growth_001": {
@@ -1737,6 +1697,7 @@
     "type": "Sorcery",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Search your library for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "rampant_growth_002": {
@@ -1745,6 +1706,7 @@
     "type": "Sorcery",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Search your library for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "rampant_growth_003": {
@@ -1753,6 +1715,7 @@
     "type": "Sorcery",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Search your library for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "rampant_growth_004": {
@@ -1761,6 +1724,7 @@
     "type": "Sorcery",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Search your library for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "naturalize_001": {
@@ -1769,6 +1733,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Destroy target artifact or enchantment."
   },
   "naturalize_002": {
@@ -1777,6 +1742,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Destroy target artifact or enchantment."
   },
   "naturalize_003": {
@@ -1785,6 +1751,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Destroy target artifact or enchantment."
   },
   "naturalize_004": {
@@ -1793,6 +1760,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "simplified_effect": "Destroy target artifact or enchantment."
   },
   "vines_of_vastwood_001": {
@@ -1801,6 +1769,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Kicker {G}. Target creature can't be the target of spells or abilities your opponents control this turn. If this spell was kicked, that creature gets +4/+4 until end of turn."
   },
   "vines_of_vastwood_002": {
@@ -1809,6 +1778,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Kicker {G}. Target creature can't be the target of spells or abilities your opponents control this turn. If this spell was kicked, that creature gets +4/+4 until end of turn."
   },
   "vines_of_vastwood_003": {
@@ -1817,6 +1787,7 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Kicker {G}. Target creature can't be the target of spells or abilities your opponents control this turn. If this spell was kicked, that creature gets +4/+4 until end of turn."
   },
   "vines_of_vastwood_004": {
@@ -1825,15 +1796,16 @@
     "type": "Instant",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "simplified_effect": "Kicker {G}. Target creature can't be the target of spells or abilities your opponents control this turn. If this spell was kicked, that creature gets +4/+4 until end of turn."
   },
   "llanowar_elves_001": {
     "card_id": "llanowar_elves_001",
     "name": "Llanowar Elves",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1842,9 +1814,9 @@
     "card_id": "llanowar_elves_002",
     "name": "Llanowar Elves",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1853,9 +1825,9 @@
     "card_id": "llanowar_elves_003",
     "name": "Llanowar Elves",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1864,9 +1836,9 @@
     "card_id": "llanowar_elves_004",
     "name": "Llanowar Elves",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1875,9 +1847,9 @@
     "card_id": "elvish_mystic_001",
     "name": "Elvish Mystic",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1886,9 +1858,9 @@
     "card_id": "elvish_mystic_002",
     "name": "Elvish Mystic",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1897,9 +1869,9 @@
     "card_id": "elvish_mystic_003",
     "name": "Elvish Mystic",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1908,9 +1880,9 @@
     "card_id": "elvish_mystic_004",
     "name": "Elvish Mystic",
     "type": "Creature",
-    "subtype": "Elf Druid",
     "color": "G",
     "CMC": 1,
+    "mana_cost": "G",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Add {G}."
@@ -1919,9 +1891,9 @@
     "card_id": "grizzly_bears_001",
     "name": "Grizzly Bears",
     "type": "Creature",
-    "subtype": "Bear",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "(No abilities.)"
@@ -1930,9 +1902,9 @@
     "card_id": "grizzly_bears_002",
     "name": "Grizzly Bears",
     "type": "Creature",
-    "subtype": "Bear",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "(No abilities.)"
@@ -1941,9 +1913,9 @@
     "card_id": "grizzly_bears_003",
     "name": "Grizzly Bears",
     "type": "Creature",
-    "subtype": "Bear",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "(No abilities.)"
@@ -1952,9 +1924,9 @@
     "card_id": "grizzly_bears_004",
     "name": "Grizzly Bears",
     "type": "Creature",
-    "subtype": "Bear",
     "color": "G",
     "CMC": 2,
+    "mana_cost": "1G",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "(No abilities.)"
@@ -1963,9 +1935,9 @@
     "card_id": "leatherback_baloth_001",
     "name": "Leatherback Baloth",
     "type": "Creature",
-    "subtype": "Beast",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "GGG",
     "power": "4",
     "toughness": "5",
     "simplified_effect": "(No abilities.)"
@@ -1974,9 +1946,9 @@
     "card_id": "leatherback_baloth_002",
     "name": "Leatherback Baloth",
     "type": "Creature",
-    "subtype": "Beast",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "GGG",
     "power": "4",
     "toughness": "5",
     "simplified_effect": "(No abilities.)"
@@ -1985,9 +1957,9 @@
     "card_id": "leatherback_baloth_003",
     "name": "Leatherback Baloth",
     "type": "Creature",
-    "subtype": "Beast",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "GGG",
     "power": "4",
     "toughness": "5",
     "simplified_effect": "(No abilities.)"
@@ -1996,9 +1968,9 @@
     "card_id": "leatherback_baloth_004",
     "name": "Leatherback Baloth",
     "type": "Creature",
-    "subtype": "Beast",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "GGG",
     "power": "4",
     "toughness": "5",
     "simplified_effect": "(No abilities.)"
@@ -2007,9 +1979,9 @@
     "card_id": "troll_ascetic_001",
     "name": "Troll Ascetic",
     "type": "Creature",
-    "subtype": "Troll Shaman",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "1GG",
     "power": "3",
     "toughness": "2",
     "simplified_effect": "Hexproof. {1}{G}: Regenerate Troll Ascetic."
@@ -2018,9 +1990,9 @@
     "card_id": "troll_ascetic_002",
     "name": "Troll Ascetic",
     "type": "Creature",
-    "subtype": "Troll Shaman",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "1GG",
     "power": "3",
     "toughness": "2",
     "simplified_effect": "Hexproof. {1}{G}: Regenerate Troll Ascetic."
@@ -2029,9 +2001,9 @@
     "card_id": "troll_ascetic_003",
     "name": "Troll Ascetic",
     "type": "Creature",
-    "subtype": "Troll Shaman",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "1GG",
     "power": "3",
     "toughness": "2",
     "simplified_effect": "Hexproof. {1}{G}: Regenerate Troll Ascetic."
@@ -2040,9 +2012,9 @@
     "card_id": "troll_ascetic_004",
     "name": "Troll Ascetic",
     "type": "Creature",
-    "subtype": "Troll Shaman",
     "color": "G",
     "CMC": 3,
+    "mana_cost": "1GG",
     "power": "3",
     "toughness": "2",
     "simplified_effect": "Hexproof. {1}{G}: Regenerate Troll Ascetic."
@@ -2051,9 +2023,9 @@
     "card_id": "wall_of_stone_001",
     "name": "Wall of Stone",
     "type": "Creature",
-    "subtype": "Wall",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "1RR",
     "power": "0",
     "toughness": "8",
     "simplified_effect": "Defender."
@@ -2062,9 +2034,9 @@
     "card_id": "wall_of_stone_002",
     "name": "Wall of Stone",
     "type": "Creature",
-    "subtype": "Wall",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "1RR",
     "power": "0",
     "toughness": "8",
     "simplified_effect": "Defender."
@@ -2073,9 +2045,9 @@
     "card_id": "wall_of_stone_003",
     "name": "Wall of Stone",
     "type": "Creature",
-    "subtype": "Wall",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "1RR",
     "power": "0",
     "toughness": "8",
     "simplified_effect": "Defender."
@@ -2084,9 +2056,9 @@
     "card_id": "wall_of_stone_004",
     "name": "Wall of Stone",
     "type": "Creature",
-    "subtype": "Wall",
     "color": "R",
     "CMC": 3,
+    "mana_cost": "1RR",
     "power": "0",
     "toughness": "8",
     "simplified_effect": "Defender."
@@ -2097,6 +2069,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller gains life equal to its power."
   },
   "swords_to_plowshares_002": {
@@ -2105,6 +2078,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller gains life equal to its power."
   },
   "swords_to_plowshares_003": {
@@ -2113,6 +2087,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller gains life equal to its power."
   },
   "swords_to_plowshares_004": {
@@ -2121,6 +2096,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller gains life equal to its power."
   },
   "path_to_exile_001": {
@@ -2129,6 +2105,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller may search for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "path_to_exile_002": {
@@ -2137,6 +2114,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller may search for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "path_to_exile_003": {
@@ -2145,6 +2123,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller may search for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "path_to_exile_004": {
@@ -2153,6 +2132,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Exile target creature. Its controller may search for a basic land, put it onto the battlefield tapped, then shuffle."
   },
   "healing_salve_001": {
@@ -2161,6 +2141,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Choose one: Target player gains 3 life; or prevent the next 3 damage dealt to any target this turn."
   },
   "healing_salve_002": {
@@ -2169,6 +2150,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Choose one: Target player gains 3 life; or prevent the next 3 damage dealt to any target this turn."
   },
   "healing_salve_003": {
@@ -2177,6 +2159,7 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Choose one: Target player gains 3 life; or prevent the next 3 damage dealt to any target this turn."
   },
   "healing_salve_004": {
@@ -2185,51 +2168,52 @@
     "type": "Instant",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "simplified_effect": "Choose one: Target player gains 3 life; or prevent the next 3 damage dealt to any target this turn."
   },
   "pacifism_001": {
     "card_id": "pacifism_001",
     "name": "Pacifism",
     "type": "Enchantment",
-    "subtype": "Aura",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "1W",
     "simplified_effect": "Enchant creature. Enchanted creature can't attack or block."
   },
   "pacifism_002": {
     "card_id": "pacifism_002",
     "name": "Pacifism",
     "type": "Enchantment",
-    "subtype": "Aura",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "1W",
     "simplified_effect": "Enchant creature. Enchanted creature can't attack or block."
   },
   "pacifism_003": {
     "card_id": "pacifism_003",
     "name": "Pacifism",
     "type": "Enchantment",
-    "subtype": "Aura",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "1W",
     "simplified_effect": "Enchant creature. Enchanted creature can't attack or block."
   },
   "pacifism_004": {
     "card_id": "pacifism_004",
     "name": "Pacifism",
     "type": "Enchantment",
-    "subtype": "Aura",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "1W",
     "simplified_effect": "Enchant creature. Enchanted creature can't attack or block."
   },
   "white_knight_001": {
     "card_id": "white_knight_001",
     "name": "White Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "WW",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from black."
@@ -2238,9 +2222,9 @@
     "card_id": "white_knight_002",
     "name": "White Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "WW",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from black."
@@ -2249,9 +2233,9 @@
     "card_id": "white_knight_003",
     "name": "White Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "WW",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from black."
@@ -2260,9 +2244,9 @@
     "card_id": "white_knight_004",
     "name": "White Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "W",
     "CMC": 2,
+    "mana_cost": "WW",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from black."
@@ -2271,9 +2255,9 @@
     "card_id": "serra_angel_001",
     "name": "Serra Angel",
     "type": "Creature",
-    "subtype": "Angel",
     "color": "W",
     "CMC": 5,
+    "mana_cost": "3WW",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying. Vigilance."
@@ -2282,9 +2266,9 @@
     "card_id": "serra_angel_002",
     "name": "Serra Angel",
     "type": "Creature",
-    "subtype": "Angel",
     "color": "W",
     "CMC": 5,
+    "mana_cost": "3WW",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying. Vigilance."
@@ -2293,9 +2277,9 @@
     "card_id": "serra_angel_003",
     "name": "Serra Angel",
     "type": "Creature",
-    "subtype": "Angel",
     "color": "W",
     "CMC": 5,
+    "mana_cost": "3WW",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying. Vigilance."
@@ -2304,9 +2288,9 @@
     "card_id": "serra_angel_004",
     "name": "Serra Angel",
     "type": "Creature",
-    "subtype": "Angel",
     "color": "W",
     "CMC": 5,
+    "mana_cost": "3WW",
     "power": "4",
     "toughness": "4",
     "simplified_effect": "Flying. Vigilance."
@@ -2315,9 +2299,9 @@
     "card_id": "savannah_lions_001",
     "name": "Savannah Lions",
     "type": "Creature",
-    "subtype": "Cat",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "2",
     "toughness": "1",
     "simplified_effect": "(No abilities.)"
@@ -2326,9 +2310,9 @@
     "card_id": "savannah_lions_002",
     "name": "Savannah Lions",
     "type": "Creature",
-    "subtype": "Cat",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "2",
     "toughness": "1",
     "simplified_effect": "(No abilities.)"
@@ -2337,9 +2321,9 @@
     "card_id": "savannah_lions_003",
     "name": "Savannah Lions",
     "type": "Creature",
-    "subtype": "Cat",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "2",
     "toughness": "1",
     "simplified_effect": "(No abilities.)"
@@ -2348,9 +2332,9 @@
     "card_id": "savannah_lions_004",
     "name": "Savannah Lions",
     "type": "Creature",
-    "subtype": "Cat",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "2",
     "toughness": "1",
     "simplified_effect": "(No abilities.)"
@@ -2359,9 +2343,9 @@
     "card_id": "mother_of_runes_001",
     "name": "Mother of Runes",
     "type": "Creature",
-    "subtype": "Human Cleric",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Target creature you control gains protection from the color of your choice until end of turn."
@@ -2370,9 +2354,9 @@
     "card_id": "mother_of_runes_002",
     "name": "Mother of Runes",
     "type": "Creature",
-    "subtype": "Human Cleric",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Target creature you control gains protection from the color of your choice until end of turn."
@@ -2381,9 +2365,9 @@
     "card_id": "mother_of_runes_003",
     "name": "Mother of Runes",
     "type": "Creature",
-    "subtype": "Human Cleric",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Target creature you control gains protection from the color of your choice until end of turn."
@@ -2392,9 +2376,9 @@
     "card_id": "mother_of_runes_004",
     "name": "Mother of Runes",
     "type": "Creature",
-    "subtype": "Human Cleric",
     "color": "W",
     "CMC": 1,
+    "mana_cost": "W",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Target creature you control gains protection from the color of your choice until end of turn."
@@ -2405,6 +2389,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Add {B}{B}{B}."
   },
   "dark_ritual_002": {
@@ -2413,6 +2398,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Add {B}{B}{B}."
   },
   "dark_ritual_003": {
@@ -2421,6 +2407,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Add {B}{B}{B}."
   },
   "dark_ritual_004": {
@@ -2429,6 +2416,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Add {B}{B}{B}."
   },
   "terror_001": {
@@ -2437,6 +2425,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonartifact, nonblack creature. It can't be regenerated."
   },
   "terror_002": {
@@ -2445,6 +2434,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonartifact, nonblack creature. It can't be regenerated."
   },
   "terror_003": {
@@ -2453,6 +2443,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonartifact, nonblack creature. It can't be regenerated."
   },
   "terror_004": {
@@ -2461,6 +2452,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonartifact, nonblack creature. It can't be regenerated."
   },
   "doom_blade_001": {
@@ -2469,6 +2461,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonblack creature."
   },
   "doom_blade_002": {
@@ -2477,6 +2470,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonblack creature."
   },
   "doom_blade_003": {
@@ -2485,6 +2479,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonblack creature."
   },
   "doom_blade_004": {
@@ -2493,6 +2488,7 @@
     "type": "Instant",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "1B",
     "simplified_effect": "Destroy target nonblack creature."
   },
   "raise_dead_001": {
@@ -2501,6 +2497,7 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Return target creature card from your graveyard to your hand."
   },
   "raise_dead_002": {
@@ -2509,6 +2506,7 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Return target creature card from your graveyard to your hand."
   },
   "raise_dead_003": {
@@ -2517,6 +2515,7 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Return target creature card from your graveyard to your hand."
   },
   "raise_dead_004": {
@@ -2525,6 +2524,7 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 1,
+    "mana_cost": "B",
     "simplified_effect": "Return target creature card from your graveyard to your hand."
   },
   "mind_rot_001": {
@@ -2533,6 +2533,7 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "2B",
     "simplified_effect": "Target player discards two cards."
   },
   "mind_rot_002": {
@@ -2541,6 +2542,7 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "2B",
     "simplified_effect": "Target player discards two cards."
   },
   "mind_rot_003": {
@@ -2549,6 +2551,7 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "2B",
     "simplified_effect": "Target player discards two cards."
   },
   "mind_rot_004": {
@@ -2557,15 +2560,16 @@
     "type": "Sorcery",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "2B",
     "simplified_effect": "Target player discards two cards."
   },
   "gray_merchant_001": {
     "card_id": "gray_merchant_001",
     "name": "Gray Merchant of Asphodel",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 5,
+    "mana_cost": "3BB",
     "power": "2",
     "toughness": "4",
     "simplified_effect": "When Gray Merchant enters, each opponent loses X life (X = your devotion to black). You gain that much life."
@@ -2574,9 +2578,9 @@
     "card_id": "gray_merchant_002",
     "name": "Gray Merchant of Asphodel",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 5,
+    "mana_cost": "3BB",
     "power": "2",
     "toughness": "4",
     "simplified_effect": "When Gray Merchant enters, each opponent loses X life (X = your devotion to black). You gain that much life."
@@ -2585,9 +2589,9 @@
     "card_id": "gray_merchant_003",
     "name": "Gray Merchant of Asphodel",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 5,
+    "mana_cost": "3BB",
     "power": "2",
     "toughness": "4",
     "simplified_effect": "When Gray Merchant enters, each opponent loses X life (X = your devotion to black). You gain that much life."
@@ -2596,9 +2600,9 @@
     "card_id": "gray_merchant_004",
     "name": "Gray Merchant of Asphodel",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 5,
+    "mana_cost": "3BB",
     "power": "2",
     "toughness": "4",
     "simplified_effect": "When Gray Merchant enters, each opponent loses X life (X = your devotion to black). You gain that much life."
@@ -2607,9 +2611,9 @@
     "card_id": "gravedigger_001",
     "name": "Gravedigger",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 4,
+    "mana_cost": "3B",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "When Gravedigger enters, return target creature card from your graveyard to your hand."
@@ -2618,9 +2622,9 @@
     "card_id": "gravedigger_002",
     "name": "Gravedigger",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 4,
+    "mana_cost": "3B",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "When Gravedigger enters, return target creature card from your graveyard to your hand."
@@ -2629,9 +2633,9 @@
     "card_id": "gravedigger_003",
     "name": "Gravedigger",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 4,
+    "mana_cost": "3B",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "When Gravedigger enters, return target creature card from your graveyard to your hand."
@@ -2640,9 +2644,9 @@
     "card_id": "gravedigger_004",
     "name": "Gravedigger",
     "type": "Creature",
-    "subtype": "Zombie",
     "color": "B",
     "CMC": 4,
+    "mana_cost": "3B",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "When Gravedigger enters, return target creature card from your graveyard to your hand."
@@ -2651,9 +2655,9 @@
     "card_id": "royal_assassin_001",
     "name": "Royal Assassin",
     "type": "Creature",
-    "subtype": "Human Assassin",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "1BB",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Destroy target tapped creature."
@@ -2662,9 +2666,9 @@
     "card_id": "royal_assassin_002",
     "name": "Royal Assassin",
     "type": "Creature",
-    "subtype": "Human Assassin",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "1BB",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Destroy target tapped creature."
@@ -2673,9 +2677,9 @@
     "card_id": "royal_assassin_003",
     "name": "Royal Assassin",
     "type": "Creature",
-    "subtype": "Human Assassin",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "1BB",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Destroy target tapped creature."
@@ -2684,9 +2688,9 @@
     "card_id": "royal_assassin_004",
     "name": "Royal Assassin",
     "type": "Creature",
-    "subtype": "Human Assassin",
     "color": "B",
     "CMC": 3,
+    "mana_cost": "1BB",
     "power": "1",
     "toughness": "1",
     "simplified_effect": "Tap: Destroy target tapped creature."
@@ -2695,9 +2699,9 @@
     "card_id": "black_knight_001",
     "name": "Black Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "BB",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from white."
@@ -2706,9 +2710,9 @@
     "card_id": "black_knight_002",
     "name": "Black Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "BB",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from white."
@@ -2717,9 +2721,9 @@
     "card_id": "black_knight_003",
     "name": "Black Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "BB",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from white."
@@ -2728,9 +2732,9 @@
     "card_id": "black_knight_004",
     "name": "Black Knight",
     "type": "Creature",
-    "subtype": "Human Knight",
     "color": "B",
     "CMC": 2,
+    "mana_cost": "BB",
     "power": "2",
     "toughness": "2",
     "simplified_effect": "First strike. Protection from white."
@@ -2741,6 +2745,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 1,
+    "mana_cost": "1",
     "simplified_effect": "Tap: Add {C}{C}."
   },
   "sol_ring_002": {
@@ -2749,6 +2754,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 1,
+    "mana_cost": "1",
     "simplified_effect": "Tap: Add {C}{C}."
   },
   "sol_ring_003": {
@@ -2757,6 +2763,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 1,
+    "mana_cost": "1",
     "simplified_effect": "Tap: Add {C}{C}."
   },
   "sol_ring_004": {
@@ -2765,13 +2772,13 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 1,
+    "mana_cost": "1",
     "simplified_effect": "Tap: Add {C}{C}."
   },
   "ornithopter_001": {
     "card_id": "ornithopter_001",
     "name": "Ornithopter",
     "type": "Artifact Creature",
-    "subtype": "Thopter",
     "color": "C",
     "power": "0",
     "toughness": "2",
@@ -2781,7 +2788,6 @@
     "card_id": "ornithopter_002",
     "name": "Ornithopter",
     "type": "Artifact Creature",
-    "subtype": "Thopter",
     "color": "C",
     "power": "0",
     "toughness": "2",
@@ -2791,7 +2797,6 @@
     "card_id": "ornithopter_003",
     "name": "Ornithopter",
     "type": "Artifact Creature",
-    "subtype": "Thopter",
     "color": "C",
     "power": "0",
     "toughness": "2",
@@ -2801,7 +2806,6 @@
     "card_id": "ornithopter_004",
     "name": "Ornithopter",
     "type": "Artifact Creature",
-    "subtype": "Thopter",
     "color": "C",
     "power": "0",
     "toughness": "2",
@@ -2813,6 +2817,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 2,
+    "mana_cost": "2",
     "simplified_effect": "{2}, Tap: Target player mills 2 cards (puts top 2 cards of their library into their graveyard)."
   },
   "millstone_002": {
@@ -2821,6 +2826,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 2,
+    "mana_cost": "2",
     "simplified_effect": "{2}, Tap: Target player mills 2 cards (puts top 2 cards of their library into their graveyard)."
   },
   "millstone_003": {
@@ -2829,6 +2835,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 2,
+    "mana_cost": "2",
     "simplified_effect": "{2}, Tap: Target player mills 2 cards (puts top 2 cards of their library into their graveyard)."
   },
   "millstone_004": {
@@ -2837,6 +2844,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 2,
+    "mana_cost": "2",
     "simplified_effect": "{2}, Tap: Target player mills 2 cards (puts top 2 cards of their library into their graveyard)."
   },
   "rod_of_ruin_001": {
@@ -2845,6 +2853,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 4,
+    "mana_cost": "4",
     "simplified_effect": "{3}, Tap: Rod of Ruin deals 1 damage to any target."
   },
   "rod_of_ruin_002": {
@@ -2853,6 +2862,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 4,
+    "mana_cost": "4",
     "simplified_effect": "{3}, Tap: Rod of Ruin deals 1 damage to any target."
   },
   "rod_of_ruin_003": {
@@ -2861,6 +2871,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 4,
+    "mana_cost": "4",
     "simplified_effect": "{3}, Tap: Rod of Ruin deals 1 damage to any target."
   },
   "rod_of_ruin_004": {
@@ -2869,6 +2880,7 @@
     "type": "Artifact",
     "color": "C",
     "CMC": 4,
+    "mana_cost": "4",
     "simplified_effect": "{3}, Tap: Rod of Ruin deals 1 damage to any target."
   }
 }

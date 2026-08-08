@@ -64,8 +64,20 @@ class ClientHandler(threading.Thread):
             except Exception:
                 pass
             if self.player_id:
+                engine = self.server.gameEngine
                 try:
-                    self.server.gameEngine.unregister_player(self.player_id)
+                    from .common.lifecycle import MacroState
+                    if engine.macro_state == MacroState.IN_GAME and engine.game_state is not None:
+                        loser = self.player_id
+                        winner = next(
+                            (p.name for p in engine.game_state.players if p.name != loser), None
+                        )
+                        if winner:
+                            self.pdu_handler._finish_game(winner, loser, "DISCONNECT")
+                except Exception:
+                    pass
+                try:
+                    engine.unregister_player(self.player_id)
                 except Exception:
                     pass
 

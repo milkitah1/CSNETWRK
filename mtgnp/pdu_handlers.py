@@ -23,7 +23,8 @@ class PDUHandler:
 
     def __init__(self, client: Any) -> None:
         self.client = client
-        self.rules_engine = RulesEngine()
+        # Pass lifecycle engine reference so RulesEngine can call trigger_game_over()
+        self.rules_engine = RulesEngine(lifecycle=client.server.gameEngine if hasattr(client, 'server') else None)
         self.handlers = {
             PDUs.PING: self.handle_ping,
             PDUs.HELLO: self.handle_hello,
@@ -44,17 +45,14 @@ class PDUHandler:
             self.client._send(PDUs.make_error(400, f"unhandled pdu type: {t}"))
 
     # -------------------------------------------------------------------------
-    # Shared helper: broadcast GAME_OVER and transition lifecycle to GAME_OVER
+    # Shared helper: broadcast GAME_OVER — only broadcasts, does NOT decide logic
     # -------------------------------------------------------------------------
     def _finish_game(self, winner_id: str, loser_id: str, reason: str) -> None:
+        """Route game-over through lifecycle (idempotent) which fires the
+        server's on_game_over broadcast callback exactly once."""
         engine = self.client.server.gameEngine
+        # trigger_game_over sets macro_state and fires on_game_over -> broadcast
         engine.trigger_game_over(winner_id, loser_id, reason)
-        self.client.server.broadcast({
-            "type": PDUs.GAME_OVER,
-            "winner_id": winner_id,
-            "loser_id": loser_id,
-            "reason": reason,
-        })
 
     # -------------------------------------------------------------------------
     # In-game PDU handler: delegates to RulesEngine, then flushes results
@@ -64,6 +62,9 @@ class PDUHandler:
         if engine.macro_state != MacroState.IN_GAME or engine.game_state is None:
             self.client._send(PDUs.make_error(400, "NOT_IN_GAME"))
             return
+
+        # Inject lifecycle reference so RulesEngine can call trigger_game_over()
+        self.rules_engine.lifecycle = engine
 
         result = self.rules_engine.process_action(
             engine.game_state, self.client.player_id, pkt
@@ -82,6 +83,8 @@ class PDUHandler:
             engine.advance_phase()
             self.client.server.send_game_state_to_all()
 
+        # game_over_pending is already routed through lifecycle inside RulesEngine;
+        # here we only need to broadcast the GAME_OVER PDU if it fired.
         if result.game_over_pending:
             self._finish_game(
                 result.game_over_pending["winner_id"],
@@ -90,7 +93,7 @@ class PDUHandler:
             )
 
     # -------------------------------------------------------------------------
-    # CONCEDE handler
+    # CONCEDE handler — routes through lifecycle.trigger_game_over()
     # -------------------------------------------------------------------------
     def handle_concede(self, pkt: dict) -> None:
         if not self.client.player_id:
@@ -101,13 +104,13 @@ class PDUHandler:
             self.client._send(PDUs.make_error(400, "NOT_IN_GAME"))
             return
         loser = self.client.player_id
-        winner = next(
-            p.name for p in engine.game_state.players if p.name != loser
-        )
-        self._finish_game(winner, loser, "CONCEDE")
+        winner = engine.get_opponent(loser)
+        if winner:
+            # lifecycle.trigger_game_over() is idempotent; _finish_game broadcasts
+            self._finish_game(winner, loser, "CONCEDE")
 
     # -------------------------------------------------------------------------
-    # DISCONNECT handler (explicit client-sent disconnect PDU)
+    # DISCONNECT handler — routes through lifecycle.trigger_game_over()
     # -------------------------------------------------------------------------
     def handle_disconnect(self, pkt: dict) -> None:
         if not self.client.player_id:
@@ -115,10 +118,9 @@ class PDUHandler:
         engine = self.client.server.gameEngine
         if engine.macro_state == MacroState.IN_GAME and engine.game_state is not None:
             loser = self.client.player_id
-            winner = next(
-                p.name for p in engine.game_state.players if p.name != loser
-            )
-            self._finish_game(winner, loser, "DISCONNECT")
+            winner = engine.get_opponent(loser)
+            if winner:
+                self._finish_game(winner, loser, "DISCONNECT")
         self.client.running = False
 
     def handle_ping(self, pkt: dict) -> None:

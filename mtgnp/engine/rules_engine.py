@@ -2,18 +2,25 @@
 
 Coordinates priority, stack resolution, combat state machine, triggered abilities,
 and state-based actions behind a single PDU processing entry point.
+
+The engine accepts an optional `lifecycle` (GameLifecycleEngine) reference so
+that game-over conditions detected here are routed through the single
+authoritative trigger_game_over() path.
 """
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Tuple, NamedTuple
-from mtgnp.common.game_state import GameState
-from mtgnp.common import pdu as PDUs
-from mtgnp.engine.priority import PriorityManager
-from mtgnp.engine.stack import StackManager
-from mtgnp.engine.sba import check_state_based_actions
-from mtgnp.engine.triggers import TriggerManager
-from mtgnp.engine.combat import CombatManager
-from mtgnp.common.verbose import log_send, log_recv
+from typing import Any, Dict, List, Optional, Tuple, NamedTuple, TYPE_CHECKING
+from ..common.game_state import GameState
+from ..common import pdu as PDUs
+from .priority import PriorityManager
+from .stack import StackManager
+from .sba import check_state_based_actions
+from .triggers import TriggerManager
+from .combat import CombatManager
+from ..common.verbose import log_send, log_recv
+
+if TYPE_CHECKING:
+    from ..common.lifecycle import GameLifecycleEngine
 
 
 class EngineResult(NamedTuple):
@@ -27,17 +34,30 @@ class EngineResult(NamedTuple):
 class RulesEngine:
     """Unified facade interface for the MTGNP rules engine."""
 
-    def __init__(self) -> None:
+    def __init__(self, lifecycle: "Optional[GameLifecycleEngine]" = None) -> None:
         self.priority_mgr = PriorityManager()
         self.stack_mgr = StackManager()
         self.combat_mgr = CombatManager()
         self.trigger_mgr = TriggerManager()
+        # Optional reference to the lifecycle engine for direct game-over routing
+        self.lifecycle = lifecycle
 
     def _get_player_index(self, game_state: GameState, name: str) -> int:
         for idx, p in enumerate(game_state.players):
             if p.name == name:
                 return idx
         return 0
+
+    def _handle_game_over(self, game_over_pending: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+        """Route a game-over condition through lifecycle.trigger_game_over().
+        Returns the pending dict unchanged so callers can still inspect it."""
+        if game_over_pending and self.lifecycle:
+            self.lifecycle.lifecycle.trigger_game_over(
+                reason=game_over_pending["reason"],
+                winner_id=game_over_pending["winner_id"],
+                loser_id=game_over_pending["loser_id"],
+            )
+        return game_over_pending
 
     def process_action(
         self, game_state: GameState, player_name: str, pdu: Dict[str, Any]
@@ -73,7 +93,7 @@ class RulesEngine:
                     # Trigger state-based actions sweep after stack item resolution
                     sba_events, game_over = check_state_based_actions(game_state)
                     if game_over or game_over_stack:
-                        game_over_pending = game_over or game_over_stack
+                        game_over_pending = self._handle_game_over(game_over or game_over_stack)
 
                     # Reset consecutive pass counter and grant priority back to Active Player
                     self.priority_mgr.consecutive_passes = 0
@@ -107,7 +127,7 @@ class RulesEngine:
                     # Run SBA sweep
                     sba_events, game_over = check_state_based_actions(game_state)
                     if game_over:
-                        game_over_pending = game_over
+                        game_over_pending = self._handle_game_over(game_over)
 
                     self.priority_mgr.consecutive_passes = 0
                     p_idx = self._get_player_index(game_state, player_name)
@@ -128,7 +148,7 @@ class RulesEngine:
 
                     sba_events, game_over = check_state_based_actions(game_state)
                     if game_over:
-                        game_over_pending = game_over
+                        game_over_pending = self._handle_game_over(game_over)
 
                     self.priority_mgr.consecutive_passes = 0
                     p_idx = self._get_player_index(game_state, player_name)
@@ -156,7 +176,7 @@ class RulesEngine:
 
                     sba_events, game_over = check_state_based_actions(game_state)
                     if game_over:
-                        game_over_pending = game_over
+                        game_over_pending = self._handle_game_over(game_over)
 
                     self.priority_mgr.consecutive_passes = 0
                     p_idx = self._get_player_index(game_state, player_name)
@@ -182,7 +202,7 @@ class RulesEngine:
 
                 sba_events, game_over = check_state_based_actions(game_state)
                 if game_over:
-                    game_over_pending = game_over
+                    game_over_pending = self._handle_game_over(game_over)
 
                 engine_signal = next_signal
 
@@ -202,7 +222,7 @@ class RulesEngine:
 
                 sba_events, game_over = check_state_based_actions(game_state)
                 if game_over:
-                    game_over_pending = game_over
+                    game_over_pending = self._handle_game_over(game_over)
 
                 engine_signal = next_signal
 

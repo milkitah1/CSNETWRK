@@ -47,6 +47,8 @@ class Client:
         self._ping_stop = threading.Event()
         self._pong_event = threading.Event()
         self._last_pong: Optional[float] = None
+        # Set to True when GAME_OVER is received; blocks further sends
+        self._game_over: bool = False
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -157,6 +159,9 @@ class Client:
     def send_pdu(self, obj: dict) -> None:
         if not self.sock:
             raise RuntimeError("not connected")
+        # Block all non-heartbeat sends once the game is over
+        if self._game_over and obj.get("type") not in (PDUs.PING, PDUs.DISCONNECT):
+            return
 
         ptype = obj.get("type")
         if ptype == PDUs.PLAYER_READY:

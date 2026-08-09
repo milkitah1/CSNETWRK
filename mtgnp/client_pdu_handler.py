@@ -27,6 +27,7 @@ class ClientPDUHandler:
             "PLAYER_READY_ACK": self._handle_player_ready_ack,
             PDUs.ERROR: self._handle_error,
             PDUs.GAME_STATE_UPDATE: self._handle_game_state_update,
+            PDUs.GAME_OVER: self._handle_game_over,
         }
 
     def register_callback(self, pdu_type: str, cb: Callable[[dict], None]) -> None:
@@ -114,6 +115,17 @@ class ClientPDUHandler:
     def _handle_error(self, pkt: dict) -> None:
         # store last error for quick inspection
         self.client._last_error = pkt
+
+    def _handle_game_over(self, pkt: dict) -> None:
+        """Set client into GAME_OVER state and display result."""
+        self.client._game_over = True
+        winner = pkt.get("winner_id", "?")
+        loser = pkt.get("loser_id", "?")
+        reason = pkt.get("reason", "?")
+        try:
+            print(f"\n=== GAME OVER === winner={winner}  loser={loser}  reason={reason}")
+        except Exception:
+            pass
 
     def _handle_game_state_update(self, pkt: dict) -> None:
         # Parse lobby-phase updates and update client-friendly fields

@@ -7,7 +7,7 @@ and turn phase transitions while mutating the canonical GameState object.
 from __future__ import annotations
 
 from enum import Enum
-from typing import Dict, List, Optional, Tuple, Set
+from typing import Callable, Dict, List, Optional, Tuple, Set
 import random
 import threading
 from typing import Any
@@ -40,6 +40,39 @@ class TurnPhase(str, Enum):
     END_STEP = "END_STEP"
     CLEANUP = "CLEANUP"
 
+# ---------------------------------------------------------------------------
+# LifecycleManager — single authoritative game-over gate
+# ---------------------------------------------------------------------------
+class LifecycleManager:
+    """Thin wrapper that prevents duplicate GAME_OVER triggers and owns the broadcast callback."""
+
+    def __init__(self) -> None:
+        self._game_over_fired = False
+        self._lock = threading.Lock()
+        # Injected by the server after construction
+        self.on_game_over: Optional[Callable[[str, str, str], None]] = None
+
+    def trigger_game_over(self, reason: str, winner_id: str, loser_id: str) -> bool:
+        """Fire GAME_OVER exactly once. Returns True if this call was the one
+        that fired it, False if it was already fired (duplicate guard)."""
+        with self._lock:
+            if self._game_over_fired:
+                return False
+            self._game_over_fired = True
+        if self.on_game_over:
+            self.on_game_over(winner_id, loser_id, reason)
+        return True
+
+    def reset(self) -> None:
+        """Clear the fired flag so a new game can end properly."""
+        with self._lock:
+            self._game_over_fired = False
+
+    @property
+    def is_over(self) -> bool:
+        return self._game_over_fired
+
+
 # Main controller and state machine for the entire game session
 class GameLifecycleEngine:
     def __init__(self, max_players: int = 2):
@@ -55,6 +88,9 @@ class GameLifecycleEngine:
         self.registered_players: Dict[str, List[str]] = {}  # player_id -> deck_list
         self.mulligan_counts: Dict[str, int] = {}           # player_id -> count
         self.mulligan_kept: Set[str] = set()                # set of players who clicked keep
+
+        # Single authoritative game-over gate
+        self.lifecycle = LifecycleManager()
         
         # Turn cycle order
         self.turn_phases: List[TurnPhase] = [
@@ -438,6 +474,8 @@ class GameLifecycleEngine:
     """Transitions state machine to GAME_OVER."""
     def trigger_game_over(self, winner_id: str, loser_id: str, reason: str) -> Dict[str, str]:
         self.macro_state = MacroState.GAME_OVER
+        # Also fire through LifecycleManager (idempotent)
+        self.lifecycle.trigger_game_over(reason, winner_id, loser_id)
         return {
             "winner_id": winner_id,
             "loser_id": loser_id,
@@ -452,10 +490,20 @@ class GameLifecycleEngine:
         self.mulligan_counts.clear()
         self.mulligan_kept.clear()
         self._phase_index = 0
+        self.lifecycle.reset()  # allow next game to fire GAME_OVER again
 
     # -------------------------------------------------------------------------
     # HELPERS
     # -------------------------------------------------------------------------
+    def get_opponent(self, player_id: str) -> Optional[str]:
+        """Return the opponent's player_id, or None if game_state is absent."""
+        if not self.game_state:
+            return None
+        for p in self.game_state.players:
+            if p.name != player_id:
+                return p.name
+        return None
+
     def _get_player_index(self, player_id: str) -> Optional[int]:
         if not self.game_state:
             return None

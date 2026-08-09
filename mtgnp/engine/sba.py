@@ -45,8 +45,8 @@ def check_state_based_actions(
                 loser_idx = 1
                 winner_idx = 0
 
+            # Return a structured pending dict; caller must call trigger_game_over()
             game_over_pending = {
-                "type": "GAME_OVER_PENDING",
                 "winner_id": game_state.players[winner_idx].name,
                 "loser_id": game_state.players[loser_idx].name,
                 "reason": "LIFE_ZERO",

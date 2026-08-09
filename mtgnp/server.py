@@ -26,6 +26,7 @@ class ClientHandler(threading.Thread):
         self.server = server
         self.running = True
         self.player_id: str | None = None
+        # PDUHandler is created after server is set so it can access server.gameEngine
         self.pdu_handler = PDUHandler(self)
         self.seq_num = 0
         self.ping_seq_num = 0
@@ -69,10 +70,9 @@ class ClientHandler(threading.Thread):
                     from .common.lifecycle import MacroState
                     if engine.macro_state == MacroState.IN_GAME and engine.game_state is not None:
                         loser = self.player_id
-                        winner = next(
-                            (p.name for p in engine.game_state.players if p.name != loser), None
-                        )
+                        winner = engine.get_opponent(loser)
                         if winner:
+                            # Route through lifecycle — idempotent, broadcasts GAME_OVER
                             self.pdu_handler._finish_game(winner, loser, "DISCONNECT")
                 except Exception:
                     pass
@@ -89,6 +89,8 @@ class Server:
         self.port = port
         
         self.gameEngine = GameLifecycleEngine(max_players=2)
+        # Wire the lifecycle broadcast callback so trigger_game_over() auto-broadcasts
+        self.gameEngine.lifecycle.on_game_over = self._on_game_over
         self._sock: Optional[socket.socket] = None
         self._accept_thread: Optional[threading.Thread] = None
         self._clients: list[ClientHandler] = []
@@ -101,6 +103,15 @@ class Server:
                 card["card_id (protocol reference)"]
                 for card in cards
             }
+
+    # Called by LifecycleManager.on_game_over — broadcasts GAME_OVER to all clients
+    def _on_game_over(self, winner_id: str, loser_id: str, reason: str) -> None:
+        self.broadcast({
+            "type": PDUs.GAME_OVER,
+            "winner_id": winner_id,
+            "loser_id": loser_id,
+            "reason": reason,
+        })
 
     def start(self) -> None:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

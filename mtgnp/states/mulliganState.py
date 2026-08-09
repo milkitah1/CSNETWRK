@@ -34,6 +34,10 @@ class MulliganState:
                         print("\n==> MULLIGAN phase ended — game starting")
                         return
 
+                elif t == PDUs.GAME_OVER:
+                    # Game ended during mulligan (e.g. disconnect)
+                    return
+
                 elif t == PDUs.GAME_STATE_UPDATE:
                     self.client.game_state = pkt.get("state")
 

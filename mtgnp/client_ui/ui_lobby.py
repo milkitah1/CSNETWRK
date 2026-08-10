@@ -5,7 +5,7 @@ from collections import Counter
 from mtgnp.client_ui.ui_helper import * 
 from mtgnp.cards import get_unique_cards, get_card
 
-from mtgnp.client_ui.ui_main_game import *
+
 from mtgnp.common import pdu as PDUs
 from mtgnp.client import *
 

@@ -12,7 +12,7 @@ class MulliganState:
         self.mulligan_count = 0
         self.does_keep = False
         self.bottomed_indices: set[int] = set()
-            
+        self.bottomed_cards = []
         self.selected_index = 0
     
         # Dimensions and Coordinates for the hand display and detail window
@@ -78,6 +78,8 @@ class MulliganState:
 
 
     def handle_key_mulligan(self, key):
+        key = normalize_key(key)
+
         # Move selection
         if key == curses.KEY_UP:
             if self.selected_index > 0:
@@ -89,11 +91,11 @@ class MulliganState:
 
 
         # Keep
-        elif key in (ord("y"), ord("Y")):
+        elif key == (ord("y")):
             self.does_keep = True
 
         # Mulligan
-        elif key in (ord("n"), ord("N")):
+        elif key == (ord("n")):
             self.does_keep = False
             self.mulligan_count += 1
 
@@ -148,17 +150,9 @@ class MulliganState:
             if len(self.bottomed_indices) == self.mulligan_count and key == 27:
                 break
 
-            # TODO: send a PDU
-            # Insert code below
-
         self.hand_window.keypad(False)
-        bottomed_cards = [self.hand[i] for i in self.bottomed_indices]
-
-        return bottomed_cards
+        self.bottomed_cards = [self.hand[i] for i in self.bottomed_indices]
         
-
-
-
 
     def keep_or_mulligan(self):
         self.init_hand_mulligan()
@@ -167,7 +161,7 @@ class MulliganState:
         key=""
         self.hand_window.keypad(True)
 
-        while key not in (ord("y"), ord("Y"), ord("n"), ord("N")):
+        while key not in (ord("y"), ord("n")):
             self.render_hand()
 
             key = self.hand_window.getch()

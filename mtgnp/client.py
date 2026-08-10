@@ -9,6 +9,7 @@ import socket
 import threading
 import queue
 import time
+import curses
 from typing import Tuple, Optional
 
 from .common import framing
@@ -17,6 +18,7 @@ from .common.verbose import set_verbose
 from .client_pdu_handler import ClientPDUHandler
 from .states.lobbyState import LobbyState
 from .states.mulliganState import MulliganState
+from .screen import lobby_get_name, LobbyCardSelectionState
 
 
 class Client:
@@ -201,10 +203,13 @@ class Client:
         with open(filename, "r") as f:
             return [line.strip() for line in f if line.strip()]
 
-    def interactive_lobby(self, name: str = "player") -> None:
+    def interactive_lobby(self, stdscr, name: str = "player") -> None:
         """Delegate the lobby UI to the `LobbyState` object."""
-        lobby = LobbyState(self)
-        lobby.run(name)
+        # lobby = LobbyState(self)
+        # lobby.run(name)
+        lobby = LobbyCardSelectionState(stdscr)
+        return lobby.get_cards()
+
 
 
 def quick_ping(host: str, port: int) -> Tuple[str, dict]:

@@ -7,15 +7,19 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import curses
 
-from mtgnp.states.mulliganState import MulliganState
+# from mtgnp.states.mulliganState import MulliganState
 
 from .server import Server
 from .client import Client
-from .client import Client
+from .common import pdu as PDUs
+from .screen import lobby_get_name, initialize_screen
+from .client_ui.ui_lobby import run_lobby
+from .client_ui.ui_mulligan import MulliganState
 
 
-def main():
+def main(stdscr):
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="cmd")
     srun = sub.add_parser("server")
@@ -49,14 +53,33 @@ def main():
         if args.ping:
             print(c.ping())
         if args.connect:
-            c.interactive_lobby(args.name)
-            if c._start_game:
-                mulligan = MulliganState(c)
-                mulligan.run()
+            initialize_screen(stdscr)
+            name = lobby_get_name(stdscr)
+            started = run_lobby(stdscr, c, name)
+
+            if started and c._start_game:
+                stdscr.clear()
+                stdscr.refresh()
+                mulligan = MulliganState(
+                    # TODO: access client's "hand" (opening hand) here
+                )
+            
+                keeps = False
+                while not keeps:
+                    keeps = mulligan.keep_or_mulligan()
+                    c.send_pdu({
+                        "type": "MULLIGAN_CHOICE", "keep": keeps, "cards_to_bottom": mulligan.bottomed_cards
+                    })
+            
+                if mulligan.mulligan_count > 0:
+                    mulligan.bottom_cards()
+                    c.send_pdu({
+                        "type": "MULLIGAN_CHOICE", "keep": keeps, "cards_to_bottom": mulligan.bottomed_cards
+                    })
         c.close()
     else:
         p.print_help()
 
 
 if __name__ == "__main__":
-    main()
+    curses.wrapper(main)

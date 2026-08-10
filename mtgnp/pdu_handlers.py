@@ -159,7 +159,7 @@ class PDUHandler:
             self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
             return
         name = pkt.get("name") or f"{self.client.addr}"
-        deckList = pkt.get("decklist") or None
+        deckList = pkt.get("deck_list") or None
 
         # validate deck
         if not deckList or not isinstance(deckList, list):

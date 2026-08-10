@@ -41,10 +41,10 @@ class ClientPDUHandler:
         """
         if not isinstance(pkt, dict):
             return
-        t = pkt.get("type")
+        type = pkt.get("type")
         if "seq_num" in pkt:
             self.client.seq_num = pkt["seq_num"]
-        handler = self.handlers.get(t)
+        handler = self.handlers.get(type)
         try:
             if handler:
                 handler(pkt)
@@ -54,7 +54,7 @@ class ClientPDUHandler:
             except Exception:
                 pass
             # invoke any registered callback
-            cb = self._callbacks.get(t)
+            cb = self._callbacks.get(type)
             if cb:
                 try:
                     cb(pkt)

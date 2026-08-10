@@ -133,6 +133,15 @@ class Server:
                     conn, addr = self._sock.accept()
                 except OSError:
                     break
+
+                if len(self.gameEngine.joined_players) >= self.gameEngine.max_players:
+                    try:
+                        framing.send_pdu(conn, PDUs.make_error(400, "LOBBY_FULL"))
+                    except Exception:
+                        pass
+                   
+                    continue
+
                 handler = ClientHandler(conn, addr, self)
                 self._clients.append(handler)
                 handler.start()

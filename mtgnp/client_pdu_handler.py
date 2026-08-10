@@ -114,6 +114,10 @@ class ClientPDUHandler:
 
     def _handle_error(self, pkt: dict) -> None:
         # store last error for quick inspection
+        if pkt.get("message") == "LOBBY_FULL":
+            
+         print(f"Received ERROR PDU: {pkt}")
+        
         self.client._last_error = pkt
 
     def _handle_game_over(self, pkt: dict) -> None:

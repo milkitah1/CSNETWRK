@@ -143,8 +143,16 @@ class PDUHandler:
 
     def handle_hello(self, pkt: dict) -> None:
         name = pkt.get("name") or f"{self.client.addr}"
+
+        # Don't allow more than 2 players
+        if len(self.client.server.gameEngine.joined_players) >= 2:
+            self.client._send(PDUs.make_error(400, "LOBBY_FULL"))
+            self.client.running = False
+            return
+
         # Generate unique player ID
         self.client.player_id = name
+
         # Register player in the lifecycle-managed lobby
         try:
             self.client.server.gameEngine.add_player(self.client.player_id)
@@ -152,6 +160,7 @@ class PDUHandler:
             self.client._send(PDUs.make_error(400, "LOBBY_FULL"))
             self.client.running = False
             return
+
         self.client.server.broadcast({
             "type": PDUs.GAME_STATE_UPDATE,
             "state": self.client.server.gameEngine.get_lobby_state()

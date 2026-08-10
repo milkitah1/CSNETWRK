@@ -116,6 +116,7 @@ class Client:
                     # no pong within timeout -> disconnect
                     try:
                         print("No PONG received; disconnecting")
+                        self.close()
                     except Exception:
                         pass
                     try:
@@ -181,12 +182,20 @@ class Client:
         if not self.sock:
             raise RuntimeError("not connected")
         self.send_pdu({"type": PDUs.HELLO, "name": name})
-        # wait for welcome
-        try:
-            pkt = self._recv_q.get(timeout=timeout)
-            return pkt
-        except queue.Empty:
-            raise TimeoutError("no welcome from server")
+
+        deadline = time.monotonic() + timeout
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError("no welcome from server")
+            try:
+                pkt = self._recv_q.get(timeout=remaining)
+            except queue.Empty:
+                raise TimeoutError("no welcome from server")
+
+            ptype = pkt.get("type")
+            if ptype in {PDUs.HELLO, PDUs.ERROR, PDUs.WELCOME}:
+                return pkt
 
     def ping(self) -> dict:
         if not self.sock:

@@ -80,8 +80,11 @@ class PDUHandler:
         self.client.server.send_game_state_to_all()
 
         if result.engine_signal == "ADVANCE_STEP":
-            engine.advance_phase()
+            next_phase, game_over = engine.advance_phase()
             self.client.server.send_game_state_to_all()
+            # DECK_EMPTY detected during DRAW step advance
+            if game_over:
+                self._finish_game(game_over["winner_id"], game_over["loser_id"], game_over["reason"])
 
         # game_over_pending is already routed through lifecycle inside RulesEngine;
         # here we only need to broadcast the GAME_OVER PDU if it fired.

@@ -422,10 +422,11 @@ class GameLifecycleEngine:
     """
     Advances to the next step/phase.
     Increments turn counter & switches active player after Cleanup step.
+    Returns (next_phase, game_over_dict_or_None).
     """
-    def advance_phase(self) -> TurnPhase:
+    def advance_phase(self) -> Tuple[TurnPhase, Optional[Dict[str, str]]]:
         if self.macro_state != MacroState.IN_GAME:
-            return TurnPhase(self.game_state.phase)
+            return TurnPhase(self.game_state.phase), None
 
         self._phase_index = (self._phase_index + 1) % len(self.turn_phases)
         next_phase = self.turn_phases[self._phase_index]
@@ -440,9 +441,27 @@ class GameLifecycleEngine:
         self.game_state.phase = next_phase.value
         self.game_state.step = next_phase.value
 
+        # DRAW step: draw one card for the active player (Section 7.4).
+        # Skip draw on turn 1 (first player does not draw on their first turn).
+        # If library is empty when a draw is required -> DECK_EMPTY loss.
+        if next_phase == TurnPhase.DRAW:
+            ap_idx = self.game_state.active_player_index
+            ap = self.game_state.players[ap_idx]
+            opponent = self.game_state.players[1 - ap_idx]
+            if self.game_state.turn_number > 1 or ap_idx != 0:
+                # Draw is required
+                if len(ap.library) == 0:
+                    # Active player cannot draw -> they lose (Section 6.5)
+                    return next_phase, {
+                        "winner_id": opponent.name,
+                        "loser_id": ap.name,
+                        "reason": "DECK_EMPTY",
+                    }
+                ap.hand.append(ap.library.pop())
+
         # Grant priority to active player for new step
         self.game_state.grant_priority(self.game_state.active_player_index)
-        return next_phase
+        return next_phase, None
 
     # -------------------------------------------------------------------------
     # 5. GAME_OVER & RESET
@@ -460,7 +479,6 @@ class GameLifecycleEngine:
         p1, p2 = self.game_state.players[0], self.game_state.players[1]
 
         if p1.life <= 0 and p2.life <= 0:
-            # Active player loses if simultaneous
             loser = self.game_state.players[self.game_state.active_player_index].name
             winner = self.game_state.players[self.game_state.non_active_player_index].name
             return winner, loser, "LIFE_ZERO"
@@ -468,6 +486,13 @@ class GameLifecycleEngine:
             return p2.name, p1.name, "LIFE_ZERO"
         elif p2.life <= 0:
             return p1.name, p2.name, "LIFE_ZERO"
+
+        # DECK_EMPTY: active player has no library and is in DRAW step
+        if self.game_state.phase == TurnPhase.DRAW.value:
+            ap = self.game_state.players[self.game_state.active_player_index]
+            opp = self.game_state.players[self.game_state.non_active_player_index]
+            if len(ap.library) == 0:
+                return opp.name, ap.name, "DECK_EMPTY"
 
         return None
     

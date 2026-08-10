@@ -58,7 +58,7 @@ def main(stdscr):
             if started and c._start_game:
                 stdscr.clear()
                 stdscr.refresh()
-                c.run_mulligan(stdscr)
+                c.run_mulligan(stdscr, c)
         c.close()
     else:
         p.print_help()

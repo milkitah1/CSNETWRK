@@ -49,6 +49,7 @@ class Client:
         self._last_pong: Optional[float] = None
         # Set to True when GAME_OVER is received; blocks further sends
         self._game_over: bool = False
+        self.state: Optional[dict] = None
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -208,10 +209,11 @@ class Client:
         lobby = LobbyCardSelectionState(stdscr)
         return lobby.get_cards()
 
-    def run_mulligan(self, stdscr):
+    def run_mulligan(self, stdscr, client):
         mulligan = MulliganState(
             # TODO: access client's "hand" (opening hand) here
             # self.player_state.get("hand")
+            self
         )
     
         keeps = False

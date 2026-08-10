@@ -1,14 +1,12 @@
 from mtgnp.client_ui.ui_helper import * 
 from mtgnp.client_ui.ui_lobby import CardDetailDisplay 
-
+import time
 class MulliganState:
     def __init__(
-            self, 
-            hand: list[str] = [ "mountain_001", "forest_001", "searing_spear_001", "prodigal_sorcerer_001", 
-                               "elvish_mystic_004", "gravedigger_002", "ornithopter_001" ]   
-    ):
+            self,  client
+        ):
+        self.client = client
         self.window_height = (PAGE_SIZE + PADDING)
-        self.hand = hand
         self.mulligan_count = 0
         self.does_keep = False
         self.bottomed_indices: set[int] = set()
@@ -28,6 +26,7 @@ class MulliganState:
 
 
     def init_hand_mulligan(self):
+         #wait for the game state to have a hand before proceeding
         self.hand_window.border(*MENU_BORDER_CHARS)
         
         self.hand_window.addstr(1, 2, "Mulligan Counter:")
@@ -57,9 +56,10 @@ class MulliganState:
 
     def render_hand(self):
         row = 6
-
+        self.wait_for_hand()
+        hand = self.client.game_state.get("hand")
         # Redraw cards
-        for i, card in enumerate(self.hand):
+        for i, card in enumerate(hand):
             attr = curses.A_NORMAL
 
             if i in self.bottomed_indices:
@@ -155,10 +155,13 @@ class MulliganState:
         
 
     def keep_or_mulligan(self):
+    # Wait until the server sends the player's hand
+        self.wait_for_hand()
+
         self.init_hand_mulligan()
         self.display_card_detail()
-        
-        key=""
+
+        key = ""
         self.hand_window.keypad(True)
 
         while key not in (ord("y"), ord("n")):
@@ -167,10 +170,20 @@ class MulliganState:
             key = self.hand_window.getch()
             self.handle_key_mulligan(key)
 
-
         self.hand_window.keypad(False)
 
         return self.does_keep
+   
+    def wait_for_hand(self):
+        while True:
+            game_state = self.client.game_state
 
-    
+            if game_state and "hand" in game_state:
+                self.hand = game_state["hand"]
+                return
+
+            # Don't busy-loop at 100% CPU
+            time.sleep(0.05)
+
+        
 

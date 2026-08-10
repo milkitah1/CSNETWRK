@@ -129,6 +129,7 @@ class ClientPDUHandler:
 
     def _handle_game_state_update(self, pkt: dict) -> None:
         # Parse lobby-phase updates and update client-friendly fields
+        self.client.state = pkt.get("state")
         self.client.game_state = pkt.get("state")
         state = pkt.get("state") or {}
         phase = state.get("phase")

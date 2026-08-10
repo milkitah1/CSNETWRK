@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import curses
 import textwrap
 from typing import Dict
@@ -5,9 +7,7 @@ from collections import Counter
 from mtgnp.client_ui.ui_helper import * 
 from mtgnp.cards import get_unique_cards, get_card
 
-
 from mtgnp.common import pdu as PDUs
-from mtgnp.client import *
 
 class CardListDisplay:
     def __init__(self, wheight, wwidth, starty, startx, page_size, page_width):

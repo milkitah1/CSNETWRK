@@ -30,6 +30,7 @@ class PDUHandler:
             PDUs.HELLO: self.handle_hello,
             PDUs.PLAYER_READY: self.handle_player_ready,
             PDUs.MULLIGAN_CHOICE: self.handle_mulligan_choice,
+            PDUs.DISCARD: self.handle_discard,
             PDUs.CONCEDE: self.handle_concede,
             PDUs.DISCONNECT: self.handle_disconnect,
         }
@@ -81,6 +82,17 @@ class PDUHandler:
 
         if result.engine_signal == "ADVANCE_STEP":
             next_phase, game_over = engine.advance_phase()
+
+            # Section 7: broadcast a PHASE_TRANSITION for the new step/phase.
+            to_phase = next_phase.value if hasattr(next_phase, "value") else str(next_phase)
+            ap_name = engine.game_state.players[engine.game_state.active_player_index].name if engine.game_state else None
+            self.client.server.broadcast({
+                "type": PDUs.PHASE_TRANSITION,
+                "to_phase": to_phase,
+                "active_player": ap_name,
+                "turn": engine.game_state.turn_number if engine.game_state else 0,
+            })
+
             self.client.server.send_game_state_to_all()
             # DECK_EMPTY detected during DRAW step advance
             if game_over:
@@ -161,8 +173,27 @@ class PDUHandler:
         if not self.client.player_id:
             self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
             return
-        name = pkt.get("name") or f"{self.client.addr}"
-        deckList = pkt.get("deck_list") or None
+
+        # Section 6.2: the player_id is client-chosen and MUST be a non-empty string.
+        claimed_id = pkt.get("player_id")
+        if not isinstance(claimed_id, str) or not claimed_id.strip():
+            self.client._send(PDUs.make_error("ILLEGAL_PLAYER_ID", "player_id must be a non-empty string"))
+            return
+        claimed_id = claimed_id.strip()
+
+        # Section 6.2: reject a player_id already claimed by the other connected player.
+        for other in list(self.client.server._clients):
+            if other is self.client:
+                continue
+            if getattr(other, "claimed_player_id", None) == claimed_id:
+                self.client._send(PDUs.make_error("DUPLICATE_ID", f"player_id '{claimed_id}' is already claimed"))
+                return
+        self.client.claimed_player_id = claimed_id
+
+        # Accept either "deck_list" (RFC) or legacy "decklist" key.
+        deckList = pkt.get("deck_list")
+        if deckList is None:
+            deckList = pkt.get("decklist")
 
         # validate deck
         if not deckList or not isinstance(deckList, list):
@@ -219,8 +250,14 @@ class PDUHandler:
             )
         except Exception as e:
             traceback.print_exc()
-            self.client._send(PDUs.make_error(400, str("ILLEGAL_ACTION")))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", str(e)))
             return
+
+        # Section 6.4: a rejected mulligan choice MUST produce ERROR ILLEGAL_ACTION
+        if not success:
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", msg or "Invalid mulligan choice"))
+            return
+
         # acknowledge
        
         self.client._send({
@@ -238,3 +275,33 @@ class PDUHandler:
                 ].name,
                 "turn": self.client.server.gameEngine.game_state.turn_number
             })
+
+    # -------------------------------------------------------------------------
+    # DISCARD handler (Section 7.8 — Cleanup step)
+    # -------------------------------------------------------------------------
+    def handle_discard(self, pkt: dict) -> None:
+        if not self.client.player_id:
+            self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
+            return
+        card_ids = pkt.get("card_ids")
+        if not isinstance(card_ids, list):
+            self.client._send(PDUs.make_error(400, "INVALID_DISCARD"))
+            return
+
+        engine = self.client.server.gameEngine
+        ok, msg, trans = engine.process_discard(self.client.player_id, card_ids)
+
+        # Section 7.8: a DISCARD with invalid cards MUST be rejected with
+        # ERROR code ILLEGAL_ACTION.
+        if not ok:
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", msg or "Invalid discard"))
+            return
+
+        if trans:
+            self.client.server.broadcast({
+                "type": PDUs.PHASE_TRANSITION,
+                "to_phase": trans["to_phase"],
+                "active_player": trans["active_player"],
+                "turn": trans["turn"],
+            })
+        self.client.server.send_game_state_to_all()

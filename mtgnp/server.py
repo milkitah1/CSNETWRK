@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import socket
 import threading
+import time
 from typing import Optional
 import uuid
 
@@ -26,6 +27,8 @@ class ClientHandler(threading.Thread):
         self.server = server
         self.running = True
         self.player_id: str | None = None
+        # Section 6.2: the client-chosen player_id claimed via PLAYER_READY
+        self.claimed_player_id: str | None = None
         # PDUHandler is created after server is set so it can access server.gameEngine
         self.pdu_handler = PDUHandler(self)
         self.seq_num = 0
@@ -112,6 +115,9 @@ class Server:
             "loser_id": loser_id,
             "reason": reason,
         })
+        # Section 6.6: after broadcasting GAME_OVER the server returns to the
+        # LOBBY state on the same TCP connections, awaiting fresh PLAYER_READY.
+        self.gameEngine.reset_to_lobby()
 
     def start(self) -> None:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -132,24 +138,28 @@ class Server:
                 handler.start()
 
         def game_starter():
-            # wait for both players to be present and ready (managed by GameLifecycleEngine)
-            ready = self.gameEngine.wait_for_all_ready()
-            if not ready:
-                return
+            from .common.lifecycle import MacroState
+            engine = self.gameEngine
+            # Loop so that after every GAME_OVER the server re-enters the lobby
+            # and can start a new game on the same connections (Section 6.6).
+            while not self._stop.is_set():
+                # Block until both players have joined and are ready.
+                if not engine.wait_for_all_ready():
+                    continue
+                # Only start a fresh game while back in the LOBBY state.
+                if engine.macro_state != MacroState.LOBBY or len(engine.registered_players) < engine.max_players:
+                    time.sleep(0.05)
+                    continue
 
-            # only start setup if both players are already registered in lifecycle
-            if len(self.gameEngine.registered_players) < self.gameEngine.max_players:
-                return
-            
-            # initialize the game state for setup + mulligan
-            self.gameEngine.run_game_setup()
+                # initialize the game state for setup + mulligan
+                engine.run_game_setup()
 
-            # send each player their initial game state (including hand, deck, etc.)
-            self.broadcast({
-                "type": PDUs.START_GAME,
-                
-            })
-            self.send_game_state_to_all()
+                # send each player their initial game state (including hand, deck, etc.)
+                self.broadcast({
+                    "type": PDUs.START_GAME,
+
+                })
+                self.send_game_state_to_all()
 
         # start the accept loop and game start threads
         self._accept_thread = threading.Thread(target=accept_loop, daemon=True)

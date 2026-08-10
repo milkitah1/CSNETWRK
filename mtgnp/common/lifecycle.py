@@ -111,6 +111,12 @@ class GameLifecycleEngine:
         ]
         self._phase_index: int = 0
 
+        # Section 7.8: cleanup-step discard pending state.
+        # When the active player holds more than seven cards at the Cleanup
+        # step, the server awaits a DISCARD PDU before the turn can end.
+        self.discard_pending: bool = False
+        self.awaiting_discard_player: Optional[str] = None
+
     def get_lobby_state(self) -> dict:
         return {
             "phase": "LOBBY",
@@ -289,6 +295,15 @@ class GameLifecycleEngine:
         self.mulligan_counts = {p1_id: 0, p2_id: 0}
         self.mulligan_kept.clear()
 
+        # Consume the ready flags so the same two connections must send a fresh
+        # PLAYER_READY PDU before the next game can begin (Section 6.6).
+        with self._lock:
+            for info in self.joined_players.values():
+                info["ready"] = False
+
+        self.discard_pending = False
+        self.awaiting_discard_player = None
+
         # Advance to MULLIGAN
         self.macro_state = MacroState.MULLIGAN
         return self.game_state
@@ -431,15 +446,23 @@ class GameLifecycleEngine:
         self._phase_index = (self._phase_index + 1) % len(self.turn_phases)
         next_phase = self.turn_phases[self._phase_index]
 
-        # Cleanup completed -> New turn
+        # Cleanup completed -> start the next player's turn (Section 7.8)
         if next_phase == TurnPhase.UNTAP:
-            self.game_state.turn_number += 1
-            # Switch active player
-            self.game_state.active_player_index = 1 - self.game_state.active_player_index
-            self.game_state.non_active_player_index = 1 - self.game_state.active_player_index
+            self._begin_next_turn()
+            return next_phase, None
 
         self.game_state.phase = next_phase.value
         self.game_state.step = next_phase.value
+
+        # Section 7.8: entering CLEANUP. If the active player holds more than
+        # seven cards they MUST discard down to seven before the turn can end.
+        # We pause here (no priority is granted) and await a DISCARD PDU.
+        if next_phase == TurnPhase.CLEANUP:
+            ap = self.game_state.players[self.game_state.active_player_index]
+            if len(ap.hand) > 7:
+                self.discard_pending = True
+                self.awaiting_discard_player = ap.name
+                return next_phase, None
 
         # DRAW step: draw one card for the active player (Section 7.4).
         # Skip draw on turn 1 (first player does not draw on their first turn).
@@ -462,6 +485,77 @@ class GameLifecycleEngine:
         # Grant priority to active player for new step
         self.game_state.grant_priority(self.game_state.active_player_index)
         return next_phase, None
+
+    def _begin_next_turn(self) -> None:
+        """Start the next player's turn (Section 7.8): increment the turn
+        counter, switch the active player, reset to the UNTAP step, and clear
+        any pending-discard state."""
+        self.game_state.turn_number += 1
+        # Switch active player
+        self.game_state.active_player_index = 1 - self.game_state.active_player_index
+        self.game_state.non_active_player_index = 1 - self.game_state.active_player_index
+        self.game_state.phase = TurnPhase.UNTAP.value
+        self.game_state.step = TurnPhase.UNTAP.value
+        self.discard_pending = False
+        self.awaiting_discard_player = None
+        self.game_state.grant_priority(self.game_state.active_player_index)
+
+    def _clear_cleanup_effects(self) -> None:
+        """Section 7.8: remove all damage from creatures and clear any
+        'until end of turn' markers after a successful cleanup discard."""
+        for player in self.game_state.players:
+            for perm in player.battlefield:
+                perm.pop("damage", None)
+                perm.pop("_until_end_of_turn", None)
+
+    def process_discard(self, player_id: str, card_ids: List[str]) -> Tuple[bool, str, Dict[str, str]]:
+        """Section 7.8: validate and apply a DISCARD PDU during the CLEANUP step.
+
+        Returns (ok, error_msg, phase_transition). phase_transition is non-empty
+        (pointing to the next turn's UNTAP) only once the hand is at seven or
+        fewer cards, at which point the server immediately begins the next turn.
+        """
+        if self.macro_state != MacroState.IN_GAME or self.game_state is None:
+            return False, "Not in IN_GAME state.", {}
+        if not self.discard_pending or self.game_state.phase != TurnPhase.CLEANUP.value:
+            return False, "No discard is required at this time.", {}
+        if player_id != self.awaiting_discard_player:
+            return False, "Only the active player may discard at cleanup.", {}
+
+        p_state = self.game_state.players[self.game_state.active_player_index]
+        hand_ids = [c["id"] if isinstance(c, dict) else c for c in p_state.hand]
+
+        # Every requested card must be currently in hand (Section 7.8)
+        for cid in card_ids:
+            if cid not in hand_ids:
+                return False, f"Card {cid} is not in the active player's hand.", {}
+            hand_ids.remove(cid)
+
+        # Player may only discard down to seven, never below
+        max_discard = max(0, len(p_state.hand) - 7)
+        if len(card_ids) > max_discard:
+            return False, f"May only discard down to seven cards (at most {max_discard}).", {}
+
+        # Move discarded cards to the graveyard
+        for cid in card_ids:
+            for c in list(p_state.hand):
+                card_id = c["id"] if isinstance(c, dict) else c
+                if card_id == cid:
+                    p_state.hand.remove(c)
+                    p_state.graveyard.append(c)
+                    break
+
+        if len(p_state.hand) > 7:
+            return True, "", {}  # still over seven — await another DISCARD PDU
+
+        # Hand is now at seven or fewer -> finish cleanup and start next turn
+        self._clear_cleanup_effects()
+        self._begin_next_turn()
+        return True, "", {
+            "to_phase": TurnPhase.UNTAP.value,
+            "turn": self.game_state.turn_number,
+            "active_player": self.game_state.players[self.game_state.active_player_index].name,
+        }
 
     # -------------------------------------------------------------------------
     # 5. GAME_OVER & RESET
@@ -514,6 +608,8 @@ class GameLifecycleEngine:
         self.registered_players.clear()
         self.mulligan_counts.clear()
         self.mulligan_kept.clear()
+        self.discard_pending = False
+        self.awaiting_discard_player = None
         self._phase_index = 0
         self.lifecycle.reset()  # allow next game to fire GAME_OVER again
 

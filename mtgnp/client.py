@@ -16,9 +16,7 @@ from .common import framing
 from .common import pdu as PDUs
 from .common.verbose import set_verbose
 from .client_pdu_handler import ClientPDUHandler
-from .states.lobbyState import LobbyState
-from .states.mulliganState import MulliganState
-from .screen import lobby_get_name, LobbyCardSelectionState
+from .client_ui.ui_main_game import LobbyCardSelectionState, MulliganState # change this to * if needed
 
 
 class Client:
@@ -209,6 +207,25 @@ class Client:
         # lobby.run(name)
         lobby = LobbyCardSelectionState(stdscr)
         return lobby.get_cards()
+
+    def run_mulligan(self, stdscr):
+        mulligan = MulliganState(
+            # TODO: access client's "hand" (opening hand) here
+            # self.player_state.get("hand")
+        )
+    
+        keeps = False
+        while not keeps:
+            keeps = mulligan.keep_or_mulligan()
+            self.send_pdu({
+                "type": "MULLIGAN_CHOICE", "keep": keeps, "cards_to_bottom": mulligan.bottomed_cards
+            })
+    
+        if mulligan.mulligan_count > 0:
+            mulligan.bottom_cards()
+            self.send_pdu({
+                "type": "MULLIGAN_CHOICE", "keep": keeps, "cards_to_bottom": mulligan.bottomed_cards
+            })
 
 
 

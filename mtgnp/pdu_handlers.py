@@ -206,11 +206,11 @@ class PDUHandler:
 
         # validate deck
         if not deckList or not isinstance(deckList, list):
-            self.client._send(PDUs.make_error(400, "INVALID_DECK"))
+            self.client._send(PDUs.make_error("ILLEGAL_DECK", "Deck list must be a non-empty array of cards."))
             return
         for card in deckList:
             if card not in self.client.server.LEGAL_CARDS:
-                self.client._send(PDUs.make_error(400, "ILLEGAL_DECK"))
+                self.client._send(PDUs.make_error("ILLEGAL_DECK", f"Card '{card}' is not legal."))
                 return
 
         # register player as ready in lifecycle and register deck
@@ -228,7 +228,7 @@ class PDUHandler:
                     self.client.server.gameEngine.set_ready(self.client.player_id, False)
                 except Exception:
                     pass
-                self.client._send(PDUs.make_error(400, err))
+                self.client._send(PDUs.make_error("ILLEGAL_DECK", err))
                 return
             self.client.server.broadcast({
                 "type": PDUs.GAME_STATE_UPDATE,

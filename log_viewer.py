@@ -44,6 +44,11 @@ def main():
     try:
         while True:
             for file, f in handles.items():
+
+                # Client may have cleared the log after we opened it.
+                if f.tell() > file.stat().st_size:
+                    f.seek(0)
+
                 while True:
                     line = f.readline()
                     if not line:

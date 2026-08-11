@@ -609,3 +609,53 @@
   "seq_num": 32,
   "type": "PONG"
 }
+[2026-08-11T20:54:08.998341Z] client2.log SEND: PING
+{
+  "seq_num": 33,
+  "type": "PING"
+}
+[2026-08-11T20:54:09.279895Z] client2.log RECV: PONG
+{
+  "seq_num": 33,
+  "type": "PONG"
+}
+[2026-08-11T20:54:39.291199Z] client2.log SEND: PING
+{
+  "seq_num": 34,
+  "type": "PING"
+}
+[2026-08-11T20:54:39.549245Z] client2.log RECV: PONG
+{
+  "seq_num": 34,
+  "type": "PONG"
+}
+[2026-08-11T20:55:09.562858Z] client2.log SEND: PING
+{
+  "seq_num": 35,
+  "type": "PING"
+}
+[2026-08-11T20:55:09.790407Z] client2.log RECV: PONG
+{
+  "seq_num": 35,
+  "type": "PONG"
+}
+[2026-08-11T20:55:39.804388Z] client2.log SEND: PING
+{
+  "seq_num": 36,
+  "type": "PING"
+}
+[2026-08-11T20:55:40.065936Z] client2.log RECV: PONG
+{
+  "seq_num": 36,
+  "type": "PONG"
+}
+[2026-08-11T20:56:10.078878Z] client2.log SEND: PING
+{
+  "seq_num": 37,
+  "type": "PING"
+}
+[2026-08-11T20:56:10.376245Z] client2.log RECV: PONG
+{
+  "seq_num": 37,
+  "type": "PONG"
+}

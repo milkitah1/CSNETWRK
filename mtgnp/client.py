@@ -331,14 +331,12 @@ class Client:
             # Let the player build/select a deck. If the server rejects it,
             # this loop returns here and allows another PLAYER_READY.
             decklist = LobbyCardSelectionState(stdscr).get_cards()
-            print("i got the decklist")
 
             if not decklist:
                 # ESC with no cards: leave the lobby.
                 return False
 
             try:
-                print("i sent the player ready")
 
                 # Starting a rematch: clear the previous GAME_OVER state.
                 self._game_over = False

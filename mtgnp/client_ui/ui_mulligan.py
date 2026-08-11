@@ -141,18 +141,15 @@ class MulliganState:
                 self.selected_index += 1
 
         
-        # 
-        elif key == ord("+"):
-            if self.selected_index not in self.bottomed_indices:
-                if len(self.bottomed_indices) < self.mulligan_count:
-                    self.bottomed_indices.add(self.selected_index)
-                    self.hand_window.addstr(2, 2, f"{self.mulligan_count - len(self.bottomed_indices)}")
+        key_norm = normalize_key(key)
+        toggle_keys = (ord("+"), ord("="), ord("-"), ord("_"), 10, 13, curses.KEY_ENTER, ord("b"), ord(" "))
 
-        # Un-bottom TODO: include some error handling 
-        elif key == ord("-"):
+        if key_norm in toggle_keys or key in toggle_keys:
             if self.selected_index in self.bottomed_indices:
                 self.bottomed_indices.remove(self.selected_index)
-                self.hand_window.addstr(2, 2, f"{self.mulligan_count - len(self.bottomed_indices)}")
+            elif len(self.bottomed_indices) < self.mulligan_count:
+                self.bottomed_indices.add(self.selected_index)
+            self.hand_window.addstr(2, 2, f"{self.mulligan_count - len(self.bottomed_indices)}")
 
         self.render_hand()
         self.display_card_detail()

@@ -15,6 +15,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 from mtgnp.common.game_state import GameState
 from mtgnp.common import pdu as PDUs
 from mtgnp.engine.sba import check_state_based_actions
+from mtgnp.cards import get_card
 
 
 class CombatManager:
@@ -93,6 +94,16 @@ class CombatManager:
                 return None, PDUs.make_error(
                     code="ILLEGAL_ACTION",
                     message=f"Attacker '{c_id}' not found on battlefield.",
+                    rejected_action=pdu,
+                    seq_num=game_state.seq_num,
+                ), "ERROR"
+
+            card_info = get_card(c_id) or get_card(c_id.rsplit("_", 1)[0]) or {}
+            c_type = str(perm.get("card_type") or perm.get("type") or card_info.get("card_type") or card_info.get("type") or "Creature")
+            if "Land" in c_type:
+                return None, PDUs.make_error(
+                    code="ILLEGAL_ACTION",
+                    message=f"'{c_id}' is a land and cannot attack.",
                     rejected_action=pdu,
                     seq_num=game_state.seq_num,
                 ), "ERROR"
@@ -183,8 +194,8 @@ class CombatManager:
         attacking_ids = {a["creature_id"] for a in self.attackers}
 
         for blk in blockers_list:
-            c_id = blk.get("creature_id", "")
-            b_id = blk.get("blocking_id", "")
+            c_id = blk.get("blocker_id") or blk.get("creature_id", "")
+            b_id = blk.get("attacker_id") or blk.get("blocking_id", "")
 
             if c_id in seen_blockers:
                 return None, PDUs.make_error(
@@ -207,6 +218,16 @@ class CombatManager:
                 return None, PDUs.make_error(
                     code="ILLEGAL_ACTION",
                     message=f"Blocker '{c_id}' not found on battlefield.",
+                    rejected_action=pdu,
+                    seq_num=game_state.seq_num,
+                ), "ERROR"
+
+            card_info = get_card(c_id) or get_card(c_id.rsplit("_", 1)[0]) or {}
+            c_type = str(perm.get("card_type") or perm.get("type") or card_info.get("card_type") or card_info.get("type") or "Creature")
+            if "Land" in c_type:
+                return None, PDUs.make_error(
+                    code="ILLEGAL_ACTION",
+                    message=f"'{c_id}' is a land and cannot block.",
                     rejected_action=pdu,
                     seq_num=game_state.seq_num,
                 ), "ERROR"
@@ -292,6 +313,20 @@ class CombatManager:
         self.damage_orders[att_id] = list(order)
         return {"type": "DAMAGE_ORDER_ASSIGNED", "attacker_id": att_id, "order": order}, None
 
+    def reset_combat_state(self, game_state: Optional[GameState] = None) -> None:
+        """Cleans up internal combat tracking data structures and permanent flags."""
+        self.attackers.clear()
+        self.blockers.clear()
+        self.damage_orders.clear()
+        self.first_strike_dealt.clear()
+        if game_state and game_state.players:
+            for player in game_state.players:
+                for perm in player.battlefield:
+                    perm.pop("attacking", None)
+                    perm.pop("attack_target", None)
+                    perm.pop("blocking", None)
+                    perm.pop("blockers", None)
+
     def resolve_combat_damage(
         self, game_state: GameState, is_first_strike_step: bool = False
     ) -> Tuple[Dict[str, Any], List[Dict[str, Any]], Optional[Dict[str, Any]]]:
@@ -307,12 +342,16 @@ class CombatManager:
 
         damage_events: List[Dict[str, Any]] = []
 
-        # Map blockers to attackers
+        # Map blockers to attackers (built from self.attackers + battlefield attacking flags)
         attackers_map = {a["creature_id"]: a for a in self.attackers}
 
         # Find battlefield objects
         ap_creatures = { (p.get("id") or p.get("card_id")): p for p in ap_player.battlefield }
         nap_creatures = { (p.get("id") or p.get("card_id")): p for p in nap_player.battlefield }
+
+        for p_id, p in ap_creatures.items():
+            if p.get("attacking", False) and p_id not in attackers_map:
+                attackers_map[p_id] = {"creature_id": p_id, "target": p.get("attack_target")}
 
         # Group blockers by attacker ID
         blockers_by_attacker: Dict[str, List[str]] = {}
@@ -345,7 +384,11 @@ class CombatManager:
                 if has_fs and not has_ds and att_id in self.first_strike_dealt:
                     continue
 
-            power = att_perm.get("power", 0)
+            raw_power = att_perm.get("power", 0)
+            try:
+                power = max(0, int(raw_power))
+            except (ValueError, TypeError):
+                power = 0
             assigned_blks = blockers_by_attacker.get(att_id, [])
 
             if len(assigned_blks) == 0:
@@ -384,6 +427,10 @@ class CombatManager:
         for blk in self.blockers:
             blk_id = blk["creature_id"]
             att_id = blk["blocking_id"]
+
+            # Safety check: guarantee attacker actually has assigned blockers
+            if len(blockers_by_attacker.get(att_id, [])) == 0:
+                continue
 
             blk_perm = nap_creatures.get(blk_id)
             att_perm = ap_creatures.get(att_id)
@@ -433,9 +480,4 @@ class CombatManager:
 
     def cleanup_combat(self, game_state: GameState) -> None:
         """Clears combat flags (attacking, blocking) from all permanents at End of Combat."""
-        for player in game_state.players:
-            for perm in player.battlefield:
-                perm.pop("attacking", None)
-                perm.pop("attack_target", None)
-                perm.pop("blocking", None)
-        self.reset_combat_state()
+        self.reset_combat_state(game_state)

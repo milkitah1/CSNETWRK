@@ -17,6 +17,7 @@ from .common import pdu as PDUs
 from .common.verbose import set_verbose
 from .common.lifecycle import GameLifecycleEngine
 from .pdu_handlers import PDUHandler
+from .engine.rules_engine import RulesEngine
 
 
 class ClientHandler(threading.Thread):
@@ -33,18 +34,25 @@ class ClientHandler(threading.Thread):
         self.pdu_handler = PDUHandler(self)
         self.seq_num = 0
         self.ping_seq_num = 0
+        # A connection is written to by its client thread, the game-starter
+        # thread, and sometimes another player's handler.  Keep each framed
+        # PDU atomic so a header from one message can never be followed by the
+        # JSON body of another.
+        self._send_lock = threading.Lock()
         
     
     def _send(self, obj):
         try:
-            if obj["type"] != PDUs.PONG:
-                self.seq_num += 1
-                obj["seq_num"] = self.seq_num
-            else:
-                self.ping_seq_num = obj.get("seq_num", self.ping_seq_num)
-                obj["seq_num"] = self.ping_seq_num
-            
-            framing.send_pdu(self.conn, obj)
+            with self._send_lock:
+                msg = dict(obj)
+                if "seq_num" not in msg:
+                    if msg.get("type") != PDUs.PONG:
+                        self.seq_num += 1
+                        msg["seq_num"] = self.seq_num
+                    else:
+                        self.ping_seq_num = msg.get("seq_num", self.ping_seq_num)
+                        msg["seq_num"] = self.ping_seq_num
+                framing.send_pdu(self.conn, msg)
         except Exception as e:
             print("SEND ERROR:", e)
             raise
@@ -54,10 +62,23 @@ class ClientHandler(threading.Thread):
             while self.running:
                 pkt = framing.recv_pdu(self.conn)
                 try:
-                    self.pdu_handler.handle_pdu(pkt)
+                    # The game state is shared by both client threads.  An
+                    # action must be checked and applied as one transaction;
+                    # otherwise simultaneous mulligan/priority PDUs can race.
+                    with self.server._state_lock:
+                        self.pdu_handler.handle_pdu(pkt)
                 except Exception as e:
+                    import traceback
+                    traceback.print_exc()
                     try:
                         self._send(PDUs.make_error("INTERNAL_ERROR", str(e)))
+                    except Exception:
+                        pass
+                    # Broadcast GAME_OVER reset so both clients gracefully unblock instead of deadlocking
+                    try:
+                        with self.server._state_lock:
+                            if self.server.gameEngine.macro_state == MacroState.IN_GAME:
+                                self.server._on_game_over("NONE", "NONE", f"Server Error: {e}")
                     except Exception:
                         pass
         except (ConnectionError, OSError):
@@ -67,6 +88,14 @@ class ClientHandler(threading.Thread):
                 self.conn.close()
             except Exception:
                 pass
+            # A disconnected client cannot receive GAME_OVER.  Removing it
+            # before the disconnect handler broadcasts prevents writes to a
+            # closed socket and leaves the notification for the opponent.
+            with self.server._state_lock:
+                try:
+                    self.server._clients.remove(self)
+                except ValueError:
+                    pass
             if self.player_id:
                 engine = self.server.gameEngine
                 try:
@@ -92,12 +121,18 @@ class Server:
         self.port = port
         
         self.gameEngine = GameLifecycleEngine(max_players=2)
+        # Rules state (priority passes, stack, combat and triggers) belongs to
+        # the match, not to an individual TCP connection.
+        self.rules_engine = RulesEngine(lifecycle=self.gameEngine)
         # Wire the lifecycle broadcast callback so trigger_game_over() auto-broadcasts
         self.gameEngine.lifecycle.on_game_over = self._on_game_over
         self._sock: Optional[socket.socket] = None
         self._accept_thread: Optional[threading.Thread] = None
         self._clients: list[ClientHandler] = []
         self._stop = threading.Event()
+        # Serializes lifecycle and rules-engine mutations across client
+        # handlers and the game-starter thread.
+        self._state_lock = threading.RLock()
 
         self._game_starter_thread: Optional[threading.Thread] = None
         with open("./jsons/cards_list/card_instances.json", "r") as f:
@@ -109,15 +144,25 @@ class Server:
 
     # Called by LifecycleManager.on_game_over — broadcasts GAME_OVER to all clients
     def _on_game_over(self, winner_id: str, loser_id: str, reason: str) -> None:
+        if getattr(self, "is_game_over", False):
+            return
+        self.is_game_over = True
+        seq = 1
+        if hasattr(self.gameEngine, "game_state") and self.gameEngine.game_state:
+            self.gameEngine.game_state.seq_num += 1
+            seq = self.gameEngine.game_state.seq_num
+
         self.broadcast({
             "type": PDUs.GAME_OVER,
             "winner_id": winner_id,
             "loser_id": loser_id,
             "reason": reason,
+            "seq_num": seq,
         })
         # Section 6.6: after broadcasting GAME_OVER the server returns to the
         # LOBBY state on the same TCP connections, awaiting fresh PLAYER_READY.
         self.gameEngine.reset_to_lobby()
+        self.is_game_over = False
 
     def start(self) -> None:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -160,15 +205,22 @@ class Server:
                     time.sleep(0.05)
                     continue
 
-                # initialize the game state for setup + mulligan
-                engine.run_game_setup()
+                with self._state_lock:
+                    # Readiness may have changed while this thread was waiting.
+                    if engine.macro_state != MacroState.LOBBY or not engine.all_ready():
+                        continue
 
-                # send each player their initial game state (including hand, deck, etc.)
-                self.broadcast({
-                    "type": PDUs.START_GAME,
+                    # initialize the game state for setup + mulligan
+                    engine.run_game_setup()
+                    # A fresh game must not inherit priority/pass state from a
+                    # previous match on these same connections.
+                    self.rules_engine = RulesEngine(lifecycle=engine)
 
-                })
-                self.send_game_state_to_all()
+                    # send each player their initial game state (including hand, deck, etc.)
+                    self.broadcast({
+                        "type": PDUs.START_GAME,
+                    })
+                    self.send_game_state_to_all()
 
         # start the accept loop and game start threads
         self._accept_thread = threading.Thread(target=accept_loop, daemon=True)
@@ -207,6 +259,7 @@ class Server:
 
                 c._send({
                     "type": PDUs.GAME_STATE_UPDATE,
+                    "seq_num": self.gameEngine.game_state.seq_num if self.gameEngine.game_state else 0,
                     "state": state
                 })
 

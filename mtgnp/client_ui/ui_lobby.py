@@ -272,11 +272,14 @@ class LobbyCardSelectionState:
         if not check_minimum_size(self.screen, self.MIN_HEIGHT, self.MIN_WIDTH):
             return
 
+        add_keys = (ord("+"), ord("="), 10, 13, curses.KEY_ENTER, ord("a"), ord("A"))
+        remove_keys = (ord("-"), ord("_"), 8, 127, 263, getattr(curses, 'KEY_BACKSPACE', 263), getattr(curses, 'KEY_DC', 330), ord("d"), ord("D"), ord("x"), ord("X"))
+
         if key in ARROW_KEYS:
             self.cards_window.navigate_cards_list(key)
-        elif key == ord("+"):
+        elif key in add_keys:
             self.selection_window.add_card(self.cards_window)
-        elif key == ord("-"):
+        elif key in remove_keys:
             self.selection_window.put_back_card(self.cards_window)
 
         self.render()

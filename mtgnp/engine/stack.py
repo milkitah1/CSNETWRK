@@ -62,12 +62,12 @@ def _validate_mana_payment(cost_str: str, mana_payment: Dict[str, int]) -> bool:
     for color, amount in req.items():
         if color == "generic":
             # Total paid mana must meet or exceed generic cost
-            total_paid = sum(mana_payment.values())
-            color_req = sum(v for k, v in req.items() if k != "generic")
-            if (total_paid - color_req) < amount:
+            total_paid = sum(int(v) for v in mana_payment.values())
+            color_req = sum(int(v) for k, v in req.items() if k != "generic")
+            if (total_paid - color_req) < int(amount):
                 return False
         else:
-            if mana_payment.get(color, 0) < amount:
+            if int(mana_payment.get(color, 0)) < int(amount):
                 return False
     return True
 
@@ -86,10 +86,14 @@ def _is_target_legal(game_state: GameState, target_id: str) -> bool:
         if player.name == target_id or target_id in ("player_1", "player_2"):
             return True
 
-    # Target can be a permanent on any battlefield
+    # Target can be a permanent on any battlefield (excluding lands)
     for player in game_state.players:
         for perm in player.battlefield:
-            if perm.get("id") == target_id or perm.get("card_id") == target_id:
+            p_id = perm.get("id") or perm.get("card_id")
+            if p_id == target_id:
+                card_data = get_card(p_id) or get_card(p_id.rsplit("_", 1)[0]) or {}
+                if "Land" in str(card_data.get("card_type", "")):
+                    return False
                 return True
 
     # Target can be a stack item (for counterspells)

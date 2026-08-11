@@ -24,4 +24,3 @@ class ClientErrorHandler:
 
     def _handle_lobby_full(self, pkt: dict) -> None:
         print("Lobby is full. Cannot join the game.")
-        }   

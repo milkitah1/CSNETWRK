@@ -52,6 +52,13 @@ class Client:
         # Set to True when GAME_OVER is received; blocks further sends
         self._game_over: bool = False
         self.visible_state: Optional[dict] = None
+        self.phase_seq_num: int = 0
+        self.cleanup_seq_num: int = 0
+        self.priority_grant_seq_num: int = 0
+        self.pending_prompt: Optional[dict] = None
+        # The UI and heartbeat threads can send at the same time.  A lock keeps
+        # the length prefix and JSON body of each PDU together on the wire.
+        self._send_lock = threading.Lock()
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -163,22 +170,28 @@ class Client:
     def send_pdu(self, obj: dict) -> None:
         if not self.sock:
             raise RuntimeError("not connected")
+        # Do not mutate a UI-owned action dict.  In particular, callers pass
+        # the exact priority token received in PRIORITY_GRANT.
+        msg = dict(obj)
         # Block all non-heartbeat sends once the game is over
-        if self._game_over and obj.get("type") not in (PDUs.PING, PDUs.DISCONNECT):
+        if self._game_over and msg.get("type") not in (PDUs.PING, PDUs.DISCONNECT):
             return
 
-        ptype = obj.get("type")
+        ptype = msg.get("type")
         if ptype == PDUs.PLAYER_READY:
             self.ready_seq_num += 1
-            obj["seq_num"] = self.ready_seq_num
+            msg["seq_num"] = self.ready_seq_num
         elif ptype == PDUs.PING:
             # use a dedicated ping counter so heartbeats don't affect other seq counters
             self.ping_seq_num += 1
-            obj["seq_num"] = self.ping_seq_num
-        else:
-            obj["seq_num"] = self.seq_num
+            msg["seq_num"] = self.ping_seq_num
+        elif "seq_num" not in msg:
+            # Non-priority messages do not use the priority token, but retain
+            # the current value for backwards-compatible server diagnostics.
+            msg["seq_num"] = self.seq_num
 
-        framing.send_pdu(self.sock, obj)
+        with self._send_lock:
+            framing.send_pdu(self.sock, msg)
 
     def hello(self, name: str = "test-client", timeout: float = 2.0) -> dict:
         if not self.sock:
@@ -359,6 +372,60 @@ class Client:
             self.send_pdu({
                 "type": "MULLIGAN_CHOICE", "keep": keeps, "cards_to_bottom": mulligan.bottomed_cards
             })
+
+    def run_main_game(self, stdscr) -> None:
+        from .client_ui.ui_main_game import GameUI
+        game_ui = GameUI(stdscr, self.player_id or "Player")
+        # Decode terminal arrow-key escape sequences into curses.KEY_UP/DOWN
+        # so selectors, including the Actions menu, can move their cursor.
+        stdscr.keypad(True)
+        stdscr.timeout(50)
+
+        while not self._game_over:
+            state = self.visible_state or {}
+            game_ui.render(state)
+
+            key = stdscr.getch()
+            if key != -1:
+                action = game_ui.handle_key(key, state)
+                if action == "QUIT":
+                    break
+                elif action == "PASS":
+                    # Only send PRIORITY_PASS when this player actually holds priority.
+                    # Suppress silently if we're in an automatic phase or opponent's priority window.
+                    priority_holder = state.get("priority_holder")
+                    if priority_holder and priority_holder == self.player_id:
+                        self.send_pdu({"type": PDUs.PRIORITY_PASS, "seq_num": self.priority_grant_seq_num})
+                elif isinstance(action, dict):
+                    p_type = action.get("type")
+                    if "seq_num" not in action:
+                        if p_type in (PDUs.TRIGGER_ORDER_RESPONSE, PDUs.TRIGGER_CHOICE_RESPONSE):
+                            if self.pending_prompt and "seq_num" in self.pending_prompt:
+                                action["seq_num"] = self.pending_prompt["seq_num"]
+                            else:
+                                action["seq_num"] = self.priority_grant_seq_num
+                            self.pending_prompt = None
+                        elif p_type == PDUs.DISCARD:
+                            action["seq_num"] = self.cleanup_seq_num if self.cleanup_seq_num is not None else self.priority_grant_seq_num
+                        elif p_type in (PDUs.DECLARE_ATTACKERS, PDUs.DECLARE_BLOCKERS, PDUs.ASSIGN_DAMAGE_ORDER):
+                            # PHASE_TRANSITION carries a transport sequence
+                            # number.  Combat actions must instead use the
+                            # authoritative token from PRIORITY_GRANT.
+                            action["seq_num"] = self.priority_grant_seq_num
+                        elif p_type in (PDUs.CAST_SPELL, PDUs.PLAY_LAND, PDUs.ACTIVATE_ABILITY):
+                            action["seq_num"] = self.priority_grant_seq_num
+                    self.send_pdu(action)
+
+        if self._game_over:
+            stdscr.clear()
+            stdscr.addstr(5, 5, "=== GAME OVER ===")
+            stdscr.addstr(7, 5, "Press any key to exit.")
+            stdscr.refresh()
+            stdscr.timeout(-1)
+            try:
+                stdscr.getch()
+            except Exception:
+                pass
 
 
 

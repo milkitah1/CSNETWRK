@@ -28,6 +28,10 @@ class ClientPDUHandler:
             PDUs.ERROR: self._handle_error,
             PDUs.GAME_STATE_UPDATE: self._handle_game_state_update,
             PDUs.GAME_OVER: self._handle_game_over,
+            PDUs.PRIORITY_GRANT: self._handle_priority_grant,
+            PDUs.PHASE_TRANSITION: self._handle_phase_transition,
+            PDUs.TRIGGER_ORDER: self._handle_trigger_prompt,
+            PDUs.TRIGGER_CHOICE: self._handle_trigger_prompt,
         }
 
     def register_callback(self, pdu_type: str, cb: Callable[[dict], None]) -> None:
@@ -119,6 +123,14 @@ class ClientPDUHandler:
          print(f"Received ERROR PDU: {pkt}")
         
         self.client._last_error = pkt
+        # A rejected action often means this client missed a phase/state
+        # update.  Request an authoritative snapshot without blocking the
+        # receiver thread; send_pdu serializes this with UI/heartbeat traffic.
+        if pkt.get("code") in {"STALE_ACTION", "NOT_YOUR_PRIORITY"}:
+            try:
+                self.client.send_pdu({"type": PDUs.STATE_REQUEST})
+            except Exception:
+                pass
 
     def _handle_game_over(self, pkt: dict) -> None:
         """Set client into GAME_OVER state and display result."""
@@ -131,12 +143,30 @@ class ClientPDUHandler:
         except Exception:
             pass
 
+    def _handle_priority_grant(self, pkt: dict) -> None:
+        if "seq_num" in pkt:
+            self.client.priority_grant_seq_num = pkt["seq_num"]
+
+    def _handle_phase_transition(self, pkt: dict) -> None:
+        # PHASE_TRANSITION is stamped by the per-connection transport stream,
+        # so its seq_num cannot validate a game action.  PRIORITY_GRANT is the
+        # sole source of an action token, including during combat.
+        return
+
+    def _handle_trigger_prompt(self, pkt: dict) -> None:
+        self.client.pending_prompt = pkt
+
     def _handle_game_state_update(self, pkt: dict) -> None:
         # Parse lobby-phase updates and update client-friendly fields
         self.client.visible_state = pkt.get("state")
 
         state = pkt.get("state") or {}
         phase = state.get("phase")
+
+        if phase == "CLEANUP" or pkt.get("request_discard"):
+            if "seq_num" in pkt:
+                self.client.cleanup_seq_num = pkt["seq_num"]
+
         if phase == "LOBBY":
             # players_ready: number of ready players
             players_ready = state.get("players_ready")
@@ -158,7 +188,6 @@ class ClientPDUHandler:
                     self.client.players_count = int(players)
                 except Exception:
                     pass
-        # otherwise leave full game-state updates to the recv queue
         return
 
 

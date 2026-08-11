@@ -30,8 +30,8 @@ def check_state_based_actions(
         p0 = game_state.players[0]
         p1 = game_state.players[1]
 
-        p0_dead = p0.life <= 0
-        p1_dead = p1.life <= 0
+        p0_dead = int(p0.life) <= 0
+        p1_dead = int(p1.life) <= 0
 
         if p0_dead or p1_dead:
             if p0_dead and p1_dead:
@@ -67,7 +67,13 @@ def check_state_based_actions(
                 if is_creature:
                     toughness = perm.get("toughness", 1)
                     damage = perm.get("damage", 0)
-                    if toughness <= 0 or damage >= toughness:
+                    try:
+                        t_val = int(toughness)
+                        d_val = int(damage)
+                    except (ValueError, TypeError):
+                        t_val = 1
+                        d_val = 0
+                    if t_val <= 0 or d_val >= t_val:
                         to_remove.append(perm)
 
             for perm in to_remove:

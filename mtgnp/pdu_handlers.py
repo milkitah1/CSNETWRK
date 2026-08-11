@@ -23,14 +23,17 @@ class PDUHandler:
 
     def __init__(self, client: Any) -> None:
         self.client = client
-        # Pass lifecycle engine reference so RulesEngine can call trigger_game_over()
-        self.rules_engine = RulesEngine(lifecycle=client.server.gameEngine if hasattr(client, 'server') else None)
+        # Rules state is shared by both ClientHandlers through Server.  Keeping
+        # it per connection causes each player to count priority passes in a
+        # separate state machine, so two passes never advance the phase.
+        self.rules_engine = client.server.rules_engine
         self.handlers = {
             PDUs.PING: self.handle_ping,
             PDUs.HELLO: self.handle_hello,
             PDUs.PLAYER_READY: self.handle_player_ready,
             PDUs.MULLIGAN_CHOICE: self.handle_mulligan_choice,
             PDUs.DISCARD: self.handle_discard,
+            PDUs.STATE_REQUEST: self.handle_state_request,
             PDUs.CONCEDE: self.handle_concede,
             PDUs.DISCONNECT: self.handle_disconnect,
         }
@@ -64,10 +67,12 @@ class PDUHandler:
             self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_IN_GAME"))
             return
 
-        # Inject lifecycle reference so RulesEngine can call trigger_game_over()
-        self.rules_engine.lifecycle = engine
+        # Resolve the server's current shared engine here.  The server replaces
+        # it when it starts a fresh game on the same client connections.
+        rules_engine = self.client.server.rules_engine
+        rules_engine.lifecycle = engine
 
-        result = self.rules_engine.process_action(
+        result = rules_engine.process_action(
             engine.game_state, self.client.player_id, pkt
         )
 
@@ -75,17 +80,42 @@ class PDUHandler:
             self.client._send(result.error_pdu)
             return
 
+        # A PRIORITY_GRANT is a game token, not a transport sequence.  Send it
+        # only after the matching state snapshot so every client renders the
+        # same priority holder before it can submit an action.
+        pending_grants = [
+            pdu for pdu in result.broadcast_pdus
+            if pdu.get("type") == PDUs.PRIORITY_GRANT
+        ]
         for b_pdu in result.broadcast_pdus:
-            self.client.server.broadcast(b_pdu)
-
-        self.client.server.send_game_state_to_all()
+            if b_pdu.get("type") != PDUs.PRIORITY_GRANT:
+                self.client.server.broadcast(b_pdu)
 
         if result.engine_signal == "ADVANCE_STEP":
-            next_phase, game_over = engine.advance_phase()
+            # The grant produced while the two passes were being counted is
+            # for the completed step.  Replace it with the new phase's token.
+            next_phase, game_over, grant_pdu = engine.advance_phase()
 
-            # Section 7: broadcast a PHASE_TRANSITION for the new step/phase.
             to_phase = next_phase.value if hasattr(next_phase, "value") else str(next_phase)
             ap_name = engine.game_state.players[engine.game_state.active_player_index].name if engine.game_state else None
+
+            # Resolve combat damage when transitioning into damage steps
+            if to_phase in ("FIRST_STRIKE_DAMAGE", "COMBAT_DAMAGE"):
+                is_fs = (to_phase == "FIRST_STRIKE_DAMAGE")
+                res_pdu, sba_events, dmg_game_over = rules_engine.combat_mgr.resolve_combat_damage(
+                    engine.game_state, is_first_strike_step=is_fs
+                )
+                if res_pdu:
+                    self.client.server.broadcast(res_pdu)
+                for sba in sba_events:
+                    self.client.server.broadcast(sba)
+                if dmg_game_over:
+                    game_over = dmg_game_over
+
+            # Clean up combat state when entering postcombat main or end of combat
+            if to_phase in ("POSTCOMBAT_MAIN", "END_OF_COMBAT"):
+                rules_engine.combat_mgr.cleanup_combat(engine.game_state)
+
             self.client.server.broadcast({
                 "type": PDUs.PHASE_TRANSITION,
                 "to_phase": to_phase,
@@ -94,9 +124,16 @@ class PDUHandler:
             })
 
             self.client.server.send_game_state_to_all()
+            # The current state's token unlocks only the named priority holder.
+            if grant_pdu:
+                self.client.server.broadcast(grant_pdu)
             # DECK_EMPTY detected during DRAW step advance
             if game_over:
                 self._finish_game(game_over["winner_id"], game_over["loser_id"], game_over["reason"])
+        else:
+            self.client.server.send_game_state_to_all()
+            for grant_pdu in pending_grants:
+                self.client.server.broadcast(grant_pdu)
 
         # game_over_pending is already routed through lifecycle inside RulesEngine;
         # here we only need to broadcast the GAME_OVER PDU if it fired.
@@ -144,6 +181,27 @@ class PDUHandler:
 
     def handle_ping(self, pkt: dict) -> None:
         self.client._send({"type": PDUs.PONG, "seq_num": pkt.get("seq_num")})
+
+    def handle_state_request(self, pkt: dict) -> None:
+        """Return an authoritative snapshot after a rejected client action."""
+        engine = self.client.server.gameEngine
+        if not self.client.player_id or engine.game_state is None:
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_IN_GAME"))
+            return
+
+        self.client._send({
+            "type": PDUs.GAME_STATE_UPDATE,
+            "seq_num": engine.game_state.seq_num if engine.game_state else 0,
+            "state": engine.get_visible_state(self.client.player_id),
+        })
+        priority_idx = engine.game_state.priority_player_index
+        if engine.macro_state == MacroState.IN_GAME and priority_idx is not None:
+            self.client._send({
+                "type": PDUs.PRIORITY_GRANT,
+                "player_id": engine.game_state.players[priority_idx].name,
+                "seq_num": engine.game_state.seq_num,
+                "time_limit_ms": 30000,
+            })
 
     def handle_hello(self, pkt: dict) -> None:
         name = pkt.get("name") or f"{self.client.addr}"
@@ -271,22 +329,38 @@ class PDUHandler:
             self.client._send(PDUs.make_error("ILLEGAL_ACTION", msg or "Invalid mulligan choice"))
             return
 
-        # acknowledge
-       
-        self.client._send({
-        "type": PDUs.GAME_STATE_UPDATE,
-        "state": self.client.server.gameEngine.get_visible_state(self.client.player_id)
-        })
-
         if started:
+            # start_in_game() already ran _untap_permanents() and advance_phase(),
+            # so the engine is already at UPKEEP with priority granted.
+            engine = self.client.server.gameEngine
+            gs = engine.game_state
+            ap_name = gs.players[gs.active_player_index].name if gs else None
+            turn_num = gs.turn_number if gs else 0
+
+            # Broadcast PHASE_TRANSITION to the actual first priority phase (UPKEEP, not UNTAP)
             self.client.server.broadcast({
                 "type": PDUs.PHASE_TRANSITION,
                 "from_phase": "MULLIGAN",
-                "to_phase": "UNTAP",
-                "active_player": self.client.server.gameEngine.game_state.players[
-                    self.client.server.gameEngine.game_state.active_player_index
-                ].name,
-                "turn": self.client.server.gameEngine.game_state.turn_number
+                "to_phase": gs.phase if gs else "UPKEEP",
+                "active_player": ap_name,
+                "turn": turn_num,
+            })
+
+            # Broadcast the current snapshot first, then the game token that
+            # unlocks priority on the active player's client.
+            self.client.server.send_game_state_to_all()
+            priority_player_idx = gs.priority_player_index
+            if priority_player_idx is not None:
+                from mtgnp.engine.priority import PriorityManager
+                _pm = PriorityManager()
+                grant_pdu = _pm.grant_priority(gs, priority_player_idx)
+                self.client.server.broadcast(grant_pdu)
+        else:
+            engine = self.client.server.gameEngine
+            self.client._send({
+                "type": PDUs.GAME_STATE_UPDATE,
+                "seq_num": engine.game_state.seq_num if engine.game_state else 0,
+                "state": engine.get_visible_state(self.client.player_id),
             })
 
     # -------------------------------------------------------------------------
@@ -318,3 +392,5 @@ class PDUHandler:
                 "turn": trans["turn"],
             })
         self.client.server.send_game_state_to_all()
+        if trans and trans.get("priority_grant"):
+            self.client.server.broadcast(trans["priority_grant"])

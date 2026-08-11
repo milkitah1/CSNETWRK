@@ -111,6 +111,10 @@ class GameLifecycleEngine:
         ]
         self._phase_index: int = 0
 
+        # Phases that are fully automatic — no player holds priority.
+        # UNTAP is the only step in this set per RFC / MTG rules.
+        self.AUTOMATIC_STEPS: Set[str] = {TurnPhase.UNTAP.value}
+
         # Section 7.8: cleanup-step discard pending state.
         # When the active player holds more than seven cards at the Cleanup
         # step, the server awaits a DISCARD PDU before the turn can end.
@@ -201,13 +205,19 @@ class GameLifecycleEngine:
                 if opponent_state else []
             },
 
-            "stack": []
+            "stack": [item.to_dict() if hasattr(item, "to_dict") else item for item in self.game_state.stack]
         }
 
         # Only include turn phases after mulligan
         if self.macro_state == MacroState.IN_GAME:
             state["phase"] = self.game_state.phase
             state["step"] = self.game_state.step
+            # Expose which player currently holds priority (None during automatic phases)
+            if self.game_state.priority_player_index is not None:
+                state["priority_holder"] = self.game_state.players[self.game_state.priority_player_index].name
+            else:
+                state["priority_holder"] = None
+            state["land_played_this_turn"] = getattr(self.game_state, "land_played_this_turn", False)
 
         return state
 
@@ -273,8 +283,8 @@ class GameLifecycleEngine:
         p2_state = PlayerState(name=p2_id, life=20)
 
         # Shuffle & load library (using card strings/dicts)
-        p1_deck = [{"id": cid} for cid in self.registered_players[p1_id]]
-        p2_deck = [{"id": cid} for cid in self.registered_players[p2_id]]
+        p1_deck = [{"id": f"{p1_id}_{i}_{cid}", "card_id": cid} for i, cid in enumerate(self.registered_players[p1_id])]
+        p2_deck = [{"id": f"{p2_id}_{i}_{cid}", "card_id": cid} for i, cid in enumerate(self.registered_players[p2_id])]
         random.shuffle(p1_deck)
         random.shuffle(p2_deck)
 
@@ -429,31 +439,36 @@ class GameLifecycleEngine:
     # -------------------------------------------------------------------------
     # 4. IN_GAME & TURN/PHASE ENGINE
     # -------------------------------------------------------------------------
-    """Starts the game loop (Section 6.5). Turn counter set to 1."""
     def start_in_game(self) -> None:
         self.macro_state = MacroState.IN_GAME
         self.game_state.turn_number = 1
         self._phase_index = 0
         self.game_state.phase = TurnPhase.UNTAP.value
         self.game_state.step = TurnPhase.UNTAP.value
-        self.game_state.grant_priority(self.game_state.active_player_index)
+        # UNTAP is automatic — immediately advance past it to UPKEEP (which grants priority)
+        self._untap_permanents()
+        # advance_phase() will move us to UPKEEP and return the PRIORITY_GRANT; discard the tuple
+        self.advance_phase()
 
     """
     Advances to the next step/phase.
     Increments turn counter & switches active player after Cleanup step.
-    Returns (next_phase, game_over_dict_or_None).
+    Returns (next_phase, game_over_dict_or_None, priority_grant_pdu_or_None).
     """
-    def advance_phase(self) -> Tuple[TurnPhase, Optional[Dict[str, str]]]:
+    def advance_phase(self) -> Tuple[TurnPhase, Optional[Dict[str, str]], Optional[Dict[str, Any]]]:
         if self.macro_state != MacroState.IN_GAME:
-            return TurnPhase(self.game_state.phase), None
+            return TurnPhase(self.game_state.phase), None, None
 
         self._phase_index = (self._phase_index + 1) % len(self.turn_phases)
         next_phase = self.turn_phases[self._phase_index]
 
         # Cleanup completed -> start the next player's turn (Section 7.8)
+        # UNTAP is fully automatic: we skip through it immediately and
+        # return the UPKEEP phase + its PRIORITY_GRANT to the caller,
+        # so the caller broadcasts PHASE_TRANSITION -> UPKEEP (not UNTAP).
         if next_phase == TurnPhase.UNTAP:
-            self._begin_next_turn()
-            return next_phase, None
+            final_phase, game_over, priority_grant_pdu = self._begin_next_turn()
+            return final_phase, game_over, priority_grant_pdu
 
         self.game_state.phase = next_phase.value
         self.game_state.step = next_phase.value
@@ -466,7 +481,7 @@ class GameLifecycleEngine:
             if len(ap.hand) > 7:
                 self.discard_pending = True
                 self.awaiting_discard_player = ap.name
-                return next_phase, None
+                return next_phase, None, None
 
         # DRAW step: draw one card for the active player (Section 7.4).
         # Skip draw on turn 1 (first player does not draw on their first turn).
@@ -483,26 +498,49 @@ class GameLifecycleEngine:
                         "winner_id": opponent.name,
                         "loser_id": ap.name,
                         "reason": "DECK_EMPTY",
-                    }
+                    }, None
                 ap.hand.append(ap.library.pop())
 
-        # Grant priority to active player for new step
+        # A new priority window needs a new token.  Reusing the token from the
+        # prior step lets an old action be replayed after a phase transition.
         self.game_state.grant_priority(self.game_state.active_player_index)
-        return next_phase, None
+        self.game_state.next_seq_num()
+        grant_pdu = {
+            "type": "PRIORITY_GRANT",
+            "player_id": self.game_state.players[self.game_state.active_player_index].name,
+            "seq_num": self.game_state.seq_num,
+            "time_limit_ms": 30000,
+        }
+        return next_phase, None, grant_pdu
 
-    def _begin_next_turn(self) -> None:
+    def _untap_permanents(self) -> None:
+        """Section 7.1: Untap all permanents controlled by the active player."""
+        if self.game_state is None:
+            return
+        ap = self.game_state.players[self.game_state.active_player_index]
+        for perm in ap.battlefield:
+            perm["tapped"] = False
+            perm.pop("entered_this_turn", None)  # clear summoning sickness flag
+
+    def _begin_next_turn(self) -> Tuple[TurnPhase, Optional[Dict[str, str]], Optional[Dict[str, Any]]]:
         """Start the next player's turn (Section 7.8): increment the turn
-        counter, switch the active player, reset to the UNTAP step, and clear
-        any pending-discard state."""
+        counter, switch the active player, run untap actions automatically,
+        then advance to UPKEEP.
+        Returns (final_phase, game_over, priority_grant_pdu) from advance_phase(UPKEEP)."""
+        self._clear_cleanup_effects()
         self.game_state.turn_number += 1
         # Switch active player
         self.game_state.active_player_index = 1 - self.game_state.active_player_index
         self.game_state.non_active_player_index = 1 - self.game_state.active_player_index
+        for idx, player in enumerate(self.game_state.players):
+            player.is_active_player = idx == self.game_state.active_player_index
         self.game_state.phase = TurnPhase.UNTAP.value
         self.game_state.step = TurnPhase.UNTAP.value
         self.discard_pending = False
         self.awaiting_discard_player = None
-        self.game_state.grant_priority(self.game_state.active_player_index)
+        # Run untap automatically, then advance to UPKEEP (which grants priority)
+        self._untap_permanents()
+        return self.advance_phase()
 
     def _clear_cleanup_effects(self) -> None:
         """Section 7.8: remove all damage from creatures and clear any
@@ -554,11 +592,13 @@ class GameLifecycleEngine:
 
         # Hand is now at seven or fewer -> finish cleanup and start next turn
         self._clear_cleanup_effects()
-        self._begin_next_turn()
+        next_phase, game_over, priority_grant_pdu = self._begin_next_turn()
         return True, "", {
-            "to_phase": TurnPhase.UNTAP.value,
+            "to_phase": next_phase.value,
             "turn": self.game_state.turn_number,
             "active_player": self.game_state.players[self.game_state.active_player_index].name,
+            "priority_grant": priority_grant_pdu,
+            "game_over": game_over,
         }
 
     # -------------------------------------------------------------------------

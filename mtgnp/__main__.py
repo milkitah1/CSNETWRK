@@ -67,6 +67,9 @@ def run_client(stdscr, args):
             stdscr.clear()
             stdscr.refresh()
             c.run_mulligan(stdscr)
+            stdscr.clear()
+            stdscr.refresh()
+            c.run_main_game(stdscr)
     c.close()
 
 if __name__ == "__main__":

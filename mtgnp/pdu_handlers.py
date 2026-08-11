@@ -43,7 +43,7 @@ class PDUHandler:
         elif t in self._RULES_ENGINE_TYPES:
             self.handle_rules_engine_pdu(pkt)
         else:
-            self.client._send(PDUs.make_error(400, f"unhandled pdu type: {t}"))
+            self.client._send(PDUs.make_error("BAD_REQUEST", f"unhandled pdu type: {t}"))
 
     # -------------------------------------------------------------------------
     # Shared helper: broadcast GAME_OVER — only broadcasts, does NOT decide logic
@@ -61,7 +61,7 @@ class PDUHandler:
     def handle_rules_engine_pdu(self, pkt: dict) -> None:
         engine = self.client.server.gameEngine
         if engine.macro_state != MacroState.IN_GAME or engine.game_state is None:
-            self.client._send(PDUs.make_error(400, "NOT_IN_GAME"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_IN_GAME"))
             return
 
         # Inject lifecycle reference so RulesEngine can call trigger_game_over()
@@ -112,11 +112,11 @@ class PDUHandler:
     # -------------------------------------------------------------------------
     def handle_concede(self, pkt: dict) -> None:
         if not self.client.player_id:
-            self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_REGISTERED"))
             return
         engine = self.client.server.gameEngine
         if engine.macro_state != MacroState.IN_GAME or engine.game_state is None:
-            self.client._send(PDUs.make_error(400, "NOT_IN_GAME"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_IN_GAME"))
             return
         loser = self.client.player_id
         winner = engine.get_opponent(loser)
@@ -146,7 +146,7 @@ class PDUHandler:
 
         # Don't allow more than 2 players
         if len(self.client.server.gameEngine.joined_players) >= 2:
-            self.client._send(PDUs.make_error(400, "LOBBY_FULL"))
+            self.client._send(PDUs.make_error("LOBBY_FULL", "Lobby is full"))
             self.client.running = False
             return
 
@@ -157,7 +157,7 @@ class PDUHandler:
         try:
             self.client.server.gameEngine.add_player(self.client.player_id)
         except RuntimeError:
-            self.client._send(PDUs.make_error(400, "LOBBY_FULL"))
+            self.client._send(PDUs.make_error("LOBBY_FULL", "Lobby is full"))
             self.client.running = False
             return
 
@@ -180,7 +180,7 @@ class PDUHandler:
 
     def handle_player_ready(self, pkt: dict) -> None:
         if not self.client.player_id:
-            self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_REGISTERED"))
             return
 
         # Section 6.2: the player_id is client-chosen and MUST be a non-empty string.
@@ -218,7 +218,7 @@ class PDUHandler:
             try:
                 self.client.server.gameEngine.set_ready(self.client.player_id)
             except KeyError:
-                self.client._send(PDUs.make_error(400, "NOT_IN_LOBBY"))
+                self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_IN_LOBBY"))
                 return
 
             ok, err = self.client.server.gameEngine.register_player_ready(self.client.player_id, deckList)
@@ -236,7 +236,7 @@ class PDUHandler:
             })
         except Exception as e:
             traceback.print_exc()
-            self.client._send(PDUs.make_error(400, str(e)))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", str(e)))
             return
         
         # acknowledge
@@ -244,12 +244,12 @@ class PDUHandler:
 
     def handle_mulligan_choice(self, pkt: dict) -> None:
         if not self.client.player_id:
-            self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_REGISTERED"))
             return
         keep = pkt.get("keep")
         cards_to_bottom = pkt.get("cards_to_bottom", [])
         if not isinstance(keep, bool) or not isinstance(cards_to_bottom, list):
-            self.client._send(PDUs.make_error(400, "INVALID_MULLIGAN_CHOICE"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "Invalid mulligan choice"))
             return
         try:
             success, msg, started = self.client.server.gameEngine.process_mulligan(
@@ -290,11 +290,11 @@ class PDUHandler:
     # -------------------------------------------------------------------------
     def handle_discard(self, pkt: dict) -> None:
         if not self.client.player_id:
-            self.client._send(PDUs.make_error(400, "NOT_REGISTERED"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_REGISTERED"))
             return
         card_ids = pkt.get("card_ids")
         if not isinstance(card_ids, list):
-            self.client._send(PDUs.make_error(400, "INVALID_DISCARD"))
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "Invalid discard choice"))
             return
 
         engine = self.client.server.gameEngine

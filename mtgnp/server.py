@@ -57,7 +57,7 @@ class ClientHandler(threading.Thread):
                     self.pdu_handler.handle_pdu(pkt)
                 except Exception as e:
                     try:
-                        self._send(PDUs.make_error(500, str(e)))
+                        self._send(PDUs.make_error("INTERNAL_ERROR", str(e)))
                     except Exception:
                         pass
         except (ConnectionError, OSError):
@@ -136,7 +136,7 @@ class Server:
 
                 if len(self.gameEngine.joined_players) >= self.gameEngine.max_players:
                     try:
-                        framing.send_pdu(conn, PDUs.make_error(400, "LOBBY_FULL"))
+                        framing.send_pdu(conn, PDUs.make_error("LOBBY_FULL", "LOBBY_FULL"))
                     except Exception:
                         pass
                    

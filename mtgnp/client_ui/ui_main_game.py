@@ -39,99 +39,82 @@ VIEW_HELP = "HELP"
 # ============================================================
 
 class GameUI:
+    MIN_HEIGHT = 45
+    MIN_WIDTH = 90
 
     def __init__(self, screen: curses.window, name):
         self.screen = screen
-        self.height, self.width = screen.getmaxyx() # Min recommended is (65, 113)
+        self.height, self.width = screen.getmaxyx()
 
-        # ----------------------------------------------------
         # Current secondary view
-        # None = normal game screen
-        # ----------------------------------------------------
         self.active_view: Optional[str] = None
-
-        # Selection state for secondary menus
         self.selected_index = 0
-
-        # Currently selected card, if applicable
         self.selected_card_id: Optional[str] = None
-
 
         # Windows
         self.header_window = None
-
         self.opponent_field_window = None
         self.player_field_window = None
-
         self.hand_window = None
         self.stack_window = None
         self.status_window = None
-
         self.active_view_window = None
-
         self.footer_window = None
 
+        self.create_windows()
+
+    def resize(self):
+        update_screen_size(self.screen)
+        self.height, self.width = self.screen.getmaxyx()
+        self.screen.erase()
+        self.screen.refresh()
         self.create_windows()
 
     # ========================================================
     # WINDOW CREATION
     # ========================================================
     def create_windows(self):
+        lower_height = max(5, self.height - HEADER_HEIGHT - OPPONENT_BATTLEFIELD_HEIGHT - PLAYER_BATTLEFIELD_HEIGHT - FOOTER_HEIGHT)
+
         # Header
         self.header_window = curses.newwin(HEADER_HEIGHT, self.width, 0, 0)
 
         # Battlefield
         opponent_y = HEADER_HEIGHT
+        self.opponent_field_window = curses.newwin(OPPONENT_BATTLEFIELD_HEIGHT, self.width, opponent_y, 0)
 
-        self.opponent_field_window = curses.newwin(OPPONENT_BATTLEFIELD_HEIGHT, self.width, opponent_y,0)
         player_y = (opponent_y + OPPONENT_BATTLEFIELD_HEIGHT)
         self.player_field_window = curses.newwin(PLAYER_BATTLEFIELD_HEIGHT, self.width, player_y, 0)
-
 
         # Lower section
         lower_y = (player_y + PLAYER_BATTLEFIELD_HEIGHT)
         hand_width = int(self.width * HAND_WIDTH_RATIO)
         right_width = self.width - hand_width
 
-
         # Your hand
-        self.hand_window = curses.newwin(LOWER_HEIGHT, hand_width, lower_y, 0)
+        self.hand_window = curses.newwin(lower_height, hand_width, lower_y, 0)
 
-        # ----------------------------------------------------
-        # Stack
-        #
-        # The stack occupies the upper part of the
-        # right-hand lower section.
-        #
-        # Player status occupies the lower part.
-        # ----------------------------------------------------
-        stack_height = LOWER_HEIGHT // 2
-        status_height = LOWER_HEIGHT - stack_height
+        stack_height = lower_height // 2
+        status_height = lower_height - stack_height
 
         self.stack_window = curses.newwin(stack_height, right_width, lower_y, hand_width)
         self.status_window = curses.newwin(status_height, right_width, lower_y + stack_height, hand_width)
 
-        # ----------------------------------------------------
-        # Active view
-        #
-        # This covers the main content area when the user
-        # presses H/G/S/etc.
-        #
-        # Header and footer remain visible.
-        # ----------------------------------------------------
         active_y = HEADER_HEIGHT
-
-        active_height = (self.height- HEADER_HEIGHT- FOOTER_HEIGHT)
-        self.active_view_window = curses.newwin(active_height,self.width,active_y,0)
+        active_height = max(5, self.height - HEADER_HEIGHT - FOOTER_HEIGHT)
+        self.active_view_window = curses.newwin(active_height, self.width, active_y, 0)
 
         # Footer
-        footer_y = self.height - FOOTER_HEIGHT
+        footer_y = max(0, self.height - FOOTER_HEIGHT)
         self.footer_window = curses.newwin(FOOTER_HEIGHT, self.width, footer_y, 0)
 
     # ========================================================
     # MAIN RENDER
     # ========================================================
     def render(self, state: dict[str, Any]):
+        if not check_minimum_size(self.screen, self.MIN_HEIGHT, self.MIN_WIDTH):
+            return
+
         # Always render these
         self.render_header(state)
         self.render_footer()
@@ -667,6 +650,11 @@ class GameUI:
     # INPUT
     # ========================================================
     def handle_key(self, key, state):
+        if key == curses.KEY_RESIZE:
+            self.resize()
+            self.render(state)
+            return None
+
         key = normalize_key(key)
         
         # NORMAL GAME SCREEN

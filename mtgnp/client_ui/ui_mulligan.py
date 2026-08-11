@@ -2,9 +2,10 @@ from mtgnp.client_ui.ui_helper import *
 from mtgnp.client_ui.ui_lobby import CardDetailDisplay 
 import time
 class MulliganState:
-    def __init__(
-            self,  client
-        ):
+    MIN_HEIGHT = 22
+    MIN_WIDTH = 70
+
+    def __init__(self, client):
         self.client = client
         self.window_height = (PAGE_SIZE + PADDING)
         self.mulligan_count = 0
@@ -12,24 +13,25 @@ class MulliganState:
         self.bottomed_indices: set[int] = set()
         self.bottomed_cards = []
         self.selected_index = 0
-    
-        # Dimensions and Coordinates for the hand display and detail window
+        self.hand = []
+        
+        self.hand_window = None
+        self.details_window = None
+        self.create_windows()
+
+    def create_windows(self):
         window_width1 = PAGE_WIDTH + PADDING*2
         window_width2 = 23 + PADDING*2
         start_y1 = 2
-        start_x1 = center_something_global(window_width1 + window_width2 + 5) # center 2 windows, add 5 padding
+        start_x1 = center_something_global(window_width1 + window_width2 + 5)
         start_x2 = start_x1 + window_width1 + 5
 
-        # Create WINDOWS that displays cards, details, and selection
         self.hand_window = curses.newwin(self.window_height, window_width1, start_y1, start_x1)
         self.details_window = CardDetailDisplay(self.window_height, window_width2, start_y1, start_x2)
 
 
     def init_hand_mulligan(self):
          #wait for the game state to have a hand before proceeding
-        self.hand_window.clear()
-        self.hand_window.refresh()
-
         self.hand_window.border(*MENU_BORDER_CHARS)
         
         self.hand_window.addstr(1, 2, "Mulligan Counter:")
@@ -39,8 +41,6 @@ class MulliganState:
         self.hand_window.addstr(self.window_height - 4, 2, "=================================")
         self.hand_window.addstr(self.window_height - 3, 2, "Keep or Mulligan?")
         self.hand_window.addstr(self.window_height - 2, 2, "[Y/N]")
-        self.render_hand()
-
 
     def init_hand_bottom(self):
         self.hand_window.erase()
@@ -53,29 +53,26 @@ class MulliganState:
         self.hand_window.addstr(self.window_height - 4, 2, "=================================")
         self.hand_window.addstr(self.window_height - 3, 2, "Bottom a card [+/-]")
         self.hand_window.addstr(self.window_height - 2, 2, "Press Esc to finish")
-        self.render_hand()
-
 
     def display_card_detail(self):
         card_id = self.hand[self.selected_index]
         self.details_window.display_card_details(card_id)
+        self.hand_window.refresh()
+
+    def resize(self):
+        stdscr = curses.initscr()
+        update_screen_size(stdscr)
+        stdscr.erase()
+        stdscr.refresh()
+        self.create_windows()
 
     def render_hand(self):
+        stdscr = curses.initscr()
+        if not check_minimum_size(stdscr, self.MIN_HEIGHT, self.MIN_WIDTH):
+            return
         row = 6
         self.wait_for_hand()
-        hand = self.client.visible_state.get("hand")
-
-        # Width available for card text, excluding borders
-        card_width = self.hand_window.getmaxyx()[1] - 4
-
-        # Clear only the card-text area
-        for i in range(len(hand)):
-            self.hand_window.addstr(
-                row + i,
-                2,
-                " " * card_width
-            )
-
+        hand = self.client.game_state.get("hand")
         # Redraw cards
         for i, card in enumerate(hand):
             attr = curses.A_NORMAL
@@ -94,8 +91,15 @@ class MulliganState:
             )
         self.hand_window.refresh()
 
-
     def handle_key_mulligan(self, key):
+        if key == curses.KEY_RESIZE:
+            self.resize()
+            self.render_hand()
+            self.display_card_detail()
+            return
+
+        key = normalize_key(key)
+
         # Move selection
         if key == curses.KEY_UP:
             if self.selected_index > 0:
@@ -104,7 +108,6 @@ class MulliganState:
         elif key == curses.KEY_DOWN:
             if self.selected_index < len(self.hand) - 1:
                 self.selected_index += 1
-
 
         # Keep
         elif key == (ord("y")):
@@ -115,10 +118,16 @@ class MulliganState:
             self.does_keep = False
             self.mulligan_count += 1
 
+        self.render_hand()
         self.display_card_detail()
 
-
     def handle_key_bottom(self, key):
+        if key == curses.KEY_RESIZE:
+            self.resize()
+            self.render_hand()
+            self.display_card_detail()
+            return
+
         curses.start_color()
         curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
 
@@ -178,13 +187,11 @@ class MulliganState:
 
         key = ""
         self.hand_window.keypad(True)
-        self.hand_window.timeout(100)
 
         while key not in (ord("y"), ord("n")):
             self.render_hand()
 
             key = self.hand_window.getch()
-            key = normalize_key(key)
             self.handle_key_mulligan(key)
 
         self.hand_window.keypad(False)
@@ -193,10 +200,10 @@ class MulliganState:
    
     def wait_for_hand(self):
         while True:
-            visible_state = self.client.visible_state
+            game_state = self.client.game_state
 
-            if visible_state and "hand" in visible_state:
-                self.hand = visible_state["hand"]
+            if game_state and "hand" in game_state:
+                self.hand = game_state["hand"]
                 return
 
             # Don't busy-loop at 100% CPU

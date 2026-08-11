@@ -57,9 +57,30 @@ HEIGHT = 0
 def center_something_global(len: int):
     return (WIDTH - len) // 2
 
+def update_screen_size(stdscr):
+    global HEIGHT, WIDTH
+    HEIGHT, WIDTH = stdscr.getmaxyx()
+
 def initialize_screen(stdscr):
-    global WIDTH
-    _, WIDTH = stdscr.getmaxyx()
+    update_screen_size(stdscr)
+
+def check_minimum_size(stdscr, min_height: int, min_width: int) -> bool:
+    update_screen_size(stdscr)
+    if HEIGHT < min_height or WIDTH < min_width:
+        stdscr.erase()
+        msg1 = "Terminal too small!"
+        msg2 = f"Current: {WIDTH}x{HEIGHT} | Minimum required: {min_width}x{min_height}"
+        msg3 = "Please resize / expand your terminal window."
+        
+        try:
+            stdscr.addstr(max(0, HEIGHT // 2 - 1), max(0, center_something_global(len(msg1))), msg1)
+            stdscr.addstr(max(0, HEIGHT // 2), max(0, center_something_global(len(msg2))), msg2)
+            stdscr.addstr(max(0, HEIGHT // 2 + 1), max(0, center_something_global(len(msg3))), msg3)
+        except Exception:
+            pass
+        stdscr.refresh()
+        return False
+    return True
 
 def center_something_local(dimension: int, length: int):
     return (dimension - length) // 2

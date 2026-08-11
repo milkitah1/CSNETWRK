@@ -16,7 +16,9 @@ from .common import framing
 from .common import pdu as PDUs
 from .common.verbose import set_verbose
 from .client_pdu_handler import ClientPDUHandler
-from .client_ui.ui_main_game import LobbyCardSelectionState, MulliganState # change this to * if needed
+from .client_ui.ui_mulligan import MulliganState
+
+from .client_ui.ui_lobby import LobbyCardSelectionState # change this to * if needed
 
 
 class Client:
@@ -49,7 +51,7 @@ class Client:
         self._last_pong: Optional[float] = None
         # Set to True when GAME_OVER is received; blocks further sends
         self._game_over: bool = False
-        self.state: Optional[dict] = None
+        self.visible_state: Optional[dict] = None
 
     def connect(self) -> None:
         self.sock = socket.create_connection((self.host, self.port))
@@ -218,12 +220,132 @@ class Client:
         lobby = LobbyCardSelectionState(stdscr)
         return lobby.get_cards()
 
-    def run_mulligan(self, stdscr, client):
-        mulligan = MulliganState(
-            # TODO: access client's "hand" (opening hand) here
-            # self.player_state.get("hand")
-            self
-        )
+    def run_lobby(self, stdscr, name):
+        """Run the curses lobby until the game starts or the client quits.
+
+        PLAYER_READY is sent after the player finishes deck selection.
+        ClientPDUHandler callbacks notify this function when the server
+        accepts the submission, rejects it with ERROR, or starts the game.
+        """
+        lobby = {
+            "ready": False,
+            "start_game": False,
+            "error": None,
+        }
+
+        def on_error(pkt):
+            lobby["error"] = pkt
+            lobby["ready"] = False
+
+        def on_game_state_update(pkt):
+            state = pkt.get("state") or {}
+
+            if state.get("phase") == "LOBBY":
+                self.game_state = state
+
+                players_ready = state.get("players_ready")
+                if players_ready is not None:
+                    try:
+                        self.players_ready = int(players_ready)
+                    except (TypeError, ValueError):
+                        pass
+
+                waiting_for = state.get("waiting_for")
+                if isinstance(waiting_for, list):
+                    self.waiting_for = list(waiting_for)
+
+                # If our PLAYER_READY was accepted, the server's lobby
+                # state should show us as ready.
+                if name not in self.waiting_for:
+                    lobby["ready"] = True
+
+            elif state.get("phase") != "LOBBY":
+                lobby["start_game"] = True
+
+        def on_start_game(pkt):
+            lobby["start_game"] = True
+            self._start_game = True
+
+        # Register callbacks for the duration of the lobby.
+        self.pdu_handler.register_callback(PDUs.ERROR, on_error)
+        self.pdu_handler.register_callback(PDUs.GAME_STATE_UPDATE, on_game_state_update)
+        self.pdu_handler.register_callback(PDUs.START_GAME, on_start_game)
+
+        self.hello(name)
+
+        while not lobby["start_game"]:
+            lobby["ready"] = False
+            lobby["error"] = None
+            self._last_error = None
+
+            # Let the player build/select a deck. If the server rejects it,
+            # this loop returns here and allows another PLAYER_READY.
+            decklist = LobbyCardSelectionState(stdscr).get_cards()
+            print("i got the decklist")
+
+            if not decklist:
+                # ESC with no cards: leave the lobby.
+                return False
+
+            try:
+                print("i sent the player ready")
+                message = {
+                    "type": PDUs.PLAYER_READY,
+                    "player_id": name,
+                    "deck_list": decklist,
+                }
+                self.send_pdu(message)
+
+            except Exception as exc:
+                stdscr.clear()
+                stdscr.addstr(2, 2, f"Failed to send PLAYER_READY: {exc}")
+                stdscr.addstr(4, 2, "Press any key to return to deck selection.")
+                stdscr.refresh()
+                stdscr.getch()
+
+                continue
+
+
+            # Wait for either an ERROR or a GAME_STATE_UPDATE.
+            while not lobby["ready"] and not lobby["error"] and not lobby["start_game"]:
+                curses.napms(50)
+
+            if lobby["error"]:
+                error = lobby["error"]
+                code = error.get("code", "UNKNOWN_ERROR")
+                message = error.get("message", "The server rejected the deck.")
+
+                print("ERROR PACKET:", error)
+
+                stdscr.clear()
+                stdscr.addstr(2, 2, "PLAYER_READY was rejected")
+                stdscr.addstr(4, 2, f"Code: {code}")
+                stdscr.addstr(5, 2, f"Message: {message}")
+                stdscr.addstr(7, 2, "Press any key to choose a deck again.")
+                stdscr.refresh()
+                stdscr.getch()
+                stdscr.clear()
+                stdscr.refresh()
+                continue
+
+            # Accepted, but the other player may not be ready yet.
+            if lobby["ready"] and not lobby["start_game"]:
+                stdscr.clear()
+                stdscr.addstr(2, 2, "Deck accepted!")
+                stdscr.addstr(4, 2, f"Players ready: {self.players_ready}/2")
+
+                if self.waiting_for:
+                    stdscr.addstr(5, 2, "Waiting for: " + ", ".join(self.waiting_for))
+
+                stdscr.addstr(7, 2, "Waiting for the game to start...")
+                stdscr.refresh()
+
+                while not lobby["start_game"]:
+                    curses.napms(50)
+        return decklist
+
+    def run_mulligan(self, stdscr):
+        mulligan = MulliganState(self)
     
         keeps = False
         while not keeps:

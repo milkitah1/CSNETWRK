@@ -27,6 +27,9 @@ class MulliganState:
 
     def init_hand_mulligan(self):
          #wait for the game state to have a hand before proceeding
+        self.hand_window.clear()
+        self.hand_window.refresh()
+
         self.hand_window.border(*MENU_BORDER_CHARS)
         
         self.hand_window.addstr(1, 2, "Mulligan Counter:")
@@ -57,7 +60,7 @@ class MulliganState:
     def render_hand(self):
         row = 6
         self.wait_for_hand()
-        hand = self.client.game_state.get("hand")
+        hand = self.client.visible_state.get("hand")
         # Redraw cards
         for i, card in enumerate(hand):
             attr = curses.A_NORMAL
@@ -176,10 +179,10 @@ class MulliganState:
    
     def wait_for_hand(self):
         while True:
-            game_state = self.client.game_state
+            visible_state = self.client.visible_state
 
-            if game_state and "hand" in game_state:
-                self.hand = game_state["hand"]
+            if visible_state and "hand" in visible_state:
+                self.hand = visible_state["hand"]
                 return
 
             # Don't busy-loop at 100% CPU

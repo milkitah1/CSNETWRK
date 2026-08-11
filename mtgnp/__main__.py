@@ -53,12 +53,12 @@ def main(stdscr):
         if args.connect:
             initialize_screen(stdscr)
             name = lobby_get_name(stdscr)
-            started = run_lobby(stdscr, c, name)
+            started = c.run_lobby(stdscr, name)
 
             if started and c._start_game:
                 stdscr.clear()
                 stdscr.refresh()
-                c.run_mulligan(stdscr, c)
+                c.run_mulligan(stdscr)
         c.close()
     else:
         p.print_help()

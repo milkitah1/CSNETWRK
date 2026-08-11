@@ -28,7 +28,7 @@ class ClientHandler(threading.Thread):
         self.server = server
         self.running = True
         self.player_id: str | None = None
-        # Section 6.2: the client-chosen player_id claimed via PLAYER_READY
+        # The client-chosen player_id claimed via PLAYER_READY
         self.claimed_player_id: str | None = None
         # PDUHandler is created after server is set so it can access server.gameEngine
         self.pdu_handler = PDUHandler(self)
@@ -159,7 +159,7 @@ class Server:
             "reason": reason,
             "seq_num": seq,
         })
-        # Section 6.6: after broadcasting GAME_OVER the server returns to the
+        # After broadcasting GAME_OVER the server returns to the
         # LOBBY state on the same TCP connections, awaiting fresh PLAYER_READY.
         self.gameEngine.reset_to_lobby()
         self.is_game_over = False
@@ -195,7 +195,7 @@ class Server:
             from .common.lifecycle import MacroState
             engine = self.gameEngine
             # Loop so that after every GAME_OVER the server re-enters the lobby
-            # and can start a new game on the same connections (Section 6.6).
+            # and can start a new game on the same connections.
             while not self._stop.is_set():
                 # Block until both players have joined and are ready.
                 if not engine.wait_for_all_ready():

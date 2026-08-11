@@ -1,3 +1,8 @@
+"""Server-side PDU packet handler and rules engine dispatcher for MTGNP.
+
+Receives incoming client PDUs, handles lobby registration, mulligan decisions,
+concessions, and routes in-game priority actions directly into the RulesEngine facade.
+"""
 from __future__ import annotations
 import traceback
 from typing import Any
@@ -245,14 +250,14 @@ class PDUHandler:
             self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_REGISTERED"))
             return
 
-        # Section 6.2: the player_id is client-chosen and MUST be a non-empty string.
+        # The player_id is client-chosen and MUST be a non-empty string.
         claimed_id = pkt.get("player_id")
         if not isinstance(claimed_id, str) or not claimed_id.strip():
             self.client._send(PDUs.make_error("ILLEGAL_PLAYER_ID", "player_id must be a non-empty string"))
             return
         claimed_id = claimed_id.strip()
 
-        # Section 6.2: reject a player_id already claimed by the other connected player.
+        # Reject a player_id already claimed by the other connected player.
         for other in list(self.client.server._clients):
             if other is self.client:
                 continue
@@ -261,7 +266,7 @@ class PDUHandler:
                 return
         self.client.claimed_player_id = claimed_id
 
-        # Accept either "deck_list" (RFC) or legacy "decklist" key.
+        # Accept either "deck_list" or legacy "decklist" key.
         deckList = pkt.get("deck_list")
         if deckList is None:
             deckList = pkt.get("decklist")
@@ -324,7 +329,7 @@ class PDUHandler:
             self.client._send(PDUs.make_error("ILLEGAL_ACTION", str(e)))
             return
 
-        # Section 6.4: a rejected mulligan choice MUST produce ERROR ILLEGAL_ACTION
+        # A rejected mulligan choice MUST produce ERROR ILLEGAL_ACTION
         if not success:
             self.client._send(PDUs.make_error("ILLEGAL_ACTION", msg or "Invalid mulligan choice"))
             return
@@ -364,7 +369,7 @@ class PDUHandler:
             })
 
     # -------------------------------------------------------------------------
-    # DISCARD handler (Section 7.8 — Cleanup step)
+    # DISCARD handler (Cleanup step)
     # -------------------------------------------------------------------------
     def handle_discard(self, pkt: dict) -> None:
         if not self.client.player_id:
@@ -378,7 +383,7 @@ class PDUHandler:
         engine = self.client.server.gameEngine
         ok, msg, trans = engine.process_discard(self.client.player_id, card_ids)
 
-        # Section 7.8: a DISCARD with invalid cards MUST be rejected with
+        # A DISCARD with invalid cards MUST be rejected with
         # ERROR code ILLEGAL_ACTION.
         if not ok:
             self.client._send(PDUs.make_error("ILLEGAL_ACTION", msg or "Invalid discard"))

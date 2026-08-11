@@ -1,3 +1,8 @@
+"""UI layout constants, border utilities, key normalization, and screen dimension helpers for Curses.
+
+Provides global constants for UI layout sizing, border character sets, minimum screen
+dimension verification, and centering utilities.
+"""
 import curses
 
 # ============================================================

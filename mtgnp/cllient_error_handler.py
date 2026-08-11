@@ -1,3 +1,7 @@
+"""Client-side error handling dispatcher for MTGNP.
+
+Maps server ERROR codes (such as LOBBY_FULL) to client notifications and state updates.
+"""
 from __future__ import annotations
 
 from typing import Any, Callable, Dict, Optional

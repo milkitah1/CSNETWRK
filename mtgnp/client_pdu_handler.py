@@ -1,3 +1,8 @@
+"""Client-side PDU packet handler and event dispatcher for MTGNP.
+
+Handles incoming server protocol packets, updates local client game state tracking,
+manages sequence numbers, and triggers UI updates/callbacks.
+"""
 from __future__ import annotations
 
 from typing import Any, Callable, Dict, Optional

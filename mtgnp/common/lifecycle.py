@@ -14,16 +14,17 @@ from typing import Any
 
 from .game_state import GameState, PlayerState
 
-# Represents the macro states of the whole game session (Section 6)
+# Represents the macro states of the whole game session
 class MacroState(str, Enum):
-    LOBBY = "LOBBY"                     # waiting for PLAYER_READY PDU from each connected player
-    GAME_SETUP = "GAME_SETUP"           # setting up the game
-    MULLIGAN = "MULLIGAN"               # performing mulligans
-    IN_GAME = "IN_GAME"                 # in the middle of a game
-    GAME_OVER = "GAME_OVER"             # game has ended, transitions to lobby state
+    LOBBY = "LOBBY"
+    SETUP = "SETUP"
+    GAME_SETUP = "SETUP"
+    MULLIGAN = "MULLIGAN"
+    IN_GAME = "IN_GAME"
+    GAME_OVER = "GAME_OVER"
 
 
-# Turn phase and steps in chronological order (Section 7, 9)
+# Turn phase and steps in chronological order
 class TurnPhase(str, Enum):
     UNTAP = "UNTAP"
     UPKEEP = "UPKEEP"
@@ -112,10 +113,10 @@ class GameLifecycleEngine:
         self._phase_index: int = 0
 
         # Phases that are fully automatic — no player holds priority.
-        # UNTAP is the only step in this set per RFC / MTG rules.
+        # UNTAP is the only step in this set per standard game rules.
         self.AUTOMATIC_STEPS: Set[str] = {TurnPhase.UNTAP.value}
 
-        # Section 7.8: cleanup-step discard pending state.
+        # Cleanup-step discard pending state.
         # When the active player holds more than seven cards at the Cleanup
         # step, the server awaits a DISCARD PDU before the turn can end.
         self.discard_pending: bool = False
@@ -222,7 +223,7 @@ class GameLifecycleEngine:
         return state
 
     # -------------------------------------------------------------------------
-    # 1. LOBBY & PLAYER READY HANDLING (Section 6.2 and 6.3)
+    # 1. LOBBY & PLAYER READY HANDLING
     # -------------------------------------------------------------------------
     """
     Validates PLAYER_READY submission.
@@ -240,7 +241,7 @@ class GameLifecycleEngine:
             return False, f"Deck contains {len(deck_list)} cards; must be between 1 and 50."
 
         if player_id in self.registered_players and self.registered_players[player_id] != deck_list:
-            # Overwrite earlier submission in LOBBY as per Section 6.2
+            # Overwrite earlier submission in LOBBY
             self.registered_players[player_id] = deck_list
             return True, ""
 
@@ -259,7 +260,7 @@ class GameLifecycleEngine:
         self.reset_to_lobby()
 
     # -------------------------------------------------------------------------
-    # 2. GAME_SETUP (Section 6.3)
+    # 2. GAME_SETUP
     # -------------------------------------------------------------------------
     """
     Executes setup operations
@@ -310,7 +311,7 @@ class GameLifecycleEngine:
         self.mulligan_kept.clear()
 
         # Consume the ready flags so the same two connections must send a fresh
-        # PLAYER_READY PDU before the next game can begin (Section 6.6).
+        # PLAYER_READY PDU before the next game can begin.
         with self._lock:
             for info in self.joined_players.values():
                 info["ready"] = False
@@ -373,7 +374,7 @@ class GameLifecycleEngine:
             return bool(waited)
 
     # -------------------------------------------------------------------------
-    # 3. MULLIGAN STATE (London Mulligan Rule | Section 6.4)
+    # 3. MULLIGAN STATE (London Mulligan Rule)
     # -------------------------------------------------------------------------
     """
     Processes a MULLIGAN_CHOICE PDU.
@@ -462,7 +463,7 @@ class GameLifecycleEngine:
         self._phase_index = (self._phase_index + 1) % len(self.turn_phases)
         next_phase = self.turn_phases[self._phase_index]
 
-        # Cleanup completed -> start the next player's turn (Section 7.8)
+        # Cleanup completed -> start the next player's turn
         # UNTAP is fully automatic: we skip through it immediately and
         # return the UPKEEP phase + its PRIORITY_GRANT to the caller,
         # so the caller broadcasts PHASE_TRANSITION -> UPKEEP (not UNTAP).
@@ -473,7 +474,7 @@ class GameLifecycleEngine:
         self.game_state.phase = next_phase.value
         self.game_state.step = next_phase.value
 
-        # Section 7.8: entering CLEANUP. If the active player holds more than
+        # Entering CLEANUP. If the active player holds more than
         # seven cards they MUST discard down to seven before the turn can end.
         # We pause here (no priority is granted) and await a DISCARD PDU.
         if next_phase == TurnPhase.CLEANUP:
@@ -483,7 +484,7 @@ class GameLifecycleEngine:
                 self.awaiting_discard_player = ap.name
                 return next_phase, None, None
 
-        # DRAW step: draw one card for the active player (Section 7.4).
+        # DRAW step: draw one card for the active player.
         # Skip draw on turn 1 (first player does not draw on their first turn).
         # If library is empty when a draw is required -> DECK_EMPTY loss.
         if next_phase == TurnPhase.DRAW:
@@ -493,7 +494,7 @@ class GameLifecycleEngine:
             if self.game_state.turn_number > 1 or ap_idx != 0:
                 # Draw is required
                 if len(ap.library) == 0:
-                    # Active player cannot draw -> they lose (Section 6.5)
+                    # Active player cannot draw -> they lose
                     return next_phase, {
                         "winner_id": opponent.name,
                         "loser_id": ap.name,
@@ -514,7 +515,7 @@ class GameLifecycleEngine:
         return next_phase, None, grant_pdu
 
     def _untap_permanents(self) -> None:
-        """Section 7.1: Untap all permanents controlled by the active player."""
+        """Untap all permanents controlled by the active player."""
         if self.game_state is None:
             return
         ap = self.game_state.players[self.game_state.active_player_index]
@@ -523,7 +524,7 @@ class GameLifecycleEngine:
             perm.pop("entered_this_turn", None)  # clear summoning sickness flag
 
     def _begin_next_turn(self) -> Tuple[TurnPhase, Optional[Dict[str, str]], Optional[Dict[str, Any]]]:
-        """Start the next player's turn (Section 7.8): increment the turn
+        """Start the next player's turn: increment the turn
         counter, switch the active player, run untap actions automatically,
         then advance to UPKEEP.
         Returns (final_phase, game_over, priority_grant_pdu) from advance_phase(UPKEEP)."""
@@ -543,7 +544,7 @@ class GameLifecycleEngine:
         return self.advance_phase()
 
     def _clear_cleanup_effects(self) -> None:
-        """Section 7.8: remove all damage from creatures and clear any
+        """Remove all damage from creatures and clear any
         'until end of turn' markers after a successful cleanup discard."""
         for player in self.game_state.players:
             for perm in player.battlefield:
@@ -551,7 +552,7 @@ class GameLifecycleEngine:
                 perm.pop("_until_end_of_turn", None)
 
     def process_discard(self, player_id: str, card_ids: List[str]) -> Tuple[bool, str, Dict[str, str]]:
-        """Section 7.8: validate and apply a DISCARD PDU during the CLEANUP step.
+        """Validate and apply a DISCARD PDU during the CLEANUP step.
 
         Returns (ok, error_msg, phase_transition). phase_transition is non-empty
         (pointing to the next turn's UNTAP) only once the hand is at seven or
@@ -567,7 +568,7 @@ class GameLifecycleEngine:
         p_state = self.game_state.players[self.game_state.active_player_index]
         hand_ids = [c["id"] if isinstance(c, dict) else c for c in p_state.hand]
 
-        # Every requested card must be currently in hand (Section 7.8)
+        # Every requested card must be currently in hand
         for cid in card_ids:
             if cid not in hand_ids:
                 return False, f"Card {cid} is not in the active player's hand.", {}
@@ -605,7 +606,7 @@ class GameLifecycleEngine:
     # 5. GAME_OVER & RESET
     # -------------------------------------------------------------------------
     """
-    Checks win/loss triggers (Section 6.5):
+    Checks win/loss triggers:
     - Life <= 0
     - Library empty when drawing
     Returns tuple of (winner_id, loser_id, reason) if over, else None.
@@ -645,7 +646,7 @@ class GameLifecycleEngine:
             "reason": reason  # LIFE_ZERO, DECK_EMPTY, CONCEDE, DISCONNECT
         }
     
-    """Resets engine state to allow a new game on the same TCP connection (Section 6.6)."""
+    """Resets engine state to allow a new game on the same TCP connection."""
     def reset_to_lobby(self) -> None:
         self.macro_state = MacroState.LOBBY
         self.game_state = None

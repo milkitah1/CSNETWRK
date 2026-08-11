@@ -1,3 +1,8 @@
+"""Curses-based lobby and deck selection UI interface for MTGNP.
+
+Handles player name entry, interactive deck building/selection from available card pool,
+and lobby ready-state synchronization before match start.
+"""
 from __future__ import annotations
 import curses
 import textwrap

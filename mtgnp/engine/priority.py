@@ -1,7 +1,7 @@
 """Priority State Machine for MTGNP Rules Engine.
 
-Implements PRIORITY_GRANT, PRIORITY_PASS, sequence number (priority token)
-validation, consecutive pass tracking, and step/stack triggers per RFC 0001 Section 8.1.
+Implements PRIORITY_GRANT, PRIORITY_PASS, sequence number validation,
+consecutive pass tracking, and step/stack triggers.
 """
 from __future__ import annotations
 

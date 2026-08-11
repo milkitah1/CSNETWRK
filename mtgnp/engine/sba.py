@@ -1,7 +1,7 @@
 """State-Based Actions (SBAs) Engine for MTGNP.
 
-Implements SBA sweeps per RFC 0001 Section 8.4:
-- Life <= 0 check (with mutual zero-life tiebreak rule: Active Player loses)
+Implements automatic rule checks:
+- Life <= 0 check (with tiebreak rule if both players hit 0 life at the same time: active player loses)
 - Lethal creature damage (damage >= toughness) and <= 0 toughness checks
 - Illegal aura attachments check
 """
@@ -35,7 +35,7 @@ def check_state_based_actions(
 
         if p0_dead or p1_dead:
             if p0_dead and p1_dead:
-                # Simultaneous zero-life: Active Player loses, Non-Active Player wins (RFC Sec 8.4)
+                # Simultaneous zero-life tiebreak: Active Player loses, Non-Active Player wins
                 loser_idx = game_state.active_player_index
                 winner_idx = game_state.non_active_player_index
             elif p0_dead:

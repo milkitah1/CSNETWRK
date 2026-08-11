@@ -1,3 +1,8 @@
+"""Curses-based main game UI interface and view controller for MTGNP.
+
+Renders header, opponent battlefield, player battlefield, hand, stack, status panel,
+and secondary views (Actions, Combat, Trigger Ordering, Discard, Card Info).
+"""
 import textwrap
 
 # import everything from the other ui modules so 

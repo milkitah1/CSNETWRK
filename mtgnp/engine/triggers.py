@@ -1,6 +1,6 @@
 """Triggered Abilities System for MTGNP.
 
-Implements trigger event detection across all 7 RFC Sec 8.6.1 checkpoints:
+Implements trigger event detection across all standard game checkpoints:
 1. ON_ENTER_BATTLEFIELD
 2. ON_PERMANENT_LEAVES_BATTLEFIELD
 3. ON_CREATURE_DIES
@@ -10,8 +10,7 @@ Implements trigger event detection across all 7 RFC Sec 8.6.1 checkpoints:
 7. ON_COMBAT_DAMAGE_DEALT
 8. Plus attack hooks (ON_ATTACK)
 
-Also implements AP/NAP stacking order (Sec 8.6.2), TRIGGER_ORDER / TRIGGER_ORDER_RESPONSE
-validation (Sec 8.6.3), and TRIGGER_CHOICE / TRIGGER_CHOICE_RESPONSE handling (Sec 8.6.4).
+Also handles active/non-active player stacking order, trigger ordering validation, and trigger choice selection.
 """
 from __future__ import annotations
 
@@ -63,7 +62,7 @@ class TriggerManager:
     ) -> List[PendingTrigger]:
         """Scans state and event_payload for triggered abilities matching the event_type.
 
-        Supports all 7 RFC 8.6.1 checkpoints:
+        Supports all standard checkpoints:
         - ON_ENTER_BATTLEFIELD
         - ON_PERMANENT_LEAVES_BATTLEFIELD
         - ON_CREATURE_DIES
@@ -202,7 +201,7 @@ class TriggerManager:
     def arrange_apnap_triggers(
         self, game_state: GameState, triggers: List[PendingTrigger]
     ) -> Tuple[Optional[Dict[str, Any]], List[PendingTrigger]]:
-        """Orders triggers per RFC 8.6.2 (AP triggers stacked first, NAP triggers stacked on top).
+        """Orders triggers so active player triggers are placed on the stack first, followed by non-active player triggers.
 
         If a single player controls 2+ simultaneous triggers, generates a TRIGGER_ORDER PDU.
 
@@ -266,7 +265,7 @@ class TriggerManager:
     def generate_trigger_choice_pdu(
         self, game_state: GameState, trigger: PendingTrigger
     ) -> Tuple[Optional[Dict[str, Any]], bool]:
-        """Generates a TRIGGER_CHOICE PDU for an optional or targeted trigger (Sec 8.6.4).
+        """Generates a TRIGGER_CHOICE PDU for an optional or targeted trigger.
 
         Returns:
             Tuple of (TRIGGER_CHOICE_pdu_or_none, should_discard_immediately)

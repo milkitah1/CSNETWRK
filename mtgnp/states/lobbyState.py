@@ -1,8 +1,13 @@
-from __future__ import annotations
+"""Interactive lobby state machine for CLI client session initialization.
 
-from typing import Optional
+Handles player registration, deck loading, ready status synchronization, and transition to game start.
+"""
+from typing import TYPE_CHECKING, Optional
 import time
 import queue
+
+if TYPE_CHECKING:
+    from ..client import Client
 
 from ..common import pdu as PDUs
 

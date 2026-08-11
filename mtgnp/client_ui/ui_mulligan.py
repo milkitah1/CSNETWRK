@@ -1,3 +1,7 @@
+"""Curses-based London Mulligan UI interface for MTGNP.
+
+Handles initial hand display, keep vs. mulligan decisions, and library bottoming card selection.
+"""
 from mtgnp.client_ui.ui_helper import * 
 from mtgnp.client_ui.ui_lobby import CardDetailDisplay 
 import time

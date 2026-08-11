@@ -1,8 +1,8 @@
 """Stack and Casting Engine for MTGNP.
 
-Implements stack data structure (LIFO), CAST_SPELL validation, ACTIVATE_ABILITY validation,
-summoning sickness checks on tap abilities, PLAY_LAND handling, stack resolution,
-and fizzle detection per RFC 0001 Sections 8.2, 8.3, and 8.5.
+Implements stack data structure (last-in first-out), spell casting validation, ability activation validation,
+summoning sickness checks on tap abilities, land placement handling, stack resolution,
+and fizzle detection for illegal targets.
 """
 from __future__ import annotations
 
@@ -277,7 +277,7 @@ class StackManager:
         # Check if mana ability (e.g. land or Llanowar Elves tapping for mana)
         is_mana_ability = source_perm.get("type") == "Land" or "mana_produced" in source_perm
         if is_mana_ability:
-            # Bypasses stack per RFC 0001
+            # Mana abilities resolve immediately and bypass the stack
             return None, None
 
         # Target check

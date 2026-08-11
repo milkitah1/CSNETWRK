@@ -1,12 +1,20 @@
+"""CLI mulligan decision state machine for MTGNP.
+
+Handles initial hand evaluation, keep vs. mulligan decisions, and card selection to place on bottom of library.
+"""
+from typing import TYPE_CHECKING
 import queue
 import time
+
+if TYPE_CHECKING:
+    from ..client import Client
 
 from ..common import pdu as PDUs
 
 
 class MulliganState:
 
-    def __init__(self, client):
+    def __init__(self, client: "Client"):
         self.client = client
         self.submitted = False
 

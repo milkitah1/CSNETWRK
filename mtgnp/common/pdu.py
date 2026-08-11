@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
-# Core PDUs (as specified in RFC)
+# Core PDUs
 PING = "PING"
 PONG = "PONG"
 HELLO = "HELLO"

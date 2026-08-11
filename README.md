@@ -12,7 +12,7 @@ Make sure to run all commands from the repository root directory (`CSNETWRK`).
 ```bash
 python -m mtgnp server --port 4444 --verbose --log
 ```
-*Note: The `--log` flag writes server logs to `mtgnp/logs/server.log`.*
+*Note: The `--log` is an optional flag used to write server logs to `mtgnp/logs/server.log`.*
 
 **2. Client 1 (Alice):**
 ```bash
@@ -53,7 +53,7 @@ python -m pytest
 
 ## 4. Real-Time Log Viewer
 
-You can watch all incoming and outgoing PDUs from the server and both clients live in a single unified terminal window:
+You can watch all incoming and outgoing PDUs from both clients live in a single unified terminal window:
 
 1. Open a new terminal in the project root.
 2. Run the log viewer script:
@@ -61,4 +61,6 @@ You can watch all incoming and outgoing PDUs from the server and both clients li
    python log_viewer.py
    ```
 3. Start the server and clients with the `--log` flags shown above.
-4. The viewer will stream formatted PDU traffic from `mtgnp/logs/server.log`, `mtgnp/logs/client1.log`, and `mtgnp/logs/client2.log`.
+4. The viewer will stream formatted PDU traffic from `mtgnp/logs/client1.log`, and `mtgnp/logs/client2.log`.
+
+Note: Server logs can still be viewed, albeit manually. They were excluded in the live viewer, due to complications with simultaneous activity with the clients.

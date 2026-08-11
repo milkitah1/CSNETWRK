@@ -18,7 +18,7 @@ import time
 LOG_DIR = Path("mtgnp/logs")
 
 LOG_FILES = [
-    LOG_DIR / "server.log",
+    # LOG_DIR / "server.log",
     LOG_DIR / "client1.log",
     LOG_DIR / "client2.log",
 ]

@@ -100,12 +100,12 @@ class ClientHandler(threading.Thread):
                 engine = self.server.gameEngine
                 try:
                     from .common.lifecycle import MacroState
-                    if engine.macro_state == MacroState.IN_GAME and engine.game_state is not None:
-                        loser = self.player_id
-                        winner = engine.get_opponent(loser)
-                        if winner:
-                            # Route through lifecycle — idempotent, broadcasts GAME_OVER
-                            self.pdu_handler._finish_game(winner, loser, "DISCONNECT")
+                    if engine.macro_state in (MacroState.IN_GAME, MacroState.MULLIGAN,
+                                              MacroState.GAME_SETUP) and engine.game_state is not None:
+                        # A hard socket close mid-match starts the reconnect
+                        # grace window instead of ending the game immediately.
+                        self.server.begin_reconnect_grace(self)
+                        return
                 except Exception:
                     pass
                 try:
@@ -115,10 +115,17 @@ class ClientHandler(threading.Thread):
 
 
 class Server:
-    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False, log: bool = False):
+    def __init__(self, host: str = "127.0.0.1", port: int = 4444, verbose: bool = False, log: bool = False,
+                 reconnect_timeout: float = 10.0):
         set_verbose(verbose, log=log)
         self.host = host
         self.port = port
+        # Implementation-defined window during which a disconnected player's
+        # seat is held so they can re-attach via RECONNECT before the server
+        # ends the match with GAME_OVER (reason DISCONNECT).
+        self.reconnect_timeout = float(reconnect_timeout)
+        # player_id -> ClientHandler whose socket closed mid-match.
+        self._reconnecting: dict[str, "ClientHandler"] = {}
         
         self.gameEngine = GameLifecycleEngine(max_players=2)
         # Rules state (priority passes, stack, combat and triggers) belongs to
@@ -144,25 +151,34 @@ class Server:
 
     # Called by LifecycleManager.on_game_over — broadcasts GAME_OVER to all clients
     def _on_game_over(self, winner_id: str, loser_id: str, reason: str) -> None:
-        if getattr(self, "is_game_over", False):
-            return
-        self.is_game_over = True
-        seq = 1
-        if hasattr(self.gameEngine, "game_state") and self.gameEngine.game_state:
-            self.gameEngine.game_state.seq_num += 1
-            seq = self.gameEngine.game_state.seq_num
+        with self._state_lock:
+            if getattr(self, "is_game_over", False):
+                return
+            self.is_game_over = True
+            # Compute seq_num while still holding the lock so both threads
+            # cannot advance it independently.
+            seq = 1
+            if hasattr(self.gameEngine, "game_state") and self.gameEngine.game_state:
+                self.gameEngine.game_state.seq_num += 1
+                seq = self.gameEngine.game_state.seq_num
+            pdu = {
+                "type": PDUs.GAME_OVER,
+                "winner_id": winner_id,
+                "loser_id": loser_id,
+                "reason": reason,
+                "seq_num": seq,
+            }
 
-        self.broadcast({
-            "type": PDUs.GAME_OVER,
-            "winner_id": winner_id,
-            "loser_id": loser_id,
-            "reason": reason,
-            "seq_num": seq,
-        })
+        # Broadcast outside the lock to avoid holding _state_lock during I/O.
+        # is_game_over stays True, so any concurrent _on_game_over entry will
+        # hit the early-return above.
+        self.broadcast(pdu)
+
         # After broadcasting GAME_OVER the server returns to the
         # LOBBY state on the same TCP connections, awaiting fresh PLAYER_READY.
         self.gameEngine.reset_to_lobby()
-        self.is_game_over = False
+        with self._state_lock:
+            self.is_game_over = False
 
     def start(self) -> None:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -179,12 +195,20 @@ class Server:
                 except OSError:
                     break
 
-                if len(self.gameEngine.joined_players) >= self.gameEngine.max_players:
+                # While a disconnected player's seat is still reserved for
+                # reconnection, accept new sockets so that a RECONNECT can
+                # complete on a fresh TCP connection.
+                with self._state_lock:
+                    reconnect_pending = bool(self._reconnecting)
+                if len(self.gameEngine.joined_players) >= self.gameEngine.max_players and not reconnect_pending:
                     try:
                         framing.send_pdu(conn, PDUs.make_error("LOBBY_FULL", "LOBBY_FULL"))
                     except Exception:
                         pass
-                   
+                    try:
+                        conn.close()
+                    except Exception:
+                        pass
                     continue
 
                 handler = ClientHandler(conn, addr, self)
@@ -246,11 +270,20 @@ class Server:
 
     # broadcast a message to all connected clients
     def broadcast(self, msg: dict):
+        dead = []
         for c in list(self._clients):
             try:
                 c._send(msg)
-            except Exception as e:
-                print("Broadcast failed:", e)
+            except Exception:
+                # Socket may have been closed between the list copy and the
+                # send (e.g. a concurrent handler finally-block).  Remove it
+                # silently; the handler's own finally-block will also try.
+                dead.append(c)
+        for c in dead:
+            try:
+                self._clients.remove(c)
+            except ValueError:
+                pass
 
     def send_game_state_to_all(self):
         for c in list(self._clients):
@@ -265,6 +298,74 @@ class Server:
 
             except Exception as e:
                 print("Failed sending game state:", e)
+
+    # -----------------------------------------------------------------------
+    # Disconnect / Reconnect handling (implementation-defined timeout)
+    # -----------------------------------------------------------------------
+    def begin_reconnect_grace(self, handler: "ClientHandler") -> None:
+        """Hold a disconnected player's seat for `reconnect_timeout` seconds.
+
+        A hard socket close mid-match (IN_GAME / MULLIGAN / SETUP) does not
+        end the game immediately: the seat is reserved and, if the same player
+        calls RECONNECT within the window, the match resumes on a fresh TCP
+        connection.  When the window elapses, the match ends with
+        GAME_OVER(DISCONNECT) and the seat is freed.
+        """
+        from .common.lifecycle import MacroState
+        engine = self.gameEngine
+        player_id = handler.player_id
+
+        if engine.macro_state not in (MacroState.IN_GAME, MacroState.MULLIGAN,
+                                      MacroState.GAME_SETUP) or engine.game_state is None:
+            # Not mid-match: nothing to preserve, just free the seat.
+            if player_id:
+                try:
+                    engine.unregister_player(player_id)
+                except Exception:
+                    pass
+            return
+
+        if self.reconnect_timeout <= 0:
+            # Timeout disabled -> fall back to immediate DISCONNECT.
+            self._finalize_disconnect(handler)
+            return
+
+        with self._state_lock:
+            self._reconnecting[player_id] = handler
+
+        def watchdog() -> None:
+            # Let the reconnect window elapse, then end the match if the seat
+            # was never reclaimed (handle_reconnect cancels this via pop).
+            time.sleep(self.reconnect_timeout)
+            with self._state_lock:
+                if self._reconnecting.get(player_id) is handler:
+                    del self._reconnecting[player_id]
+                    self._finalize_disconnect(handler)
+
+        threading.Thread(target=watchdog, daemon=True).start()
+
+    def _finalize_disconnect(self, handler: "ClientHandler") -> None:
+        """End the match with DISCONNECT and free the player's seat."""
+        from .common.lifecycle import MacroState
+        engine = self.gameEngine
+        player_id = handler.player_id
+        try:
+            if engine.macro_state in (MacroState.IN_GAME, MacroState.MULLIGAN,
+                                      MacroState.GAME_SETUP) and engine.game_state is not None:
+                winner = engine.get_opponent(player_id)
+                if winner:
+                    # Idempotent via LifecycleManager: broadcasts GAME_OVER once.
+                    handler.pdu_handler._finish_game(winner, player_id, "DISCONNECT")
+        except Exception:
+            pass
+        if player_id:
+            try:
+                engine.unregister_player(player_id)
+            except Exception:
+                pass
+
+    def is_reconnect_pending(self, player_id: str) -> bool:
+        return player_id in self._reconnecting
 
 
 if __name__ == "__main__":

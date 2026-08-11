@@ -41,6 +41,7 @@ class PDUHandler:
             PDUs.STATE_REQUEST: self.handle_state_request,
             PDUs.CONCEDE: self.handle_concede,
             PDUs.DISCONNECT: self.handle_disconnect,
+            PDUs.RECONNECT: self.handle_reconnect,
         }
 
     def handle_pdu(self, pkt: dict) -> None:
@@ -184,6 +185,50 @@ class PDUHandler:
             engine.reset_to_lobby()
         self.client.running = False
 
+    def handle_reconnect(self, pkt: dict) -> None:
+        """Re-attach a player whose socket closed mid-match within the
+        implementation-defined reconnect window (see Server.begin_reconnect_grace)."""
+        player_id = pkt.get("player_id")
+        if not isinstance(player_id, str) or not player_id.strip():
+            self.client._send(PDUs.make_error("ILLEGAL_ACTION", "RECONNECT requires a non-empty player_id"))
+            return
+        player_id = player_id.strip()
+        server = self.client.server
+
+        # The outer run loop holds server._state_lock; re-acquiring the RLock
+        # keeps the seat claim and watchdog-cancel atomic with disconnects.
+        with server._state_lock:
+            pending = server._reconnecting.get(player_id)
+            if pending is None:
+                self.client._send(PDUs.make_error(
+                    "NOT_CONNECTED",
+                    f"No pending session for '{player_id}'. Reconnect window expired or unknown player.",
+                ))
+                self.client.running = False
+                return
+            # Claim the seat: cancel the watchdog and attach this connection.
+            del server._reconnecting[player_id]
+
+        self.client.player_id = player_id
+        self.client.claimed_player_id = player_id
+
+        self.client._send({"type": PDUs.RECONNECT_ACK, "player_id": player_id})
+
+        # Resync with the authoritative game state so play can resume.
+        engine = server.gameEngine
+        if engine.macro_state in (MacroState.IN_GAME, MacroState.MULLIGAN,
+                                  MacroState.GAME_SETUP) and engine.game_state is not None:
+            server.send_game_state_to_all()
+            if engine.macro_state == MacroState.IN_GAME:
+                gs = engine.game_state
+                if gs.priority_player_index is not None:
+                    self.client._send({
+                        "type": PDUs.PRIORITY_GRANT,
+                        "player_id": gs.players[gs.priority_player_index].name,
+                        "seq_num": gs.seq_num,
+                        "time_limit_ms": 30000,
+                    })
+
     def handle_ping(self, pkt: dict) -> None:
         self.client._send({"type": PDUs.PONG, "seq_num": pkt.get("seq_num")})
 
@@ -210,6 +255,27 @@ class PDUHandler:
 
     def handle_hello(self, pkt: dict) -> None:
         name = pkt.get("name") or f"{self.client.addr}"
+
+        # A client that is already registered (e.g. re-entering the lobby for a
+        # rematch after GAME_OVER, on the same TCP connection) is allowed to
+        # re-announce itself without being treated as a brand-new join.
+        if self.client.player_id and self.client.player_id == name:
+            # After a game-over, reset_to_lobby() clears the lobby roster so
+            # reconnecting players don't get spurious LOBBY_FULL errors.
+            # Re-add the player to the (possibly cleared) lobby roster.
+            try:
+                self.client.server.gameEngine.add_player(name)
+            except RuntimeError:
+                self.client._send(PDUs.make_error("LOBBY_FULL", "Lobby is full"))
+                self.client.running = False
+                return
+            self.client.server.broadcast({
+                "type": PDUs.GAME_STATE_UPDATE,
+                "state": self.client.server.gameEngine.get_lobby_state()
+            })
+            self.client._send({"type": PDUs.HELLO, "player_id": name})
+            self.client._send({"type": PDUs.WELCOME, "message": "Welcome back to MTGNP"})
+            return
 
         # Don't allow more than 2 players
         if len(self.client.server.gameEngine.joined_players) >= 2:
@@ -285,8 +351,19 @@ class PDUHandler:
             try:
                 self.client.server.gameEngine.set_ready(self.client.player_id)
             except KeyError:
-                self.client._send(PDUs.make_error("ILLEGAL_ACTION", "NOT_IN_LOBBY"))
-                return
+                # After a game-over, reset_to_lobby() clears the lobby roster.
+                # A player reconnecting on the same TCP connection (who sent
+                # HELLO via the same-connection path) should already be
+                # re-added, but if they skipped HELLO or hit a race with
+                # unregister_player, re-add them here so the rematch can
+                # proceed instead of being rejected with NOT_IN_LOBBY.
+                try:
+                    self.client.server.gameEngine.add_player(self.client.player_id)
+                except RuntimeError:
+                    self.client._send(PDUs.make_error("LOBBY_FULL", "Lobby is full"))
+                    self.client.running = False
+                    return
+                self.client.server.gameEngine.set_ready(self.client.player_id)
 
             ok, err = self.client.server.gameEngine.register_player_ready(self.client.player_id, deckList)
             if not ok:

@@ -1,10 +1,20 @@
-[2026-08-06T18:04:24.707973Z] client1.log SEND: HELLO
+[2026-08-11T20:37:54.031953Z] client1.log SEND: PING
 {
-  "name": "ace1",
+  "seq_num": 1,
+  "type": "PING"
+}
+[2026-08-11T20:37:54.280491Z] client1.log RECV: PONG
+{
+  "seq_num": 1,
+  "type": "PONG"
+}
+[2026-08-11T20:37:57.175766Z] client1.log SEND: HELLO
+{
+  "name": "Alice",
   "seq_num": 1,
   "type": "HELLO"
 }
-[2026-08-06T18:04:24.994952Z] client1.log RECV: GAME_STATE_UPDATE
+[2026-08-11T20:37:57.439314Z] client1.log RECV: GAME_STATE_UPDATE
 {
   "seq_num": 1,
   "state": {
@@ -12,72 +22,62 @@
     "players": 1,
     "players_ready": 0,
     "waiting_for": [
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9"
+      "Alice"
     ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:25.150986Z] client1.log RECV: HELLO
+[2026-08-11T20:37:57.577869Z] client1.log RECV: HELLO
 {
-  "player_id": "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9",
+  "player_id": "Alice",
   "seq_num": 2,
   "type": "HELLO"
 }
-[2026-08-06T18:04:25.311004Z] client1.log RECV: WELCOME
+[2026-08-11T20:37:57.703388Z] client1.log RECV: WELCOME
 {
   "message": "Welcome to MTGNP",
   "seq_num": 3,
   "type": "WELCOME"
 }
-[2026-08-06T18:04:29.990846Z] client1.log SEND: PLAYER_READY
-{
-  "decklist": [
-    "forest_001",
-    "mountain_001",
-    "plains_001",
-    "island_001",
-    "lightning_bolt_001",
-    "lava_spike_001",
-    "searing_spear_001",
-    "skullcrack_001",
-    "rift_bolt_001"
-  ],
-  "player_id": "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9",
-  "seq_num": 2,
-  "type": "PLAYER_READY"
-}
-[2026-08-06T18:04:30.289648Z] client1.log RECV: GAME_STATE_UPDATE
+[2026-08-11T20:38:02.193677Z] client1.log RECV: GAME_STATE_UPDATE
 {
   "seq_num": 4,
   "state": {
     "phase": "LOBBY",
-    "players": 1,
-    "players_ready": 1,
-    "waiting_for": []
+    "players": 2,
+    "players_ready": 0,
+    "waiting_for": [
+      "Alice",
+      "Bob"
+    ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:30.449670Z] client1.log RECV: PLAYER_READY_ACK
+[2026-08-11T20:38:04.449878Z] client1.log RECV: GAME_STATE_UPDATE
 {
   "seq_num": 5,
-  "type": "PLAYER_READY_ACK"
-}
-[2026-08-06T18:04:36.185518Z] client1.log RECV: GAME_STATE_UPDATE
-{
-  "seq_num": 6,
   "state": {
     "phase": "LOBBY",
     "players": 2,
     "players_ready": 1,
     "waiting_for": [
-      "440b6db1-406c-4c48-86fb-f17b76a088dc"
+      "Alice"
     ]
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:39.008682Z] client1.log RECV: GAME_STATE_UPDATE
+[2026-08-11T20:38:07.354187Z] client1.log SEND: PLAYER_READY
 {
-  "seq_num": 7,
+  "deck_list": [
+    "forest_001"
+  ],
+  "player_id": "Alice",
+  "seq_num": 1,
+  "type": "PLAYER_READY"
+}
+[2026-08-11T20:38:07.728371Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "seq_num": 6,
   "state": {
     "phase": "LOBBY",
     "players": 2,
@@ -86,47 +86,537 @@
   },
   "type": "GAME_STATE_UPDATE"
 }
-[2026-08-06T18:04:39.070716Z] client1.log RECV: START_GAME
+[2026-08-11T20:38:08.034435Z] client1.log RECV: PLAYER_READY_ACK
+{
+  "seq_num": 7,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-11T20:38:08.034435Z] client1.log RECV: START_GAME
 {
   "seq_num": 8,
   "type": "START_GAME"
 }
-[2026-08-06T18:04:39.356751Z] client1.log RECV: GAME_STATE_UPDATE
+[2026-08-11T20:38:08.232537Z] client1.log RECV: GAME_STATE_UPDATE
 {
-  "seq_num": 9,
+  "seq_num": 0,
   "state": {
-    "active_player": "440b6db1-406c-4c48-86fb-f17b76a088dc",
+    "active_player": "Bob",
     "battlefield": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": [],
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": []
+      "Alice": [],
+      "Bob": []
     },
     "graveyard": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": [],
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": []
+      "Alice": [],
+      "Bob": []
     },
     "hand": [
-      "searing_spear_001",
-      "rift_bolt_001",
-      "forest_001",
-      "skullcrack_001",
-      "lightning_bolt_001",
-      "plains_001",
-      "island_001"
+      "Alice_0_forest_001"
     ],
     "hand_counts": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 7
+      "Bob": 1
     },
     "library_counts": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 2,
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": 2
+      "Alice": 0,
+      "Bob": 0
     },
     "life_totals": {
-      "440b6db1-406c-4c48-86fb-f17b76a088dc": 20,
-      "9edfa10f-f460-4cf7-9c19-d026c3d3f3b9": 20
+      "Alice": 20,
+      "Bob": 20
     },
     "phase": "MULLIGAN",
     "stack": [],
     "turn": 0
   },
   "type": "GAME_STATE_UPDATE"
+}
+[2026-08-11T20:38:09.239048Z] client1.log SEND: MULLIGAN_CHOICE
+{
+  "cards_to_bottom": [],
+  "keep": true,
+  "seq_num": 0,
+  "type": "MULLIGAN_CHOICE"
+}
+[2026-08-11T20:38:09.504115Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "seq_num": 0,
+  "state": {
+    "active_player": "Bob",
+    "battlefield": {
+      "Alice": [],
+      "Bob": []
+    },
+    "graveyard": {
+      "Alice": [],
+      "Bob": []
+    },
+    "hand": [
+      "Alice_0_forest_001"
+    ],
+    "hand_counts": {
+      "Bob": 1
+    },
+    "library_counts": {
+      "Alice": 0,
+      "Bob": 0
+    },
+    "life_totals": {
+      "Alice": 20,
+      "Bob": 20
+    },
+    "phase": "MULLIGAN",
+    "stack": [],
+    "turn": 0
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-11T20:38:11.065104Z] client1.log RECV: PHASE_TRANSITION
+{
+  "active_player": "Bob",
+  "from_phase": "MULLIGAN",
+  "seq_num": 9,
+  "to_phase": "UPKEEP",
+  "turn": 1,
+  "type": "PHASE_TRANSITION"
+}
+[2026-08-11T20:38:11.317690Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "seq_num": 1,
+  "state": {
+    "active_player": "Bob",
+    "battlefield": {
+      "Alice": [],
+      "Bob": []
+    },
+    "graveyard": {
+      "Alice": [],
+      "Bob": []
+    },
+    "hand": [
+      "Alice_0_forest_001"
+    ],
+    "hand_counts": {
+      "Bob": 1
+    },
+    "land_played_this_turn": false,
+    "library_counts": {
+      "Alice": 0,
+      "Bob": 0
+    },
+    "life_totals": {
+      "Alice": 20,
+      "Bob": 20
+    },
+    "phase": "UPKEEP",
+    "priority_holder": "Bob",
+    "stack": [],
+    "step": "UPKEEP",
+    "turn": 1
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-11T20:38:11.564722Z] client1.log RECV: PRIORITY_GRANT
+{
+  "player_id": "Bob",
+  "seq_num": 2,
+  "time_limit_ms": 30000,
+  "type": "PRIORITY_GRANT"
+}
+[2026-08-11T20:38:14.069961Z] client1.log SEND: CONCEDE
+{
+  "seq_num": 2,
+  "type": "CONCEDE"
+}
+[2026-08-11T20:38:14.320670Z] client1.log RECV: GAME_OVER
+{
+  "loser_id": "Alice",
+  "reason": "CONCEDE",
+  "seq_num": 3,
+  "type": "GAME_OVER",
+  "winner_id": "Bob"
+}
+[2026-08-11T20:38:23.395114Z] client1.log SEND: PLAYER_READY
+{
+  "deck_list": [
+    "mountain_001"
+  ],
+  "player_id": "Alice",
+  "seq_num": 2,
+  "type": "PLAYER_READY"
+}
+[2026-08-11T20:38:23.774683Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "seq_num": 10,
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "players_ready": 1,
+    "waiting_for": [
+      "Bob"
+    ]
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-11T20:38:24.145737Z] client1.log RECV: PLAYER_READY_ACK
+{
+  "seq_num": 11,
+  "type": "PLAYER_READY_ACK"
+}
+[2026-08-11T20:38:24.518821Z] client1.log SEND: PING
+{
+  "seq_num": 2,
+  "type": "PING"
+}
+[2026-08-11T20:38:25.194314Z] client1.log RECV: PONG
+{
+  "seq_num": 2,
+  "type": "PONG"
+}
+[2026-08-11T20:38:34.915251Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "seq_num": 12,
+  "state": {
+    "phase": "LOBBY",
+    "players": 2,
+    "players_ready": 2,
+    "waiting_for": []
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-11T20:38:35.283935Z] client1.log RECV: START_GAME
+{
+  "seq_num": 13,
+  "type": "START_GAME"
+}
+[2026-08-11T20:38:35.655072Z] client1.log RECV: GAME_STATE_UPDATE
+{
+  "seq_num": 0,
+  "state": {
+    "active_player": "Bob",
+    "battlefield": {
+      "Alice": [],
+      "Bob": []
+    },
+    "graveyard": {
+      "Alice": [],
+      "Bob": []
+    },
+    "hand": [
+      "Alice_0_mountain_001"
+    ],
+    "hand_counts": {
+      "Bob": 1
+    },
+    "library_counts": {
+      "Alice": 0,
+      "Bob": 0
+    },
+    "life_totals": {
+      "Alice": 20,
+      "Bob": 20
+    },
+    "phase": "MULLIGAN",
+    "stack": [],
+    "turn": 0
+  },
+  "type": "GAME_STATE_UPDATE"
+}
+[2026-08-11T20:38:56.601829Z] client1.log SEND: PING
+{
+  "seq_num": 3,
+  "type": "PING"
+}
+[2026-08-11T20:38:56.864379Z] client1.log RECV: PONG
+{
+  "seq_num": 3,
+  "type": "PONG"
+}
+[2026-08-11T20:39:26.878254Z] client1.log SEND: PING
+{
+  "seq_num": 4,
+  "type": "PING"
+}
+[2026-08-11T20:39:27.108327Z] client1.log RECV: PONG
+{
+  "seq_num": 4,
+  "type": "PONG"
+}
+[2026-08-11T20:39:57.122712Z] client1.log SEND: PING
+{
+  "seq_num": 5,
+  "type": "PING"
+}
+[2026-08-11T20:39:57.376766Z] client1.log RECV: PONG
+{
+  "seq_num": 5,
+  "type": "PONG"
+}
+[2026-08-11T20:40:27.393477Z] client1.log SEND: PING
+{
+  "seq_num": 6,
+  "type": "PING"
+}
+[2026-08-11T20:40:27.652031Z] client1.log RECV: PONG
+{
+  "seq_num": 6,
+  "type": "PONG"
+}
+[2026-08-11T20:40:57.666432Z] client1.log SEND: PING
+{
+  "seq_num": 7,
+  "type": "PING"
+}
+[2026-08-11T20:40:57.921981Z] client1.log RECV: PONG
+{
+  "seq_num": 7,
+  "type": "PONG"
+}
+[2026-08-11T20:41:27.937323Z] client1.log SEND: PING
+{
+  "seq_num": 8,
+  "type": "PING"
+}
+[2026-08-11T20:41:28.200414Z] client1.log RECV: PONG
+{
+  "seq_num": 8,
+  "type": "PONG"
+}
+[2026-08-11T20:41:58.214799Z] client1.log SEND: PING
+{
+  "seq_num": 9,
+  "type": "PING"
+}
+[2026-08-11T20:41:58.475344Z] client1.log RECV: PONG
+{
+  "seq_num": 9,
+  "type": "PONG"
+}
+[2026-08-11T20:42:28.492203Z] client1.log SEND: PING
+{
+  "seq_num": 10,
+  "type": "PING"
+}
+[2026-08-11T20:42:28.775260Z] client1.log RECV: PONG
+{
+  "seq_num": 10,
+  "type": "PONG"
+}
+[2026-08-11T20:42:58.788071Z] client1.log SEND: PING
+{
+  "seq_num": 11,
+  "type": "PING"
+}
+[2026-08-11T20:42:59.036619Z] client1.log RECV: PONG
+{
+  "seq_num": 11,
+  "type": "PONG"
+}
+[2026-08-11T20:43:29.051147Z] client1.log SEND: PING
+{
+  "seq_num": 12,
+  "type": "PING"
+}
+[2026-08-11T20:43:29.311704Z] client1.log RECV: PONG
+{
+  "seq_num": 12,
+  "type": "PONG"
+}
+[2026-08-11T20:43:59.325491Z] client1.log SEND: PING
+{
+  "seq_num": 13,
+  "type": "PING"
+}
+[2026-08-11T20:43:59.563534Z] client1.log RECV: PONG
+{
+  "seq_num": 13,
+  "type": "PONG"
+}
+[2026-08-11T20:44:29.578838Z] client1.log SEND: PING
+{
+  "seq_num": 14,
+  "type": "PING"
+}
+[2026-08-11T20:44:29.825759Z] client1.log RECV: PONG
+{
+  "seq_num": 14,
+  "type": "PONG"
+}
+[2026-08-11T20:44:59.843182Z] client1.log SEND: PING
+{
+  "seq_num": 15,
+  "type": "PING"
+}
+[2026-08-11T20:45:00.089435Z] client1.log RECV: PONG
+{
+  "seq_num": 15,
+  "type": "PONG"
+}
+[2026-08-11T20:45:30.102355Z] client1.log SEND: PING
+{
+  "seq_num": 16,
+  "type": "PING"
+}
+[2026-08-11T20:45:30.345900Z] client1.log RECV: PONG
+{
+  "seq_num": 16,
+  "type": "PONG"
+}
+[2026-08-11T20:46:00.361672Z] client1.log SEND: PING
+{
+  "seq_num": 17,
+  "type": "PING"
+}
+[2026-08-11T20:46:00.617711Z] client1.log RECV: PONG
+{
+  "seq_num": 17,
+  "type": "PONG"
+}
+[2026-08-11T20:46:30.633667Z] client1.log SEND: PING
+{
+  "seq_num": 18,
+  "type": "PING"
+}
+[2026-08-11T20:46:30.875225Z] client1.log RECV: PONG
+{
+  "seq_num": 18,
+  "type": "PONG"
+}
+[2026-08-11T20:47:00.890336Z] client1.log SEND: PING
+{
+  "seq_num": 19,
+  "type": "PING"
+}
+[2026-08-11T20:47:01.133924Z] client1.log RECV: PONG
+{
+  "seq_num": 19,
+  "type": "PONG"
+}
+[2026-08-11T20:47:31.148602Z] client1.log SEND: PING
+{
+  "seq_num": 20,
+  "type": "PING"
+}
+[2026-08-11T20:47:31.417154Z] client1.log RECV: PONG
+{
+  "seq_num": 20,
+  "type": "PONG"
+}
+[2026-08-11T20:48:01.428275Z] client1.log SEND: PING
+{
+  "seq_num": 21,
+  "type": "PING"
+}
+[2026-08-11T20:48:01.678858Z] client1.log RECV: PONG
+{
+  "seq_num": 21,
+  "type": "PONG"
+}
+[2026-08-11T20:48:31.697600Z] client1.log SEND: PING
+{
+  "seq_num": 22,
+  "type": "PING"
+}
+[2026-08-11T20:48:31.946157Z] client1.log RECV: PONG
+{
+  "seq_num": 22,
+  "type": "PONG"
+}
+[2026-08-11T20:49:01.964251Z] client1.log SEND: PING
+{
+  "seq_num": 23,
+  "type": "PING"
+}
+[2026-08-11T20:49:02.216395Z] client1.log RECV: PONG
+{
+  "seq_num": 23,
+  "type": "PONG"
+}
+[2026-08-11T20:49:32.228015Z] client1.log SEND: PING
+{
+  "seq_num": 24,
+  "type": "PING"
+}
+[2026-08-11T20:49:32.475558Z] client1.log RECV: PONG
+{
+  "seq_num": 24,
+  "type": "PONG"
+}
+[2026-08-11T20:50:02.490634Z] client1.log SEND: PING
+{
+  "seq_num": 25,
+  "type": "PING"
+}
+[2026-08-11T20:50:02.751700Z] client1.log RECV: PONG
+{
+  "seq_num": 25,
+  "type": "PONG"
+}
+[2026-08-11T20:50:32.769987Z] client1.log SEND: PING
+{
+  "seq_num": 26,
+  "type": "PING"
+}
+[2026-08-11T20:50:33.024702Z] client1.log RECV: PONG
+{
+  "seq_num": 26,
+  "type": "PONG"
+}
+[2026-08-11T20:51:03.040652Z] client1.log SEND: PING
+{
+  "seq_num": 27,
+  "type": "PING"
+}
+[2026-08-11T20:51:03.288423Z] client1.log RECV: PONG
+{
+  "seq_num": 27,
+  "type": "PONG"
+}
+[2026-08-11T20:51:33.303158Z] client1.log SEND: PING
+{
+  "seq_num": 28,
+  "type": "PING"
+}
+[2026-08-11T20:51:33.569789Z] client1.log RECV: PONG
+{
+  "seq_num": 28,
+  "type": "PONG"
+}
+[2026-08-11T20:52:03.584982Z] client1.log SEND: PING
+{
+  "seq_num": 29,
+  "type": "PING"
+}
+[2026-08-11T20:52:03.829546Z] client1.log RECV: PONG
+{
+  "seq_num": 29,
+  "type": "PONG"
+}
+[2026-08-11T20:52:33.842738Z] client1.log SEND: PING
+{
+  "seq_num": 30,
+  "type": "PING"
+}
+[2026-08-11T20:52:34.087785Z] client1.log RECV: PONG
+{
+  "seq_num": 30,
+  "type": "PONG"
+}
+[2026-08-11T20:53:04.101708Z] client1.log SEND: PING
+{
+  "seq_num": 31,
+  "type": "PING"
+}
+[2026-08-11T20:53:04.320304Z] client1.log RECV: PONG
+{
+  "seq_num": 31,
+  "type": "PONG"
+}
+[2026-08-11T20:53:34.335851Z] client1.log SEND: PING
+{
+  "seq_num": 32,
+  "type": "PING"
+}
+[2026-08-11T20:53:34.594177Z] client1.log RECV: PONG
+{
+  "seq_num": 32,
+  "type": "PONG"
 }

@@ -35,6 +35,7 @@ class Client:
         self._ready = False
         self._start_game = False
         self._last_error: Optional[dict] = None
+        self._reconnected = False
         self.players_count = 0
         self.players_ready: int = 0
         self.waiting_for: list[str] = []
@@ -173,8 +174,14 @@ class Client:
         # Do not mutate a UI-owned action dict.  In particular, callers pass
         # the exact priority token received in PRIORITY_GRANT.
         msg = dict(obj)
-        # Block all non-heartbeat sends once the game is over
-        if self._game_over and msg.get("type") not in (PDUs.PING, PDUs.DISCONNECT):
+        # Block all non-heartbeat sends once the game is over, except the few
+        # PDUs needed to start a rematch on the same connection (fresh
+        # PLAYER_READY / HELLO) or to re-attach after a mid-game disconnect
+        # (RECONNECT).  Anything else silently dropped, as a finished match no
+        # longer accepts game actions.
+        if self._game_over and msg.get("type") not in (
+            PDUs.PING, PDUs.DISCONNECT, PDUs.PLAYER_READY, PDUs.HELLO, PDUs.RECONNECT,
+        ):
             return
 
         ptype = msg.get("type")
@@ -220,6 +227,32 @@ class Client:
             return self._recv_q.get(timeout=1.0)
         except queue.Empty:
             raise TimeoutError("no pong")
+
+    def reconnect(self, player_id: str, timeout: float = 5.0) -> dict:
+        """Open a fresh TCP connection and re-attach to a pending session.
+
+        The server holds the player's seat for `reconnect_timeout` seconds
+        after a mid-game disconnect; this sends RECONNECT and returns the
+        RECONNECT_ACK (or an ERROR if the window has already expired).
+        """
+        if self.sock:
+            self.close()
+        self.connect()
+        self._reconnected = False
+        self.send_pdu({"type": PDUs.RECONNECT, "player_id": player_id})
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            try:
+                pkt = self._recv_q.get(timeout=max(0.1, deadline - time.monotonic()))
+            except queue.Empty:
+                continue
+            t = pkt.get("type")
+            if t == PDUs.RECONNECT_ACK:
+                self.player_id = player_id
+                return pkt
+            if t == PDUs.ERROR:
+                return pkt
+        raise TimeoutError("no RECONNECT_ACK from server")
 
     @staticmethod
     def load_deck(filename: str) -> list[str]:
@@ -284,7 +317,11 @@ class Client:
         self.pdu_handler.register_callback(PDUs.GAME_STATE_UPDATE, on_game_state_update)
         self.pdu_handler.register_callback(PDUs.START_GAME, on_start_game)
 
-        self.hello(name)
+        # Only send HELLO on the initial lobby connection.
+        # Rematches reuse the existing TCP connection and go directly
+        # to PLAYER_READY as required by the protocol.
+        if not self.player_id:
+            self.hello(name)
 
         while not lobby["start_game"]:
             lobby["ready"] = False
@@ -302,6 +339,12 @@ class Client:
 
             try:
                 print("i sent the player ready")
+
+                # Starting a rematch: clear the previous GAME_OVER state.
+                self._game_over = False
+                self._last_error = None
+                self._start_game = False
+                
                 message = {
                     "type": PDUs.PLAYER_READY,
                     "player_id": name,

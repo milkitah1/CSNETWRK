@@ -25,6 +25,8 @@ def main():
     srun.add_argument("--port", type=int, default=4444)
     srun.add_argument("--verbose", action="store_true")
     srun.add_argument("--log", action="store_true")
+    srun.add_argument("--reconnect-timeout", type=float, default=10.0,
+                      help="Seconds a disconnected player's seat is held before GAME_OVER(DISCONNECT).")
 
     crun = sub.add_parser("client")
     crun.add_argument("--host", default="127.0.0.1")
@@ -37,7 +39,8 @@ def main():
 
     args = p.parse_args()
     if args.cmd == "server":
-        srv = Server(host=args.host, port=args.port, verbose=args.verbose, log=args.log)
+        srv = Server(host=args.host, port=args.port, verbose=args.verbose,
+                     log=args.log, reconnect_timeout=args.reconnect_timeout)
         print(f"Starting server on {args.host}:{srv.port}")
         srv.start()
         try:
@@ -61,15 +64,27 @@ def run_client(stdscr, args):
         initialize_screen(stdscr)
         curses.curs_set(0)
         name = lobby_get_name(stdscr)
-        started = c.run_lobby(stdscr, name)
 
-        if started and c._start_game:
+        # Rematch loop: after GAME_OVER the server returns to LOBBY on the
+        # same TCP connection, so the client re-enters the lobby and sends a
+        # fresh PLAYER_READY instead of exiting.
+        while True:
+            started = c.run_lobby(stdscr, name)
+            if not started or not c._start_game:
+                break
+
             stdscr.clear()
             stdscr.refresh()
             c.run_mulligan(stdscr)
             stdscr.clear()
             stdscr.refresh()
             c.run_main_game(stdscr)
+
+            # run_main_game returns after GAME_OVER; loop back to the lobby
+            # for a rematch unless the player left via QUIT.
+            if not c._game_over:
+                break
+
     c.close()
 
 if __name__ == "__main__":

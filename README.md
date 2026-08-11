@@ -24,6 +24,14 @@ python -m mtgnp client --host 127.0.0.1 --port 4444 --connect --log client1.log
 python -m mtgnp client --host 127.0.0.1 --port 4444 --connect --log client2.log
 ```
 
+**Reconnect & Rematch:**
+- If a client disconnects mid-match, its seat is held for the implementation-defined
+  `--reconnect-timeout` (default 10 s) on the server. The same player can re-attach
+  with a `RECONNECT` PDU (`client.reconnect(player_id)`) within that window and the
+  match resumes; otherwise the match ends with `GAME_OVER` reason `DISCONNECT`.
+- After any `GAME_OVER`, the server returns to LOBBY on the same TCP connections, and
+  the client re-enters the lobby to send a fresh `PLAYER_READY` for a rematch.
+
 ---
 
 ## 2. Terminal Game UI Controls & Views

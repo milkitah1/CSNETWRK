@@ -591,9 +591,12 @@ class GameLifecycleEngine:
         if len(p_state.hand) > 7:
             return True, "", {}  # still over seven — await another DISCARD PDU
 
-        # Hand is now at seven or fewer -> finish cleanup and start next turn
+        # Hand is now at seven or fewer -> finish cleanup and start next turn.
+        # Use advance_phase() so the UNTAP wrap is handled exactly once (it
+        # routes through _begin_next_turn internally); calling _begin_next_turn
+        # directly would double-increment the turn counter.
         self._clear_cleanup_effects()
-        next_phase, game_over, priority_grant_pdu = self._begin_next_turn()
+        next_phase, game_over, priority_grant_pdu = self.advance_phase()
         return True, "", {
             "to_phase": next_phase.value,
             "turn": self.game_state.turn_number,
@@ -646,7 +649,7 @@ class GameLifecycleEngine:
             "reason": reason  # LIFE_ZERO, DECK_EMPTY, CONCEDE, DISCONNECT
         }
     
-    """Resets engine state to allow a new game on the same TCP connection."""
+        """Resets engine state to allow a new game on the same TCP connection."""
     def reset_to_lobby(self) -> None:
         self.macro_state = MacroState.LOBBY
         self.game_state = None
@@ -656,9 +659,14 @@ class GameLifecycleEngine:
         self.discard_pending = False
         self.awaiting_discard_player = None
         self._phase_index = 0
+
+        # Keep the existing TCP-connected players in the lobby.
+        # They only need to submit fresh PLAYER_READY PDUs for the rematch.
         with self._lock:
             for info in self.joined_players.values():
                 info["ready"] = False
+            self._lock.notify_all()
+
         self.lifecycle.reset()  # allow next game to fire GAME_OVER again
 
     # -------------------------------------------------------------------------

@@ -11,6 +11,9 @@ import json
 import datetime
 from typing import Any, Dict
 from pathlib import Path
+import threading
+
+LOG_LOCK = threading.Lock()
 
 VERBOSE = False
 LOG_FILENAME = ""
@@ -50,9 +53,10 @@ def _pretty(obj: Dict[str, Any]) -> str:
 def log_to_file(obj: str):
     file_path = Path(f"mtgnp/logs/{LOG_FILENAME}")
 
-    with open(file_path, "a") as f:
-        f.write(obj)
-        f.flush()
+    with LOG_LOCK:
+        with open(file_path, "a", encoding="utf-8") as f:
+            f.write(obj)
+            f.flush()
 
 
 def log_send(label: str, pdu: Dict[str, Any]) -> None:

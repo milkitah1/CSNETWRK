@@ -17,7 +17,7 @@ from .common import pdu as PDUs
 from .client_ui.ui_main_game import *
 
 
-def main(stdscr):
+def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="cmd")
     srun = sub.add_parser("server")
@@ -46,23 +46,28 @@ def main(stdscr):
         except KeyboardInterrupt:
             srv.stop()
     elif args.cmd == "client":
-        c = Client(host=args.host, port=args.port, verbose=args.verbose, log_filename=args.log)
-        c.connect()
-        if args.ping:
-            print(c.ping())
-        if args.connect:
-            initialize_screen(stdscr)
-            name = lobby_get_name(stdscr)
-            started = c.run_lobby(stdscr, name)
-
-            if started and c._start_game:
-                stdscr.clear()
-                stdscr.refresh()
-                c.run_mulligan(stdscr)
-        c.close()
+        curses.wrapper(run_client, args)
     else:
         p.print_help()
 
+def run_client(stdscr, args):
+    c = Client(host=args.host, port=args.port, verbose=args.verbose, log_filename=args.log)
+    c.connect()
+
+    if args.ping:
+        print(c.ping())
+
+    if args.connect:
+        initialize_screen(stdscr)
+        curses.curs_set(0)
+        name = lobby_get_name(stdscr)
+        started = c.run_lobby(stdscr, name)
+
+        if started and c._start_game:
+            stdscr.clear()
+            stdscr.refresh()
+            c.run_mulligan(stdscr)
+    c.close()
 
 if __name__ == "__main__":
-    curses.wrapper(main)
+    main()

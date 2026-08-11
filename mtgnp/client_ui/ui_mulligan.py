@@ -39,6 +39,8 @@ class MulliganState:
         self.hand_window.addstr(self.window_height - 4, 2, "=================================")
         self.hand_window.addstr(self.window_height - 3, 2, "Keep or Mulligan?")
         self.hand_window.addstr(self.window_height - 2, 2, "[Y/N]")
+        self.render_hand()
+
 
     def init_hand_bottom(self):
         self.hand_window.erase()
@@ -51,16 +53,29 @@ class MulliganState:
         self.hand_window.addstr(self.window_height - 4, 2, "=================================")
         self.hand_window.addstr(self.window_height - 3, 2, "Bottom a card [+/-]")
         self.hand_window.addstr(self.window_height - 2, 2, "Press Esc to finish")
+        self.render_hand()
+
 
     def display_card_detail(self):
         card_id = self.hand[self.selected_index]
         self.details_window.display_card_details(card_id)
-        self.hand_window.refresh()
 
     def render_hand(self):
         row = 6
         self.wait_for_hand()
         hand = self.client.visible_state.get("hand")
+
+        # Width available for card text, excluding borders
+        card_width = self.hand_window.getmaxyx()[1] - 4
+
+        # Clear only the card-text area
+        for i in range(len(hand)):
+            self.hand_window.addstr(
+                row + i,
+                2,
+                " " * card_width
+            )
+
         # Redraw cards
         for i, card in enumerate(hand):
             attr = curses.A_NORMAL
@@ -81,8 +96,6 @@ class MulliganState:
 
 
     def handle_key_mulligan(self, key):
-        key = normalize_key(key)
-
         # Move selection
         if key == curses.KEY_UP:
             if self.selected_index > 0:
@@ -102,7 +115,6 @@ class MulliganState:
             self.does_keep = False
             self.mulligan_count += 1
 
-        self.render_hand()
         self.display_card_detail()
 
 
@@ -166,11 +178,13 @@ class MulliganState:
 
         key = ""
         self.hand_window.keypad(True)
+        self.hand_window.timeout(100)
 
         while key not in (ord("y"), ord("n")):
             self.render_hand()
 
             key = self.hand_window.getch()
+            key = normalize_key(key)
             self.handle_key_mulligan(key)
 
         self.hand_window.keypad(False)

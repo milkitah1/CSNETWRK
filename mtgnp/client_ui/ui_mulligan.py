@@ -72,7 +72,7 @@ class MulliganState:
             return
         row = 6
         self.wait_for_hand()
-        hand = self.client.game_state.get("hand")
+        hand = (self.client.visible_state or {}).get("hand", [])
         # Redraw cards
         for i, card in enumerate(hand):
             attr = curses.A_NORMAL
@@ -200,7 +200,7 @@ class MulliganState:
    
     def wait_for_hand(self):
         while True:
-            game_state = self.client.game_state
+            game_state = self.client.visible_state
 
             if game_state and "hand" in game_state:
                 self.hand = game_state["hand"]

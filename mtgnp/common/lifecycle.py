@@ -1,4 +1,4 @@
-﻿"""
+"""
 Game lifecycle engine for MTGNP
 This module drives macro game states (LOBBY -> GAME_SETUP -> MULLIGAN -> IN_GAME -> GAME_OVER)
 and turn phase transitions while mutating the canonical GameState object.
@@ -220,6 +220,9 @@ class GameLifecycleEngine:
     - Player ID must be unique within the lobby session.
     """
     def register_player_ready(self, player_id: str, deck_list: List[str]) -> Tuple[bool, str]:
+        if self.macro_state == MacroState.GAME_OVER:
+            self.reset_to_lobby()
+
         if self.macro_state != MacroState.LOBBY:
             return False, "Cannot set ready outside LOBBY state."
 
@@ -235,7 +238,7 @@ class GameLifecycleEngine:
         return True, ""
 
     def unregister_player(self, player_id: str) -> None:
-        """Removes a player from tracking if they disconnect during LOBBY."""
+        """Removes a player from tracking if they disconnect during LOBBY or game."""
         if player_id in self.registered_players:
             del self.registered_players[player_id]
         # also remove from joined / ready tracking
@@ -243,6 +246,7 @@ class GameLifecycleEngine:
             if player_id in self.joined_players:
                 del self.joined_players[player_id]
                 self._lock.notify_all()
+        self.reset_to_lobby()
 
     # -------------------------------------------------------------------------
     # 2. GAME_SETUP (Section 6.3)
@@ -611,6 +615,9 @@ class GameLifecycleEngine:
         self.discard_pending = False
         self.awaiting_discard_player = None
         self._phase_index = 0
+        with self._lock:
+            for info in self.joined_players.values():
+                info["ready"] = False
         self.lifecycle.reset()  # allow next game to fire GAME_OVER again
 
     # -------------------------------------------------------------------------

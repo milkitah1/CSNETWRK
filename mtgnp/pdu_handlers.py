@@ -131,11 +131,15 @@ class PDUHandler:
         if not self.client.player_id:
             return
         engine = self.client.server.gameEngine
-        if engine.macro_state == MacroState.IN_GAME and engine.game_state is not None:
+        if engine.macro_state in (MacroState.IN_GAME, MacroState.MULLIGAN, MacroState.GAME_SETUP):
             loser = self.client.player_id
             winner = engine.get_opponent(loser)
             if winner:
                 self._finish_game(winner, loser, "DISCONNECT")
+            else:
+                engine.reset_to_lobby()
+        else:
+            engine.reset_to_lobby()
         self.client.running = False
 
     def handle_ping(self, pkt: dict) -> None:
